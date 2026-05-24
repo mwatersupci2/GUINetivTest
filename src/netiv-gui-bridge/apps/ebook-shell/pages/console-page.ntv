@@ -8,7 +8,7 @@
       version: "0.1.0",
       error: "terminal",
       status: "future-active-draft",
-      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render,gui.runtime.loop,gui.host.windows,gui.host.windows_window",
       target: "binary-hosted-trinary-runtime",
       notes: "Defines the terminal and runtime console page for ebook-shell."
     };
@@ -21,8 +21,12 @@
 
     <book>{
       °struct •ConsolePage {
+        °define •shell: •string;
         °define •lineCount: °usize;
         °define •interactive: °bool;
+        °define •started: °bool;
+        °define •transcript: •string;
+        °define •input: •string;
         °define •layout: •TachyonLayoutEngine;
       };
 
@@ -30,10 +34,42 @@
         °return •ConsolePage;
       };
 
+      °function •BootConsolePage {
+        °define •page: •ConsolePage;
+        °define •loop: •RuntimeLoop;
+        °define •host: •WindowsHost;
+        °define •window: •WindowsWindow;
+        °set •page.started = true;
+        °set •page.interactive = true;
+        °set •page.shell = "powershell.exe";
+        °set •page.transcript = "Launching powershell.exe\\nType commands and press Enter.";
+        °set •host = •HostBootWindow(•host, •loop);
+        °set •window = •WindowsOpenWindow(•window);
+        °set •window = •WindowsCreateBackbuffer(•window);
+        °return •page;
+      };
+
+      °function •HandleConsoleInput {
+        °define •page: •ConsolePage;
+        °define •key: •string;
+        °if { •key == "Enter" } {
+          °set •page.transcript = •page.transcript + "\\n> " + •page.input;
+          °set •page.input = "";
+        };
+        °if { •key == "Backspace" } {
+          °set •page.input = •page.input;
+        };
+        °return •page;
+      };
+
       °function •RenderConsolePage {
         °define •page: •ConsolePage;
         °set •page.layout = •LayoutConsolePage(•page.layout);
         °set •page.interactive = true;
+        °set •page.lineCount = 12;
+        °if { •page.started == false } {
+          °set •page = •BootConsolePage(•page);
+        };
         °return •page;
       };
     };
