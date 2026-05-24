@@ -10,7 +10,7 @@
       status: "future-active-draft",
       imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render,gui.runtime.loop,gui.host.windows,gui.host.windows_window",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines the terminal and runtime console page for ebook-shell."
+      notes: "Defines the full-bleed terminal and runtime console page for ebook-shell."
     };
 
     <edges>{
@@ -23,8 +23,10 @@
       °struct •ConsolePage {
         °define •shell: •string;
         °define •lineCount: °usize;
-        °define •interactive: °bool;
-        °define •started: °bool;
+        °define •interactive: •bool;
+        °define •started: •bool;
+        °define •fullBleed: •bool;
+        °define •chromeVisible: •bool;
         °define •transcript: •string;
         °define •input: •string;
         °define •layout: •TachyonLayoutEngine;
@@ -41,6 +43,8 @@
         °define •window: •WindowsWindow;
         °set •page.started = true;
         °set •page.interactive = true;
+        °set •page.fullBleed = true;
+        °set •page.chromeVisible = false;
         °set •page.shell = "powershell.exe";
         °set •page.transcript = "Launching powershell.exe\\nType commands and press Enter.";
         °set •host = •HostBootWindow(•host, •loop);
@@ -67,6 +71,8 @@
         °set •page.layout = •LayoutConsolePage(•page.layout);
         °set •page.interactive = true;
         °set •page.lineCount = 12;
+        °set •page.fullBleed = true;
+        °set •page.chromeVisible = false;
         °if { •page.started == false } {
           °set •page = •BootConsolePage(•page);
         };

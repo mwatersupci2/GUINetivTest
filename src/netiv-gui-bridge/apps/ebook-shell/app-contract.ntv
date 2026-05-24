@@ -68,7 +68,7 @@
       °call •GuiPage {
         tab: "Console",
         heading: "> netiv write",
-        body: "Runtime log stream and command output surface.",
+        body: "Full-bleed runtime log stream and command output surface with no side panels.",
         tools: "Run|Clear|Copy|Trace|Export",
         shell: "powershell.exe",
         kind: "console"
