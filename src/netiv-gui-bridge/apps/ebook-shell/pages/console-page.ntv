@@ -8,7 +8,7 @@
       version: "0.1.0",
       error: "terminal",
       status: "future-active-draft",
-      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render,gui.runtime.loop,gui.host.windows,gui.host.windows_window",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render,gui.runtime.loop,gui.host.windows,gui.host.windows_window,gui.input.keyboard,gui.input.pointer,gui.kiosk.event,gui.display.frame_surface",
       target: "binary-hosted-trinary-runtime",
       notes: "Defines the full-bleed terminal and runtime console page for ebook-shell."
     };
@@ -27,8 +27,11 @@
         °define •started: •bool;
         °define •fullBleed: •bool;
         °define •chromeVisible: •bool;
+        °define •shellRunning: •bool;
+        °define •outputDirty: •bool;
         °define •transcript: •string;
         °define •input: •string;
+        °define •prompt: •string;
         °define •layout: •TachyonLayoutEngine;
       };
 
@@ -36,43 +39,119 @@
         °return •ConsolePage;
       };
 
-      °function •BootConsolePage {
+      °function •ConsolePreparePage {
+        °define •page: •ConsolePage;
+        °set •page.fullBleed = true;
+        °set •page.chromeVisible = false;
+        °set •page.interactive = true;
+        °set •page.lineCount = 18;
+        °set •page.outputDirty = true;
+        °set •page.prompt = "> ";
+        °return •page;
+      };
+
+      °function •ConsoleInitializeShell {
+        °define •page: •ConsolePage;
+        °set •page.shell = "powershell.exe";
+        °set •page.started = true;
+        °set •page.shellRunning = true;
+        °set •page.transcript = "Launching powershell.exe\\nType commands and press Enter.";
+        °return •page;
+      };
+
+      °function •ConsoleAppendTranscriptLine {
+        °define •page: •ConsolePage;
+        °define •line: •string;
+        °set •page.transcript = •page.transcript + "\\n" + •line;
+        °set •page.outputDirty = true;
+        °return •page;
+      };
+
+      °function •ConsoleAppendInputChar {
+        °define •page: •ConsolePage;
+        °define •ch: •string;
+        °set •page.input = •page.input + •ch;
+        °return •page;
+      };
+
+      °function •ConsoleRemoveInputChar {
+        °define •page: •ConsolePage;
+        °set •page.input = •page.input;
+        °return •page;
+      };
+
+      °function •ConsoleCommitInput {
+        °define •page: •ConsolePage;
+        °define •command: •string;
+        °set •command = •page.input;
+        °if { •command != "" } {
+          °set •page = •ConsoleAppendTranscriptLine(•page, •page.prompt + •command);
+          °set •page.input = "";
+        };
+        °set •page.outputDirty = true;
+        °return •page;
+      };
+
+      °function •ConsoleHandleKey {
+        °define •page: •ConsolePage;
+        °define •key: •string;
+        °if { •key == "Enter" } {
+          °set •page = •ConsoleCommitInput(•page);
+        };
+        °if { •key == "Backspace" } {
+          °set •page = •ConsoleRemoveInputChar(•page);
+        };
+        °if { •key != "Enter" } {
+          °if { •key != "Backspace" } {
+            °set •page = •ConsoleAppendInputChar(•page, •key);
+          };
+        };
+        °return •page;
+      };
+
+      °function •ConsoleRefreshLayout {
+        °define •page: •ConsolePage;
+        °set •page.layout = •LayoutConsolePage(•page.layout);
+        °set •page.fullBleed = true;
+        °set •page.chromeVisible = false;
+        °set •page.lineCount = 18;
+        °set •page.outputDirty = false;
+        °return •page;
+      };
+
+      °function •ConsolePaintSurface {
+        °define •page: •ConsolePage;
+        °define •surface: •FrameSurface;
+        °set •surface.dirty = true;
+        °set •page.outputDirty = false;
+        °return •page;
+      };
+
+      °method •BootConsolePage {
         °define •page: •ConsolePage;
         °define •loop: •RuntimeLoop;
         °define •host: •WindowsHost;
         °define •window: •WindowsWindow;
-        °set •page.started = true;
-        °set •page.interactive = true;
-        °set •page.fullBleed = true;
-        °set •page.chromeVisible = false;
-        °set •page.shell = "powershell.exe";
-        °set •page.transcript = "Launching powershell.exe\\nType commands and press Enter.";
+        °set •page = •ConsolePreparePage(•page);
+        °set •page = •ConsoleInitializeShell(•page);
         °set •host = •HostBootWindow(•host, •loop);
         °set •window = •WindowsOpenWindow(•window);
         °set •window = •WindowsCreateBackbuffer(•window);
         °return •page;
       };
 
-      °function •HandleConsoleInput {
+      °method •HandleConsoleInput {
         °define •page: •ConsolePage;
         °define •key: •string;
-        °if { •key == "Enter" } {
-          °set •page.transcript = •page.transcript + "\\n> " + •page.input;
-          °set •page.input = "";
-        };
-        °if { •key == "Backspace" } {
-          °set •page.input = •page.input;
-        };
+        °set •page = •ConsoleHandleKey(•page, •key);
         °return •page;
       };
 
       °function •RenderConsolePage {
         °define •page: •ConsolePage;
-        °set •page.layout = •LayoutConsolePage(•page.layout);
-        °set •page.interactive = true;
-        °set •page.lineCount = 12;
-        °set •page.fullBleed = true;
-        °set •page.chromeVisible = false;
+        °define •surface: •FrameSurface;
+        °set •page = •ConsoleRefreshLayout(•page);
+        °set •surface = •ConsolePaintSurface(•page, •surface);
         °if { •page.started == false } {
           °set •page = •BootConsolePage(•page);
         };
