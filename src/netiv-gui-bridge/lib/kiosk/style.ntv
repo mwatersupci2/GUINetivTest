@@ -1,0 +1,86 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/style.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.style",
+      kind: "library",
+      namespace: "gui.kiosk.style",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.pixel,gui.display.rect,gui.kiosk.element",
+      target: "windows-native-window",
+      notes: "Defines simple offline kiosk style primitives: foreground, background, border, padding, spacing, and alignment."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   KioskStyle --> TritPixel
+      %%   KioskStyle --> StyleSpacing
+      %%   KioskStyle --> StyleBorder
+      %%   KioskStyle --> StyleAlign
+      %%   ApplyStyleToElement --> KioskElement
+      %%   ApplyStyleToElement --> KioskStyle
+    };
+
+    <book>{
+      °enum •StyleAlign {
+        •start,
+        •center,
+        •end,
+        •stretch
+      };
+
+      °struct •StyleSpacing {
+        °define •top: °i64;
+        °define •right: °i64;
+        °define •bottom: °i64;
+        °define •left: °i64;
+      };
+
+      °struct •StyleBorder {
+        °define •width: °i64;
+        °define •pixel: •TritPixel;
+      };
+
+      °struct •KioskStyle {
+        °define •foreground: •TritPixel;
+        °define •background: •TritPixel;
+        °define •border: •StyleBorder;
+        °define •padding: •StyleSpacing;
+        °define •margin: •StyleSpacing;
+        °define •align: •StyleAlign;
+      };
+
+      °function •MakeStyleSpacing {
+        °define •top: °i64;
+        °define •right: °i64;
+        °define •bottom: °i64;
+        °define •left: °i64;
+        °return •StyleSpacing;
+      };
+
+      °function •MakeStyleBorder {
+        °define •width: °i64;
+        °define •pixel: •TritPixel;
+        °return •StyleBorder;
+      };
+
+      °function •MakeKioskStyle {
+        °define •foreground: •TritPixel;
+        °define •background: •TritPixel;
+        °define •border: •StyleBorder;
+        °define •padding: •StyleSpacing;
+        °define •margin: •StyleSpacing;
+        °define •align: •StyleAlign;
+        °return •KioskStyle;
+      };
+
+      °function •ApplyStyleToElement {
+        °define •element: •KioskElement;
+        °define •style: •KioskStyle;
+        °return •element;
+      };
+    };
+  |■
+|●

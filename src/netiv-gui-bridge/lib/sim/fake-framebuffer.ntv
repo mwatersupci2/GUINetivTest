@@ -1,0 +1,63 @@
+<Netiv="research/netiv-gui-bridge/lib/sim/fake-framebuffer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.sim.fake_framebuffer",
+      kind: "library",
+      namespace: "gui.sim.fake_framebuffer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.framebuffer,gui.display.framebuffer_write,gui.compositor.dirty_rect",
+      target: "simulation",
+      notes: "Defines an in-memory fake framebuffer for testing the Netiv kiosk render path before real Debian framebuffer integration."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FakeFramebuffer --> FramebufferSurface
+      %%   FakeFramebuffer --> FramebufferWriter
+      %%   FakeFramebufferWrite --> WriteFramebufferPixel
+      %%   FakeFramebufferFlush --> DirtyRectQueue
+      %%   FakeFramebufferPresent --> PresentFramebuffer
+    };
+
+    <book>{
+      °struct •FakeFramebuffer {
+        °define •surface: •FramebufferSurface;
+        °define •writer: •FramebufferWriter;
+        °define •writeCount: °usize;
+        °define •presentCount: °usize;
+      };
+
+      °function •MakeFakeFramebuffer {
+        °define •surface: •FramebufferSurface;
+        °define •writer: •FramebufferWriter;
+        °return •FakeFramebuffer;
+      };
+
+      °function •FakeFramebufferWrite {
+        °define •fake: •FakeFramebuffer;
+        °define •pixel: •TritPixel;
+        °define •x: °i64;
+        °define •y: °i64;
+        °set •fake.writer = •WriteFramebufferPixel(•fake.writer, •pixel, •x, •y);
+        °set •fake.writeCount = •fake.writeCount + 1;
+        °return •fake;
+      };
+
+      °function •FakeFramebufferFlush {
+        °define •fake: •FakeFramebuffer;
+        °define •queue: •DirtyRectQueue;
+        °return •fake;
+      };
+
+      °function •FakeFramebufferPresent {
+        °define •fake: •FakeFramebuffer;
+        °set •fake.surface = •PresentFramebuffer(•fake.writer);
+        °set •fake.presentCount = •fake.presentCount + 1;
+        °return •fake;
+      };
+    };
+  |■
+|●

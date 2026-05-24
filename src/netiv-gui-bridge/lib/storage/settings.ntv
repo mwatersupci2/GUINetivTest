@@ -1,0 +1,65 @@
+<Netiv="research/netiv-gui-bridge/lib/storage/settings.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.storage.settings",
+      kind: "library",
+      namespace: "gui.storage.settings",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.assets.palette,gui.assets.font",
+      target: "windows-native-window",
+      notes: "Defines local offline settings storage contracts for the Netiv kiosk runtime."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   StorageSettings --> SettingsKind
+      %%   StorageSettings --> AssetPalette
+      %%   StorageSettings --> FontAsset
+      %%   LoadSettings --> StorageSettings
+      %%   SaveSettings --> StorageSettings
+      %%   ResetSettings --> StorageSettings
+    };
+
+    <book>{
+      °enum •SettingsKind {
+        •display,
+        •reader,
+        •input,
+        •debug
+      };
+
+      °struct •StorageSettings {
+        °define •kind: •SettingsKind;
+        °define •loaded: °bool;
+        °define •dirty: °bool;
+      };
+
+      °function •MakeStorageSettings {
+        °define •kind: •SettingsKind;
+        °return •StorageSettings;
+      };
+
+      °function •LoadSettings {
+        °define •settings: •StorageSettings;
+        °set •settings.loaded = true;
+        °return •settings;
+      };
+
+      °function •SaveSettings {
+        °define •settings: •StorageSettings;
+        °set •settings.dirty = false;
+        °return •settings;
+      };
+
+      °function •ResetSettings {
+        °define •settings: •StorageSettings;
+        °set •settings.loaded = false;
+        °set •settings.dirty = true;
+        °return •settings;
+      };
+    };
+  |■
+|●

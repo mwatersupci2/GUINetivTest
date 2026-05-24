@@ -1,0 +1,54 @@
+<Netiv="research/netiv-gui-bridge/lib/display/blitter.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.blitter",
+      kind: "library",
+      namespace: "gui.display.blitter",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.frame_surface,gui.display.pixel,gui.display.rect",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines pixel transfer and rectangle fill behavior for frame surfaces."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   Blitter --> FrameSurface
+      %%   Blitter --> TritPixel
+      %%   Blitter --> DisplayRect
+      %%   FillRect --> FrameSurface
+      %%   BlitPixel --> TritPixel
+    };
+
+    <book>{
+      °struct •Blitter {
+        °define •operationCount: °usize;
+      };
+
+      °function •MakeBlitter {
+        °return •Blitter;
+      };
+
+      °function •BlitPixel {
+        °define •blitter: •Blitter;
+        °define •surface: •FrameSurface;
+        °define •pixel: •TritPixel;
+        °set •surface.writeCount = •surface.writeCount + 1;
+        °set •blitter.operationCount = •blitter.operationCount + 1;
+        °return •surface;
+      };
+
+      °function •FillRect {
+        °define •blitter: •Blitter;
+        °define •surface: •FrameSurface;
+        °define •bounds: •DisplayRect;
+        °define •pixel: •TritPixel;
+        °set •surface.dirty = true;
+        °set •blitter.operationCount = •blitter.operationCount + 1;
+        °return •surface;
+      };
+    };
+  |■
+|●

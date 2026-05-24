@@ -1,0 +1,57 @@
+<Netiv="research/netiv-gui-bridge/lib/display/draw-line.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.draw_line",
+      kind: "library",
+      namespace: "gui.display.draw_line",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.frame_surface,gui.display.pixel",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines line drawing operations on frame surfaces."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DrawLine --> FrameSurface
+      %%   DrawLine --> TritPixel
+    };
+
+    <book>{
+      °struct •LinePoint {
+        °define •x: °i64;
+        °define •y: °i64;
+      };
+
+      °struct •DrawLineOperation {
+        °define •writeCount: °usize;
+      };
+
+      °function •MakeLinePoint {
+        °define •x: °i64;
+        °define •y: °i64;
+        °return •LinePoint;
+      };
+
+      °function •MakeDrawLineOperation {
+        °return •DrawLineOperation;
+      };
+
+      °function •DrawSurfaceLine {
+        °define •operation: •DrawLineOperation;
+        °define •surface: •FrameSurface;
+        °define •from: •LinePoint;
+        °define •to: •LinePoint;
+        °define •pixel: •TritPixel;
+
+        °set •surface.dirty = true;
+        °set •surface.writeCount = •surface.writeCount + 1;
+        °set •operation.writeCount = •operation.writeCount + 1;
+
+        °return •surface;
+      };
+    };
+  |■
+|●

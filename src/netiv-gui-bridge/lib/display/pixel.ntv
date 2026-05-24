@@ -1,0 +1,82 @@
+<Netiv="research/netiv-gui-bridge/lib/display/pixel.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.pixel",
+      kind: "library",
+      namespace: "gui.display.pixel",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,trit.tryte",
+      target: "windows-native-window",
+      notes: "Symbolic trit pixels stay trinary inside Netiv and are translated to host RGB pixels before framebuffer output."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   TritPixel --> PixelPalette
+      %%   PixelPalette --> DecodeTritPixelToRgb
+      %%   DecodeTritPixelToRgb --> HostRgbPixel
+      %%   TrytePixelTile3x3 --> TritPixel
+    };
+
+    <book>{
+      °enum •TritColorState {
+        •low,
+        •mid,
+        •high
+      };
+
+      °struct •TritPixel {
+        °define •state: •TritColorState;
+      };
+
+      °struct •HostRgbPixel {
+        °define •r: °u8;
+        °define •g: °u8;
+        °define •b: °u8;
+      };
+
+      °struct •PixelPalette {
+        °define •low: •HostRgbPixel;
+        °define •mid: •HostRgbPixel;
+        °define •high: •HostRgbPixel;
+      };
+
+      °struct •TrytePixelTile3x3 {
+        °define •p0: •TritPixel;
+        °define •p1: •TritPixel;
+        °define •p2: •TritPixel;
+        °define •p3: •TritPixel;
+        °define •p4: •TritPixel;
+        °define •p5: •TritPixel;
+        °define •p6: •TritPixel;
+        °define •p7: •TritPixel;
+        °define •p8: •TritPixel;
+      };
+
+      °function •MakeHostRgbPixel {
+        °define •r: °u8;
+        °define •g: °u8;
+        °define •b: °u8;
+        °return •HostRgbPixel;
+      };
+
+      °function •DecodeTritPixelToRgb {
+        °define •pixel: •TritPixel;
+        °define •palette: •PixelPalette;
+
+        °if { •pixel.state == •low } {
+          °return •palette.low;
+        };
+
+        °if { •pixel.state == •mid } {
+          °return •palette.mid;
+        };
+
+        °return •palette.high;
+      };
+    };
+  |■
+|●

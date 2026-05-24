@@ -1,0 +1,50 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/frame-loop.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.frame_loop",
+      kind: "library",
+      namespace: "gui.runtime.frame_loop",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.compositor.present_queue",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Deterministic frame execution ordering."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FrameLoop --> PresentQueue
+    };
+
+    <book>{
+      °struct •FrameLoop {
+        °define •frameCount: °usize;
+        °define •running: °bool;
+      };
+
+      °function •MakeFrameLoop {
+        °return •FrameLoop;
+      };
+
+      °function •BeginFrame {
+        °define •loop: •FrameLoop;
+        °set •loop.running = true;
+        °set •loop.frameCount = •loop.frameCount + 1;
+        °return •loop;
+      };
+
+      °function •EndFrame {
+        °define •loop: •FrameLoop;
+        °return •loop;
+      };
+
+      °function •StopFrameLoop {
+        °define •loop: •FrameLoop;
+        °set •loop.running = false;
+        °return •loop;
+      };
+    };
+  |■
+|●

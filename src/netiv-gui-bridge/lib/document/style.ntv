@@ -1,0 +1,58 @@
+<Netiv="research/netiv-gui-bridge/lib/document/style.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.style",
+      kind: "library",
+      namespace: "gui.document.style",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.document_buffer,gui.memory.region",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines document style interpretation between flatfile content and rendering behavior."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DocumentStyle --> DocumentBuffer
+      %%   DocumentStyle --> MemoryRegion
+      %%   ApplyDocumentStyle --> DocumentBuffer
+      %%   FlushDocumentStyle --> MemoryRegion
+    };
+
+    <book>{
+      °enum •DocumentStyleState {
+        •empty,
+        •parsed,
+        •applied,
+        •dirty
+      };
+
+      °struct •DocumentStyle {
+        °define •document: •DocumentBuffer;
+        °define •region: •MemoryRegion;
+        °define •state: •DocumentStyleState;
+        °define •ruleCount: °usize;
+      };
+
+      °function •MakeDocumentStyle {
+        °define •document: •DocumentBuffer;
+        °define •region: •MemoryRegion;
+        °return •DocumentStyle;
+      };
+
+      °function •ApplyDocumentStyle {
+        °define •style: •DocumentStyle;
+        °set •style.state = •applied;
+        °return •style;
+      };
+
+      °function •FlushDocumentStyle {
+        °define •style: •DocumentStyle;
+        °set •style.region = •MemoryRegionFlush(•style.region);
+        °return •style;
+      };
+    };
+  |■
+|●

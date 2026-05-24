@@ -1,0 +1,56 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/event-propagation.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.event_propagation",
+      kind: "library",
+      namespace: "gui.kiosk.event_propagation",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.kiosk.event,gui.kiosk.element,gui.input.pointer,gui.input.keyboard",
+      target: "windows-native-window",
+      notes: "Defines deterministic event propagation for kiosk element trees."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   EventPropagation --> KioskEvent
+      %%   EventPropagation --> KioskElement
+      %%   PropagatePointerEvent --> PointerEvent
+      %%   PropagateKeyboardEvent --> KeyboardEvent
+      %%   BubbleEvent --> KioskElement
+    };
+
+    <book>{
+      °struct •EventPropagation {
+        °define •depth: °usize;
+        °define •handled: °bool;
+      };
+
+      °function •MakeEventPropagation {
+        °return •EventPropagation;
+      };
+
+      °function •PropagatePointerEvent {
+        °define •propagation: •EventPropagation;
+        °define •event: •PointerEvent;
+        °set •propagation.depth = •propagation.depth + 1;
+        °return •propagation;
+      };
+
+      °function •PropagateKeyboardEvent {
+        °define •propagation: •EventPropagation;
+        °define •event: •KeyboardEvent;
+        °set •propagation.depth = •propagation.depth + 1;
+        °return •propagation;
+      };
+
+      °function •BubbleEvent {
+        °define •propagation: •EventPropagation;
+        °define •element: •KioskElement;
+        °return •propagation;
+      };
+    };
+  |■
+|●

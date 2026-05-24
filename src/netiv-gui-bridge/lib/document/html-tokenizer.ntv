@@ -1,0 +1,43 @@
+<Netiv="research/netiv-gui-bridge/lib/document/html-tokenizer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.html_tokenizer",
+      kind: "library",
+      namespace: "gui.document.html_tokenizer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.document_buffer,gui.document.token_buffer,gui.standards.html5_contract",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines HTML token extraction into the shared document token pipeline."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   HtmlTokenizer --> DocumentBuffer
+      %%   HtmlTokenizer --> TokenBuffer
+      %%   HtmlTokenizer --> Html5Contract
+    };
+
+    <book>{
+      °struct •HtmlTokenizer {
+        °define •tokenCount: °usize;
+        °define •validated: °bool;
+      };
+
+      °function •MakeHtmlTokenizer {
+        °return •HtmlTokenizer;
+      };
+
+      °function •TokenizeHtml {
+        °define •tokenizer: •HtmlTokenizer;
+        °define •document: •DocumentBuffer;
+        °define •tokens: •TokenBuffer;
+        °set •tokens = •BuildTokenBuffer(•tokens);
+        °set •tokenizer.validated = true;
+        °return •tokenizer;
+      };
+    };
+  |■
+|●

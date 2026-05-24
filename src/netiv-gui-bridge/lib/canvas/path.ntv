@@ -1,0 +1,98 @@
+<Netiv="research/netiv-gui-bridge/lib/canvas/path.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.canvas.path",
+      kind: "library",
+      namespace: "gui.canvas.path",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.canvas.context2d",
+      target: "windows-native-window",
+      notes: "Defines lightweight path commands for the Netiv kiosk canvas. Curves are reserved for later research."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CanvasPath --> PathCommand
+      %%   PathCommand --> RectPoint
+      %%   PathMoveTo --> CanvasPath
+      %%   PathLineTo --> CanvasPath
+      %%   PathClose --> CanvasPath
+      %%   ContextStrokePath --> CanvasContext2D
+      %%   ContextStrokePath --> CanvasPath
+    };
+
+    <book>{
+      °enum •PathCommandKind {
+        •moveTo,
+        •lineTo,
+        •closePath
+      };
+
+      °struct •PathCommand {
+        °define •kind: •PathCommandKind;
+        °define •point: •RectPoint;
+      };
+
+      °struct •CanvasPath {
+        °define •start: •RectPoint;
+        °define •current: •RectPoint;
+        °define •count: °usize;
+        °define •closed: °bool;
+      };
+
+      °function •MakePathCommand {
+        °define •kind: •PathCommandKind;
+        °define •point: •RectPoint;
+        °return •PathCommand;
+      };
+
+      °function •MakeCanvasPath {
+        °define •start: •RectPoint;
+        °return •CanvasPath;
+      };
+
+      °function •PathMoveTo {
+        °define •path: •CanvasPath;
+        °define •point: •RectPoint;
+        °set •path.start = •point;
+        °set •path.current = •point;
+        °set •path.count = •path.count + 1;
+        °return •path;
+      };
+
+      °function •PathLineTo {
+        °define •path: •CanvasPath;
+        °define •point: •RectPoint;
+        °set •path.current = •point;
+        °set •path.count = •path.count + 1;
+        °return •path;
+      };
+
+      °function •PathClose {
+        °define •path: •CanvasPath;
+        °set •path.current = •path.start;
+        °set •path.closed = true;
+        °return •path;
+      };
+
+      °function •PathIsEmpty {
+        °define •path: •CanvasPath;
+
+        °if { •path.count == 0 } {
+          °return true;
+        };
+
+        °return false;
+      };
+
+      °function •ContextStrokePath {
+        °define •ctx: •CanvasContext2D;
+        °define •path: •CanvasPath;
+        °return •ctx;
+      };
+    };
+  |■
+|●

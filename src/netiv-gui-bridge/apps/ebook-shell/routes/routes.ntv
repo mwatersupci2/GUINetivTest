@@ -1,0 +1,53 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/routes/routes.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.routes.routes",
+      kind: "application-routes",
+      namespace: "apps.ebook_shell.routes.routes",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.state.app_state",
+      target: "windows-native-window",
+      notes: "Defines route resolution for the ebook-shell proving application."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   ResolveRoute --> EbookShellState
+      %%   ResolveRoute --> EbookRoute
+      %%   NavigateHome --> ResolveRoute
+      %%   NavigateReader --> ResolveRoute
+      %%   NavigateLibrary --> ResolveRoute
+      %%   NavigateSettings --> ResolveRoute
+    };
+
+    <book>{
+      °function •ResolveRoute {
+        °define •state: •EbookShellState;
+        °return •state.route;
+      };
+
+      °function •NavigateHome {
+        °define •state: •EbookShellState;
+        °return •SetEbookRoute(•state, •home);
+      };
+
+      °function •NavigateReader {
+        °define •state: •EbookShellState;
+        °return •SetEbookRoute(•state, •reader);
+      };
+
+      °function •NavigateLibrary {
+        °define •state: •EbookShellState;
+        °return •SetEbookRoute(•state, •library);
+      };
+
+      °function •NavigateSettings {
+        °define •state: •EbookShellState;
+        °return •SetEbookRoute(•state, •settings);
+      };
+    };
+  |■
+|●

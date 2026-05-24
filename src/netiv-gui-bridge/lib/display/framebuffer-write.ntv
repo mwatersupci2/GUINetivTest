@@ -1,0 +1,50 @@
+<Netiv="research/netiv-gui-bridge/lib/display/framebuffer-write.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.framebuffer_write",
+      kind: "library",
+      namespace: "gui.display.framebuffer_write",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.pixel,gui.display.framebuffer",
+      target: "windows-native-window",
+      notes: "Defines framebuffer write operations for the Netiv GUI bridge."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FramebufferWriter --> FramebufferSurface
+      %%   FramebufferWriter --> PixelPalette
+      %%   WriteFramebufferPixel --> TritPixel
+      %%   PresentFramebuffer --> FramebufferSurface
+    };
+
+    <book>{
+      °struct •FramebufferWriter {
+        °define •surface: •FramebufferSurface;
+        °define •writeCount: °usize;
+      };
+
+      °function •MakeFramebufferWriter {
+        °define •surface: •FramebufferSurface;
+        °return •FramebufferWriter;
+      };
+
+      °function •WriteFramebufferPixel {
+        °define •writer: •FramebufferWriter;
+        °define •pixel: •TritPixel;
+        °define •x: °i64;
+        °define •y: °i64;
+        °set •writer.writeCount = •writer.writeCount + 1;
+        °return •writer;
+      };
+
+      °function •PresentFramebuffer {
+        °define •writer: •FramebufferWriter;
+        °return •writer.surface;
+      };
+    };
+  |■
+|●

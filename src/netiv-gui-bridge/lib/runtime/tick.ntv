@@ -1,0 +1,66 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/tick.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.tick",
+      kind: "library",
+      namespace: "gui.runtime.tick",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core",
+      target: "windows-native-window",
+      notes: "Defines monotonic GUI runtime ticks for deterministic kiosk update, input, render, and present cycles."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RuntimeTick --> TickPhase
+      %%   RuntimeClock --> RuntimeTick
+      %%   AdvanceTick --> RuntimeClock
+      %%   TickPhase --> InputPhase
+      %%   TickPhase --> UpdatePhase
+      %%   TickPhase --> RenderPhase
+      %%   TickPhase --> PresentPhase
+    };
+
+    <book>{
+      °enum •TickPhase {
+        •input,
+        •update,
+        •render,
+        •present,
+        •idle
+      };
+
+      °struct •RuntimeTick {
+        °define •index: °usize;
+        °define •phase: •TickPhase;
+      };
+
+      °struct •RuntimeClock {
+        °define •current: •RuntimeTick;
+        °define •started: °bool;
+      };
+
+      °function •MakeRuntimeTick {
+        °define •index: °usize;
+        °define •phase: •TickPhase;
+        °return •RuntimeTick;
+      };
+
+      °function •MakeRuntimeClock {
+        °define •tick: •RuntimeTick;
+        °return •RuntimeClock;
+      };
+
+      °function •AdvanceTick {
+        °define •clock: •RuntimeClock;
+        °define •phase: •TickPhase;
+        °set •clock.current.index = •clock.current.index + 1;
+        °set •clock.current.phase = •phase;
+        °return •clock;
+      };
+    };
+  |■
+|●

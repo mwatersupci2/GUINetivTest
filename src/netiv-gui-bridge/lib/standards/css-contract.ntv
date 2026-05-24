@@ -1,0 +1,48 @@
+<Netiv="research/netiv-gui-bridge/lib/standards/css-contract.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.standards.css_contract",
+      kind: "library",
+      namespace: "gui.standards.css_contract",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.style",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the CSS interpretation contract for the Netiv intra-file browser runtime."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CssContract --> CssCompatibilityMode
+      %%   CssContract --> DocumentStyle
+      %%   ApplyCssContract --> DocumentStyle
+    };
+
+    <book>{
+      °enum •CssCompatibilityMode {
+        •strict,
+        •kioskSafe,
+        •netivCustom
+      };
+
+      °struct •CssContract {
+        °define •mode: •CssCompatibilityMode;
+        °define •validated: °bool;
+      };
+
+      °function •MakeCssContract {
+        °define •mode: •CssCompatibilityMode;
+        °return •CssContract;
+      };
+
+      °function •ApplyCssContract {
+        °define •contract: •CssContract;
+        °define •style: •DocumentStyle;
+        °set •contract.validated = true;
+        °return •style;
+      };
+    };
+  |■
+|●

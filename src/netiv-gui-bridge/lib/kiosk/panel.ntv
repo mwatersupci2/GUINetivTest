@@ -1,0 +1,44 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/panel.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.panel",
+      kind: "library",
+      namespace: "gui.kiosk.panel",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.kiosk.element,gui.kiosk.style,gui.canvas.shape",
+      target: "windows-native-window",
+      notes: "Defines basic panel/container rendering for the Netiv kiosk runtime."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   KioskPanel --> KioskElement
+      %%   KioskPanel --> KioskStyle
+      %%   RenderPanel --> ShapeFillRect
+      %%   RenderPanel --> CanvasContext2D
+    };
+
+    <book>{
+      °struct •KioskPanel {
+        °define •element: •KioskElement;
+        °define •style: •KioskStyle;
+      };
+
+      °function •MakeKioskPanel {
+        °define •element: •KioskElement;
+        °define •style: •KioskStyle;
+        °return •KioskPanel;
+      };
+
+      °function •RenderPanel {
+        °define •ctx: •CanvasContext2D;
+        °define •panel: •KioskPanel;
+        °set •ctx = •ContextSetFillPixel(•ctx, •panel.style.background);
+        °return •ShapeFillRect(•ctx, •panel.element.bounds);
+      };
+    };
+  |■
+|●

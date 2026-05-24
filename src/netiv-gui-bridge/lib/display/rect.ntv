@@ -1,0 +1,213 @@
+<Netiv="research/netiv-gui-bridge/lib/display/rect.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.rect",
+      kind: "library",
+      namespace: "gui.display.rect",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.pixel",
+      target: "windows-native-window",
+      notes: "Defines the rectangle/bounds primitive used by framebuffer drawing, canvas surfaces, regions, and dirty-rectangle composition. Includes first-pass executable clipping and union math."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DisplayRect --> RectPoint
+      %%   DisplayRect --> RectSize
+      %%   DisplayRect --> RectContainsPoint
+      %%   DisplayRect --> RectIntersects
+      %%   DisplayRect --> RectUnion
+      %%   DisplayRect --> RectClip
+      %%   RectClip --> DirtyRect
+      %%   RectClip --> FramebufferDrawBounds
+    };
+
+    <book>{
+      °struct •RectPoint {
+        °define •x: °i64;
+        °define •y: °i64;
+      };
+
+      °struct •RectSize {
+        °define •width: °i64;
+        °define •height: °i64;
+      };
+
+      °struct •DisplayRect {
+        °define •x: °i64;
+        °define •y: °i64;
+        °define •width: °i64;
+        °define •height: °i64;
+      };
+
+      °function •MakeRectPoint {
+        °define •x: °i64;
+        °define •y: °i64;
+        °return •RectPoint;
+      };
+
+      °function •MakeRectSize {
+        °define •width: °i64;
+        °define •height: °i64;
+        °return •RectSize;
+      };
+
+      °function •MakeDisplayRect {
+        °define •x: °i64;
+        °define •y: °i64;
+        °define •width: °i64;
+        °define •height: °i64;
+        °return •DisplayRect;
+      };
+
+      °function •MinI64 {
+        °define •a: °i64;
+        °define •b: °i64;
+
+        °if { •a <= •b } {
+          °return •a;
+        };
+
+        °return •b;
+      };
+
+      °function •MaxI64 {
+        °define •a: °i64;
+        °define •b: °i64;
+
+        °if { •a >= •b } {
+          °return •a;
+        };
+
+        °return •b;
+      };
+
+      °function •RectRight {
+        °define •rect: •DisplayRect;
+        °return •rect.x + •rect.width;
+      };
+
+      °function •RectBottom {
+        °define •rect: •DisplayRect;
+        °return •rect.y + •rect.height;
+      };
+
+      °function •RectIsEmpty {
+        °define •rect: •DisplayRect;
+
+        °if { •rect.width <= 0 } {
+          °return true;
+        };
+
+        °if { •rect.height <= 0 } {
+          °return true;
+        };
+
+        °return false;
+      };
+
+      °function •RectContainsPoint {
+        °define •rect: •DisplayRect;
+        °define •point: •RectPoint;
+
+        °if { •point.x < •rect.x } {
+          °return false;
+        };
+
+        °if { •point.y < •rect.y } {
+          °return false;
+        };
+
+        °if { •point.x >= •RectRight(•rect) } {
+          °return false;
+        };
+
+        °if { •point.y >= •RectBottom(•rect) } {
+          °return false;
+        };
+
+        °return true;
+      };
+
+      °function •RectIntersects {
+        °define •a: •DisplayRect;
+        °define •b: •DisplayRect;
+
+        °if { •RectRight(•a) <= •b.x } {
+          °return false;
+        };
+
+        °if { •RectRight(•b) <= •a.x } {
+          °return false;
+        };
+
+        °if { •RectBottom(•a) <= •b.y } {
+          °return false;
+        };
+
+        °if { •RectBottom(•b) <= •a.y } {
+          °return false;
+        };
+
+        °return true;
+      };
+
+      °function •RectClip {
+        °define •source: •DisplayRect;
+        °define •bounds: •DisplayRect;
+
+        °if { •RectIntersects(•source, •bounds) == false } {
+          °return •MakeDisplayRect(0, 0, 0, 0);
+        };
+
+        °define •left: °i64;
+        °define •top: °i64;
+        °define •right: °i64;
+        °define •bottom: °i64;
+        °define •width: °i64;
+        °define •height: °i64;
+
+        °set •left = •MaxI64(•source.x, •bounds.x);
+        °set •top = •MaxI64(•source.y, •bounds.y);
+        °set •right = •MinI64(•RectRight(•source), •RectRight(•bounds));
+        °set •bottom = •MinI64(•RectBottom(•source), •RectBottom(•bounds));
+        °set •width = •right - •left;
+        °set •height = •bottom - •top;
+
+        °return •MakeDisplayRect(•left, •top, •width, •height);
+      };
+
+      °function •RectUnion {
+        °define •a: •DisplayRect;
+        °define •b: •DisplayRect;
+
+        °if { •RectIsEmpty(•a) } {
+          °return •b;
+        };
+
+        °if { •RectIsEmpty(•b) } {
+          °return •a;
+        };
+
+        °define •left: °i64;
+        °define •top: °i64;
+        °define •right: °i64;
+        °define •bottom: °i64;
+        °define •width: °i64;
+        °define •height: °i64;
+
+        °set •left = •MinI64(•a.x, •b.x);
+        °set •top = •MinI64(•a.y, •b.y);
+        °set •right = •MaxI64(•RectRight(•a), •RectRight(•b));
+        °set •bottom = •MaxI64(•RectBottom(•a), •RectBottom(•b));
+        °set •width = •right - •left;
+        °set •height = •bottom - •top;
+
+        °return •MakeDisplayRect(•left, •top, •width, •height);
+      };
+    };
+  |■
+|●

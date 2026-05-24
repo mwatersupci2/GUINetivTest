@@ -1,0 +1,46 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/frame-present.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.frame_present",
+      kind: "library",
+      namespace: "gui.runtime.frame_present",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.loop,gui.display.framebuffer_write,gui.runtime.journal",
+      target: "windows-native-window",
+      notes: "Defines the frame present boundary for Netiv kiosk rendering."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FramePresent --> RuntimeLoopFrame
+      %%   FramePresent --> FramebufferWriter
+      %%   FramePresent --> RuntimeJournal
+      %%   PresentFrame --> FramebufferSurface
+      %%   PresentFrame --> RuntimeLoop
+    };
+
+    <book>{
+      °struct •FramePresent {
+        °define •presentCount: °usize;
+      };
+
+      °function •MakeFramePresent {
+        °return •FramePresent;
+      };
+
+      °function •PresentFrame {
+        °define •present: •FramePresent;
+        °define •loop: •RuntimeLoop;
+        °define •writer: •FramebufferWriter;
+
+        °set •writer.surface = •PresentFramebuffer(•writer);
+        °set •present.presentCount = •present.presentCount + 1;
+
+        °return •present;
+      };
+    };
+  |■
+|●

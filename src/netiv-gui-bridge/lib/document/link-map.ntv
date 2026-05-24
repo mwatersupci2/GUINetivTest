@@ -1,0 +1,66 @@
+<Netiv="research/netiv-gui-bridge/lib/document/link-map.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.link_map",
+      kind: "library",
+      namespace: "gui.document.link_map",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.hit_region,gui.graph.graph_navigation",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines hyperlink mappings between hit regions and intra-file browser navigation targets."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   LinkMap --> HitRegion
+      %%   LinkMap --> GraphNavigation
+      %%   ResolveLink --> HitRegion
+      %%   OpenLink --> GraphNavigation
+    };
+
+    <book>{
+      °enum •LinkTargetKind {
+        •flatfile,
+        •graphCanvas,
+        •importedFile,
+        •documentPage
+      };
+
+      °struct •LinkTarget {
+        °define •kind: •LinkTargetKind;
+        °define •ordinal: °usize;
+      };
+
+      °struct •LinkMap {
+        °define •linkCount: °usize;
+        °define •resolved: °bool;
+      };
+
+      °function •MakeLinkTarget {
+        °define •kind: •LinkTargetKind;
+        °define •ordinal: °usize;
+        °return •LinkTarget;
+      };
+
+      °function •MakeLinkMap {
+        °return •LinkMap;
+      };
+
+      °function •ResolveLink {
+        °define •map: •LinkMap;
+        °define •region: •HitRegion;
+        °set •map.resolved = true;
+        °return •map;
+      };
+
+      °function •OpenLink {
+        °define •map: •LinkMap;
+        °define •target: •LinkTarget;
+        °return •map;
+      };
+    };
+  |■
+|●

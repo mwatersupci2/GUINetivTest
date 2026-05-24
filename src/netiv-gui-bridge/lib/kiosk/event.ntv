@@ -1,0 +1,59 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/event.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.event",
+      kind: "library",
+      namespace: "gui.kiosk.event",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.input.keyboard,gui.input.pointer,gui.kiosk.document,gui.kiosk.element",
+      target: "windows-native-window",
+      notes: "Defines unified kiosk document events above raw keyboard and pointer input."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   KioskEvent --> EventKind
+      %%   KioskEvent --> KeyboardEvent
+      %%   KioskEvent --> PointerEvent
+      %%   DispatchEvent --> KioskDocument
+      %%   DispatchEvent --> KioskElement
+      %%   DispatchEvent --> ElementHitTest
+    };
+
+    <book>{
+      °enum •EventKind {
+        •keyboard,
+        •pointer,
+        •focus,
+        •layout,
+        •render
+      };
+
+      °struct •KioskEvent {
+        °define •kind: •EventKind;
+        °define •handled: °bool;
+      };
+
+      °function •MakeKioskEvent {
+        °define •kind: •EventKind;
+        °return •KioskEvent;
+      };
+
+      °function •EventMarkHandled {
+        °define •event: •KioskEvent;
+        °set •event.handled = true;
+        °return •event;
+      };
+
+      °function •DispatchEvent {
+        °define •document: •KioskDocument;
+        °define •element: •KioskElement;
+        °define •event: •KioskEvent;
+        °return •document;
+      };
+    };
+  |■
+|●

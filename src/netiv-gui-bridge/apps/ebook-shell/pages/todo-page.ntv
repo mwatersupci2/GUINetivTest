@@ -1,0 +1,83 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/todo-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.todo_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.todo_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render,gui.document.hit_region,gui.display.rect",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the Cornell-style todo list page where every todo item owns a visible checkbox region."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   TodoPage --> TodoItem
+      %%   TodoItem --> TodoCheckbox
+      %%   TodoCheckbox --> HitRegion
+      %%   ToggleTodoCheckbox --> TodoCheckbox
+      %%   ToggleTodoItem --> TodoItem
+    };
+
+    <book>{
+      °struct •TodoCheckbox {
+        °define •checked: °bool;
+        °define •bounds: •DisplayRect;
+        °define •hitRegion: •HitRegion;
+        °define •visible: °bool;
+      };
+
+      °struct •TodoItem {
+        °define •checkbox: •TodoCheckbox;
+        °define •priority: °usize;
+        °define •lineOrdinal: °usize;
+      };
+
+      °struct •TodoPage {
+        °define •itemCount: °usize;
+        °define •cornellMode: °bool;
+        °define •layout: •TachyonLayoutEngine;
+      };
+
+      °function •MakeTodoCheckbox {
+        °return •TodoCheckbox;
+      };
+
+      °function •MakeTodoItem {
+        °return •TodoItem;
+      };
+
+      °function •MakeTodoPage {
+        °return •TodoPage;
+      };
+
+      °function •RenderTodoPage {
+        °define •page: •TodoPage;
+        °set •page.layout = •LayoutTodoPage(•page.layout);
+        °set •page.cornellMode = true;
+        °return •page;
+      };
+
+      °function •ToggleTodoCheckbox {
+        °define •checkbox: •TodoCheckbox;
+
+        °if { •checkbox.checked == true } {
+          °set •checkbox.checked = false;
+          °return •checkbox;
+        };
+
+        °set •checkbox.checked = true;
+        °return •checkbox;
+      };
+
+      °function •ToggleTodoItem {
+        °define •item: •TodoItem;
+        °set •item.checkbox = •ToggleTodoCheckbox(•item.checkbox);
+        °return •item;
+      };
+    };
+  |■
+|●

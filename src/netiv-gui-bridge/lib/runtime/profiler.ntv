@@ -1,0 +1,59 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/profiler.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.profiler",
+      kind: "library",
+      namespace: "gui.runtime.profiler",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.tick",
+      target: "windows-native-window",
+      notes: "Defines runtime profiling contracts for kiosk rendering, layout, flush, and update timing."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RuntimeProfile --> RuntimeTick
+      %%   RuntimeProfile --> ProfileKind
+      %%   ProfileBegin --> RuntimeProfile
+      %%   ProfileEnd --> RuntimeProfile
+      %%   ProfileFlush --> RuntimeProfile
+    };
+
+    <book>{
+      °enum •ProfileKind {
+        •input,
+        •layout,
+        •render,
+        •flush,
+        •present
+      };
+
+      °struct •RuntimeProfile {
+        °define •tick: •RuntimeTick;
+        °define •kind: •ProfileKind;
+        °define •active: °bool;
+      };
+
+      °function •MakeRuntimeProfile {
+        °define •tick: •RuntimeTick;
+        °define •kind: •ProfileKind;
+        °return •RuntimeProfile;
+      };
+
+      °function •ProfileBegin {
+        °define •profile: •RuntimeProfile;
+        °set •profile.active = true;
+        °return •profile;
+      };
+
+      °function •ProfileEnd {
+        °define •profile: •RuntimeProfile;
+        °set •profile.active = false;
+        °return •profile;
+      };
+    };
+  |■
+|●

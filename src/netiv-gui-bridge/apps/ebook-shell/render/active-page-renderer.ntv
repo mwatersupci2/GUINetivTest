@@ -1,0 +1,136 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/render/active-page-renderer.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.render.active_page_renderer",
+      kind: "application-renderer",
+      namespace: "apps.ebook_shell.render.active_page_renderer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.pages.shell_page,apps.ebook_shell.pages.graph_page,apps.ebook_shell.pages.files_page,apps.ebook_shell.pages.console_page,apps.ebook_shell.pages.compiler_page,apps.ebook_shell.pages.observability_page,apps.ebook_shell.pages.systems_page,apps.ebook_shell.pages.pods_page,apps.ebook_shell.pages.network_page,apps.ebook_shell.pages.notes_page,apps.ebook_shell.pages.todo_page,apps.ebook_shell.pages.chat_page,apps.ebook_shell.pages.settings_page,apps.ebook_shell.render.home_renderer,apps.ebook_shell.render.wiki_renderer,gui.display.frame_surface",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Renders the selected ebook-shell page from tab state."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   ActivePageRenderer --> TabState
+      %%   ActivePageRenderer --> HomeRenderer
+      %%   ActivePageRenderer --> WikiRenderer
+      %%   ActivePageRenderer --> GraphPage
+      %%   ActivePageRenderer --> FilesPage
+      %%   ActivePageRenderer --> ConsolePage
+      %%   ActivePageRenderer --> CompilerPage
+      %%   ActivePageRenderer --> ObservabilityPage
+      %%   ActivePageRenderer --> SystemsPage
+      %%   ActivePageRenderer --> PodsPage
+      %%   ActivePageRenderer --> NetworkPage
+      %%   ActivePageRenderer --> NotesPage
+      %%   ActivePageRenderer --> TodoPage
+      %%   ActivePageRenderer --> ChatPage
+      %%   ActivePageRenderer --> SettingsPage
+      %%   RenderActivePage --> FrameSurface
+    };
+
+    <book>{
+      °struct •ActivePageRenderer {
+        °define •renderCount: °usize;
+      };
+
+      °function •MakeActivePageRenderer {
+        °return •ActivePageRenderer;
+      };
+
+      °function •RenderActivePage {
+        °define •renderer: •ActivePageRenderer;
+        °define •state: •TabState;
+        °define •surface: •FrameSurface;
+        °define •graphPage: •GraphPage;
+        °define •filesPage: •FilesPage;
+        °define •consolePage: •ConsolePage;
+        °define •compilerPage: •CompilerPage;
+        °define •observabilityPage: •ObservabilityPage;
+        °define •systemsPage: •SystemsPage;
+        °define •podsPage: •PodsPage;
+        °define •networkPage: •NetworkPage;
+        °define •notesPage: •NotesPage;
+        °define •todoPage: •TodoPage;
+        °define •chatPage: •ChatPage;
+        °define •settingsPage: •SettingsPage;
+
+        °if { •state.active == •home } {
+          °set •surface = •RenderHomeView();
+        };
+
+        °if { •state.active == •wiki } {
+          °set •surface = •RenderWikiView();
+        };
+
+        °if { •state.active == •graph } {
+          °set •graphPage = •RenderGraphPage(•graphPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •files } {
+          °set •filesPage = •RenderFilesPage(•filesPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •console } {
+          °set •consolePage = •RenderConsolePage(•consolePage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •compiler } {
+          °set •compilerPage = •RenderCompilerPage(•compilerPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •observability } {
+          °set •observabilityPage = •RenderObservabilityPage(•observabilityPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •systems } {
+          °set •systemsPage = •RenderSystemsPage(•systemsPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •pods } {
+          °set •podsPage = •RenderPodsPage(•podsPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •network } {
+          °set •networkPage = •RenderNetworkPage(•networkPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •notes } {
+          °set •notesPage = •RenderNotesPage(•notesPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •todo } {
+          °set •todoPage = •RenderTodoPage(•todoPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •chat } {
+          °set •chatPage = •RenderChatPage(•chatPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •settings } {
+          °set •settingsPage = •RenderSettingsPage(•settingsPage);
+          °set •surface.dirty = true;
+        };
+
+        °set •surface.dirty = true;
+        °set •renderer.renderCount = •renderer.renderCount + 1;
+        °return •surface;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,87 @@
+<Netiv="research/netiv-gui-bridge/lib/assets/cache.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.assets.cache",
+      kind: "library",
+      namespace: "gui.assets.cache",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.assets.font,gui.assets.image,gui.assets.palette",
+      target: "windows-native-window",
+      notes: "Defines a small asset cache contract for low-RAM offline kiosk and ebook-shell rendering."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   AssetCache --> AssetCacheState
+      %%   AssetCache --> FontAsset
+      %%   AssetCache --> ImageAsset
+      %%   AssetCache --> AssetPalette
+      %%   CachePutAsset --> AssetCache
+      %%   CacheEvictAsset --> AssetCache
+      %%   CacheClear --> AssetCache
+    };
+
+    <book>{
+      °enum •AssetCacheState {
+        •cold,
+        •warm,
+        •hot,
+        •full
+      };
+
+      °struct •AssetCache {
+        °define •state: •AssetCacheState;
+        °define •entryCount: °usize;
+        °define •capacity: °usize;
+      };
+
+      °function •MakeAssetCache {
+        °define •capacity: °usize;
+        °return •AssetCache;
+      };
+
+      °function •CacheHasRoom {
+        °define •cache: •AssetCache;
+
+        °if { •cache.entryCount < •cache.capacity } {
+          °return true;
+        };
+
+        °return false;
+      };
+
+      °function •CachePutAsset {
+        °define •cache: •AssetCache;
+
+        °if { •CacheHasRoom(•cache) == false } {
+          °set •cache.state = •full;
+          °return •cache;
+        };
+
+        °set •cache.entryCount = •cache.entryCount + 1;
+        °set •cache.state = •warm;
+        °return •cache;
+      };
+
+      °function •CacheEvictAsset {
+        °define •cache: •AssetCache;
+
+        °if { •cache.entryCount > 0 } {
+          °set •cache.entryCount = •cache.entryCount - 1;
+        };
+
+        °return •cache;
+      };
+
+      °function •CacheClear {
+        °define •cache: •AssetCache;
+        °set •cache.entryCount = 0;
+        °set •cache.state = •cold;
+        °return •cache;
+      };
+    };
+  |■
+|●

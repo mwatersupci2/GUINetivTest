@@ -1,0 +1,67 @@
+<Netiv="research/netiv-gui-bridge/lib/document/hit-region.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.hit_region",
+      kind: "library",
+      namespace: "gui.document.hit_region",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.render_token,gui.display.rect,gui.input.pointer",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines clickable document hit regions built from render tokens and canvas bounds."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   HitRegion --> RenderToken
+      %%   HitRegion --> DisplayRect
+      %%   HitRegion --> PointerEvent
+      %%   BuildHitRegion --> RenderToken
+      %%   HitRegionContains --> RectContainsPoint
+    };
+
+    <book>{
+      °enum •HitRegionKind {
+        •none,
+        •text,
+        •link,
+        •graphNode,
+        •graphEdge,
+        •importRef,
+        •fileRef
+      };
+
+      °struct •HitRegion {
+        °define •kind: •HitRegionKind;
+        °define •sourceOrdinal: °usize;
+        °define •bounds: •DisplayRect;
+        °define •active: °bool;
+      };
+
+      °function •MakeHitRegion {
+        °define •kind: •HitRegionKind;
+        °define •sourceOrdinal: °usize;
+        °define •bounds: •DisplayRect;
+        °return •HitRegion;
+      };
+
+      °function •BuildHitRegion {
+        °define •token: •RenderToken;
+        °return •MakeHitRegion(•link, •token.sourceOrdinal, •token.bounds);
+      };
+
+      °function •HitRegionContains {
+        °define •region: •HitRegion;
+        °define •event: •PointerEvent;
+
+        °if { •region.active == false } {
+          °return false;
+        };
+
+        °return •RectContainsPoint(•region.bounds, •event.position);
+      };
+    };
+  |■
+|●

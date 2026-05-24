@@ -1,0 +1,48 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/render/home-renderer.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.render.home_renderer",
+      kind: "application-renderer",
+      namespace: "apps.ebook_shell.render.home_renderer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.pages.shell_page,gui.layout.tachyon_layout,gui.document.document_page_render,gui.display.frame_surface",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines rendering behavior for the Netiv E-Book Shell home dashboard: dark chrome, top tabs, path bar, file tree, dashboard cards, tips panel, and bottom status strip."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   HomeRenderer --> ShellPage
+      %%   HomeRenderer --> DocumentPageRender
+      %%   RenderHomeView --> FrameSurface
+    };
+
+    <book>{
+      °struct •HomeRenderer {
+        °define •renderCount: °usize;
+        °define •theme: •PaletteKind;
+      };
+
+      °function •MakeHomeRenderer {
+        °return •HomeRenderer;
+      };
+
+      °function •RenderHomeView {
+        °define •renderer: •HomeRenderer;
+        °define •page: •ShellPage;
+        °define •surface: •FrameSurface;
+        °define •layout: •TachyonLayoutEngine;
+
+        °set •layout = •LayoutEbookShellDashboard(•layout);
+        °set •surface.dirty = true;
+        °set •renderer.theme = •netivDarkShell;
+        °set •renderer.renderCount = •renderer.renderCount + 1;
+
+        °return •surface;
+      };
+    };
+  |■
+|●

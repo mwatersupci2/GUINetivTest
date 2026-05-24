@@ -1,0 +1,83 @@
+<Netiv="research/netiv-gui-bridge/lib/canvas/canvas.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.canvas.canvas",
+      kind: "library",
+      namespace: "gui.canvas.canvas",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.pixel,gui.display.rect,gui.display.framebuffer,gui.compositor.dirty_rect",
+      target: "windows-native-window",
+      notes: "Defines the canvas surface/session primitive for the offline Netiv kiosk runtime. Drawing commands live in context2d."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CanvasSurface --> DisplayRect
+      %%   CanvasSurface --> FramebufferSurface
+      %%   CanvasSurface --> DirtyRectQueue
+      %%   CanvasMarkDirty --> DirtyRectQueue
+      %%   CanvasClearDirty --> DirtyRectQueue
+      %%   CanvasPresent --> FramebufferFlushDirtyRects
+    };
+
+    <book>{
+      °struct •CanvasSurface {
+        °define •bounds: •DisplayRect;
+        °define •framebuffer: •FramebufferSurface;
+        °define •dirty: •DirtyRectQueue;
+      };
+
+      °function •MakeCanvasSurface {
+        °define •bounds: •DisplayRect;
+        °define •framebuffer: •FramebufferSurface;
+        °define •dirty: •DirtyRectQueue;
+        °return •CanvasSurface;
+      };
+
+      °function •CanvasBounds {
+        °define •canvas: •CanvasSurface;
+        °return •canvas.bounds;
+      };
+
+      °function •CanvasMarkDirty {
+        °define •canvas: •CanvasSurface;
+        °define •rect: •DisplayRect;
+        °define •clipped: •DisplayRect;
+        °set •clipped = •RectClip(•rect, •canvas.bounds);
+        °set •canvas.dirty = •MarkDirtyRect(•canvas.dirty, •clipped);
+        °return •canvas;
+      };
+
+      °function •CanvasMarkAllDirty {
+        °define •canvas: •CanvasSurface;
+        °return •CanvasMarkDirty(•canvas, •canvas.bounds);
+      };
+
+      °function •CanvasClearDirty {
+        °define •canvas: •CanvasSurface;
+        °set •canvas.dirty = •ClearDirtyRects(•canvas.dirty);
+        °return •canvas;
+      };
+
+      °function •CanvasHasDirty {
+        °define •canvas: •CanvasSurface;
+        °return •HasDirtyRects(•canvas.dirty);
+      };
+
+      °function •CanvasPresent {
+        °define •canvas: •CanvasSurface;
+
+        °if { •CanvasHasDirty(•canvas) == false } {
+          °return •canvas;
+        };
+
+        °set •canvas.framebuffer = •FramebufferFlushDirtyRects(•canvas.framebuffer, •canvas.dirty);
+        °set •canvas = •CanvasClearDirty(•canvas);
+        °return •canvas;
+      };
+    };
+  |■
+|●

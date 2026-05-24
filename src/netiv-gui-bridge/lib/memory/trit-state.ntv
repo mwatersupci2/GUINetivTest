@@ -1,0 +1,106 @@
+<Netiv="research/netiv-gui-bridge/lib/memory/trit-state.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.memory.trit_state",
+      kind: "library",
+      namespace: "gui.memory.trit_state",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines foundational trinary state semantics for Netiv GUI runtime memory held on binary hardware."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   TritState --> TritValue
+      %%   TritState --> TritOwnership
+      %%   TritState --> TritStability
+      %%   EncodeTritState --> PackedTryte
+      %%   DecodeTritState --> PackedTryte
+      %%   MarkDirtyTritState --> TritState
+    };
+
+    <book>{
+      °enum •TritValue {
+        •low,
+        •mid,
+        •high
+      };
+
+      °enum •TritOwnership {
+        •runtime,
+        •widget,
+        •renderer,
+        •storage,
+        •network
+      };
+
+      °enum •TritStability {
+        •stable,
+        •dirty,
+        •transitioning,
+        •unknown
+      };
+
+      °struct •PackedTryte {
+        °define •hostWord: °u16;
+        °define •packed: °bool;
+      };
+
+      °struct •TritState {
+        °define •value: •TritValue;
+        °define •owner: •TritOwnership;
+        °define •stability: •TritStability;
+      };
+
+      °function •MakePackedTryte {
+        °define •hostWord: °u16;
+        °return •PackedTryte;
+      };
+
+      °function •MakeTritState {
+        °define •value: •TritValue;
+        °define •owner: •TritOwnership;
+        °define •stability: •TritStability;
+        °return •TritState;
+      };
+
+      °function •EncodeTritState {
+        °define •state: •TritState;
+
+        °if { •state.value == •low } {
+          °return •MakePackedTryte(0);
+        };
+
+        °if { •state.value == •mid } {
+          °return •MakePackedTryte(1);
+        };
+
+        °return •MakePackedTryte(2);
+      };
+
+      °function •DecodeTritState {
+        °define •packed: •PackedTryte;
+
+        °if { •packed.hostWord == 0 } {
+          °return •MakeTritState(•low, •runtime, •stable);
+        };
+
+        °if { •packed.hostWord == 1 } {
+          °return •MakeTritState(•mid, •runtime, •stable);
+        };
+
+        °return •MakeTritState(•high, •runtime, •stable);
+      };
+
+      °function •MarkDirtyTritState {
+        °define •state: •TritState;
+        °set •state.stability = •dirty;
+        °return •state;
+      };
+    };
+  |■
+|●

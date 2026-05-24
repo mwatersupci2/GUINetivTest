@@ -1,0 +1,83 @@
+<Netiv="research/netiv-gui-bridge/lib/input/keyboard.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.input.keyboard",
+      kind: "library",
+      namespace: "gui.input.keyboard",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.kiosk.document,gui.kiosk.element",
+      target: "windows-native-window",
+      notes: "Defines keyboard input contracts for the Netiv offline kiosk runtime. Host key events are normalized before document routing."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   KeyboardEvent --> KeyCode
+      %%   KeyboardEvent --> KeyAction
+      %%   KeyboardState --> KeyboardEvent
+      %%   NormalizeKeyboardEvent --> KeyboardEvent
+      %%   RouteKeyboardEvent --> KioskDocument
+      %%   RouteKeyboardEvent --> KioskElement
+    };
+
+    <book>{
+      °enum •KeyAction {
+        •down,
+        •up,
+        •repeat
+      };
+
+      °struct •KeyCode {
+        °define •code: °i64;
+      };
+
+      °struct •KeyboardEvent {
+        °define •key: •KeyCode;
+        °define •action: •KeyAction;
+        °define •handled: °bool;
+      };
+
+      °struct •KeyboardState {
+        °define •focused: °bool;
+        °define •eventCount: °usize;
+      };
+
+      °function •MakeKeyCode {
+        °define •code: °i64;
+        °return •KeyCode;
+      };
+
+      °function •MakeKeyboardEvent {
+        °define •key: •KeyCode;
+        °define •action: •KeyAction;
+        °return •KeyboardEvent;
+      };
+
+      °function •MakeKeyboardState {
+        °define •focused: °bool;
+        °return •KeyboardState;
+      };
+
+      °function •KeyboardMarkHandled {
+        °define •event: •KeyboardEvent;
+        °set •event.handled = true;
+        °return •event;
+      };
+
+      °function •NormalizeKeyboardEvent {
+        °define •event: •KeyboardEvent;
+        °return •event;
+      };
+
+      °function •RouteKeyboardEvent {
+        °define •document: •KioskDocument;
+        °define •element: •KioskElement;
+        °define •event: •KeyboardEvent;
+        °return •document;
+      };
+    };
+  |■
+|●

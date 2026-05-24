@@ -1,0 +1,60 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/settings-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.settings_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.settings_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render,gui.document.hit_region",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines runtime settings, workspace customization, and AI provider configuration for ebook-shell."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   SettingsPage --> LlmProviderField
+      %%   SettingsPage --> HitRegion
+      %%   SaveProviderField --> SettingsPage
+    };
+
+    <book>{
+      °struct •LlmProviderField {
+        °define •providerOrdinal: °usize;
+        °define •apiKeyVisible: °bool;
+        °define •saveRegion: •HitRegion;
+      };
+
+      °struct •SettingsPage {
+        °define •settingCount: °usize;
+        °define •editable: °bool;
+        °define •providerCount: °usize;
+        °define •layout: •TachyonLayoutEngine;
+      };
+
+      °function •MakeLlmProviderField {
+        °return •LlmProviderField;
+      };
+
+      °function •MakeSettingsPage {
+        °return •SettingsPage;
+      };
+
+      °function •RenderSettingsPage {
+        °define •page: •SettingsPage;
+        °set •page.layout = •LayoutSettingsPage(•page.layout);
+        °set •page.editable = true;
+        °return •page;
+      };
+
+      °function •SaveProviderField {
+        °define •page: •SettingsPage;
+        °define •field: •LlmProviderField;
+        °set •page.settingCount = •page.settingCount + 1;
+        °return •page;
+      };
+    };
+  |■
+|●

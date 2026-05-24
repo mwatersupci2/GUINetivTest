@@ -1,0 +1,61 @@
+<Netiv="research/netiv-gui-bridge/lib/net/update-channel.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.net.update_channel",
+      kind: "library",
+      namespace: "gui.net.update_channel",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.net.sync",
+      target: "windows-native-window",
+      notes: "Defines update channel contracts for Netiv kiosk synchronization behavior."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   UpdateChannel --> ChannelKind
+      %%   UpdateChannel --> SyncSession
+      %%   SelectChannel --> UpdateChannel
+      %%   EnableChannel --> UpdateChannel
+      %%   DisableChannel --> UpdateChannel
+    };
+
+    <book>{
+      °enum •ChannelKind {
+        •stable,
+        •beta,
+        •dev,
+        •local
+      };
+
+      °struct •UpdateChannel {
+        °define •kind: •ChannelKind;
+        °define •enabled: °bool;
+      };
+
+      °function •MakeUpdateChannel {
+        °define •kind: •ChannelKind;
+        °return •UpdateChannel;
+      };
+
+      °function •SelectChannel {
+        °define •channel: •UpdateChannel;
+        °return •channel;
+      };
+
+      °function •EnableChannel {
+        °define •channel: •UpdateChannel;
+        °set •channel.enabled = true;
+        °return •channel;
+      };
+
+      °function •DisableChannel {
+        °define •channel: •UpdateChannel;
+        °set •channel.enabled = false;
+        °return •channel;
+      };
+    };
+  |■
+|●

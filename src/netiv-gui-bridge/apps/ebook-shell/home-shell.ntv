@@ -1,0 +1,53 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/home-shell.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.home_shell",
+      kind: "application",
+      namespace: "apps.ebook_shell.home_shell",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.pages.shell_page,apps.ebook_shell.pages.graph_page,apps.ebook_shell.pages.files_page,apps.ebook_shell.pages.console_page,apps.ebook_shell.pages.compiler_page,apps.ebook_shell.pages.observability_page,apps.ebook_shell.pages.systems_page,apps.ebook_shell.pages.pods_page,apps.ebook_shell.pages.network_page,apps.ebook_shell.pages.notes_page,apps.ebook_shell.pages.todo_page,apps.ebook_shell.pages.chat_page,apps.ebook_shell.pages.settings_page",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the full fourteen-tab ebook-shell interface."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   HomeShell --> TabState
+      %%   HomeShell --> ShellPage
+      %%   HomeShell --> GraphPage
+      %%   HomeShell --> FilesPage
+      %%   HomeShell --> ConsolePage
+      %%   HomeShell --> CompilerPage
+      %%   HomeShell --> ObservabilityPage
+      %%   HomeShell --> SystemsPage
+      %%   HomeShell --> PodsPage
+      %%   HomeShell --> NetworkPage
+      %%   HomeShell --> NotesPage
+      %%   HomeShell --> TodoPage
+      %%   HomeShell --> ChatPage
+      %%   HomeShell --> SettingsPage
+      %%   BuildHomeShell --> TabState
+    };
+
+    <book>{
+      °struct •HomeShell {
+        °define •loaded: °bool;
+        °define •pageCount: °usize;
+      };
+
+      °function •MakeHomeShell {
+        °return •HomeShell;
+      };
+
+      °function •BuildHomeShell {
+        °define •shell: •HomeShell;
+        °set •shell.loaded = true;
+        °set •shell.pageCount = 14;
+        °return •shell;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,65 @@
+<Netiv="research/netiv-gui-bridge/lib/net/download-queue.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.net.download_queue",
+      kind: "library",
+      namespace: "gui.net.download_queue",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.net.sync,gui.assets.stream",
+      target: "windows-native-window",
+      notes: "Defines staged download queue behavior for offline-first Netiv kiosk content delivery."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DownloadQueue --> DownloadEntry
+      %%   DownloadEntry --> AssetStream
+      %%   QueuePush --> DownloadQueue
+      %%   QueueNext --> DownloadQueue
+      %%   QueueComplete --> DownloadQueue
+    };
+
+    <book>{
+      °struct •DownloadEntry {
+        °define •ordinal: °usize;
+        °define •completed: °bool;
+      };
+
+      °struct •DownloadQueue {
+        °define •count: °usize;
+        °define •active: °bool;
+      };
+
+      °function •MakeDownloadEntry {
+        °define •ordinal: °usize;
+        °return •DownloadEntry;
+      };
+
+      °function •MakeDownloadQueue {
+        °return •DownloadQueue;
+      };
+
+      °function •QueuePush {
+        °define •queue: •DownloadQueue;
+        °define •entry: •DownloadEntry;
+        °set •queue.count = •queue.count + 1;
+        °return •queue;
+      };
+
+      °function •QueueNext {
+        °define •queue: •DownloadQueue;
+        °set •queue.active = true;
+        °return •queue;
+      };
+
+      °function •QueueComplete {
+        °define •queue: •DownloadQueue;
+        °set •queue.active = false;
+        °return •queue;
+      };
+    };
+  |■
+|●

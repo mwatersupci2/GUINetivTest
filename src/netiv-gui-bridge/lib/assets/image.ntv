@@ -1,0 +1,59 @@
+<Netiv="research/netiv-gui-bridge/lib/assets/image.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.assets.image",
+      kind: "library",
+      namespace: "gui.assets.image",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.pixel,gui.display.rect",
+      target: "windows-native-window",
+      notes: "Defines image asset contracts for offline kiosk rendering and ebook graphics."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   ImageAsset --> DisplayRect
+      %%   ImageAsset --> ImageEncoding
+      %%   LoadImageAsset --> ImageAsset
+      %%   BlitImageAsset --> CanvasContext2D
+      %%   BlitImageAsset --> ImageAsset
+    };
+
+    <book>{
+      °enum •ImageEncoding {
+        •raw,
+        •indexed,
+        •trinaryPacked,
+        •compressed
+      };
+
+      °struct •ImageAsset {
+        °define •bounds: •DisplayRect;
+        °define •encoding: •ImageEncoding;
+        °define •frameCount: °usize;
+      };
+
+      °function •MakeImageAsset {
+        °define •bounds: •DisplayRect;
+        °define •encoding: •ImageEncoding;
+        °define •frameCount: °usize;
+        °return •ImageAsset;
+      };
+
+      °function •LoadImageAsset {
+        °define •asset: •ImageAsset;
+        °return •asset;
+      };
+
+      °function •BlitImageAsset {
+        °define •ctx: •CanvasContext2D;
+        °define •asset: •ImageAsset;
+        °define •target: •DisplayRect;
+        °return •ctx;
+      };
+    };
+  |■
+|●

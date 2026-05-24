@@ -1,0 +1,90 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/document.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.document",
+      kind: "library",
+      namespace: "gui.kiosk.document",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.display.text,gui.canvas.canvas,gui.canvas.context2d",
+      target: "windows-native-window",
+      notes: "Defines the offline document/screen primitive for the Netiv trinary kiosk runtime. This is the first HTML5-style layer above canvas and display primitives."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   KioskDocument --> DocumentMeta
+      %%   KioskDocument --> DocumentViewport
+      %%   KioskDocument --> CanvasSurface
+      %%   KioskDocument --> CanvasContext2D
+      %%   RenderDocument --> CanvasContext2D
+      %%   RenderDocument --> ContextPresent
+      %%   InvalidateDocument --> CanvasMarkDirty
+    };
+
+    <book>{
+      °struct •DocumentMeta {
+        °define •titleLength: °usize;
+        °define •routeLength: °usize;
+      };
+
+      °struct •DocumentViewport {
+        °define •bounds: •DisplayRect;
+        °define •scale: °i64;
+      };
+
+      °struct •KioskDocument {
+        °define •meta: •DocumentMeta;
+        °define •viewport: •DocumentViewport;
+        °define •canvas: •CanvasSurface;
+        °define •ctx: •CanvasContext2D;
+      };
+
+      °function •MakeDocumentMeta {
+        °define •titleLength: °usize;
+        °define •routeLength: °usize;
+        °return •DocumentMeta;
+      };
+
+      °function •MakeDocumentViewport {
+        °define •bounds: •DisplayRect;
+        °define •scale: °i64;
+        °return •DocumentViewport;
+      };
+
+      °function •MakeKioskDocument {
+        °define •meta: •DocumentMeta;
+        °define •viewport: •DocumentViewport;
+        °define •canvas: •CanvasSurface;
+        °define •ctx: •CanvasContext2D;
+        °return •KioskDocument;
+      };
+
+      °function •DocumentBounds {
+        °define •document: •KioskDocument;
+        °return •document.viewport.bounds;
+      };
+
+      °function •InvalidateDocument {
+        °define •document: •KioskDocument;
+        °define •bounds: •DisplayRect;
+        °set •document.canvas = •CanvasMarkDirty(•document.canvas, •bounds);
+        °return •document;
+      };
+
+      °function •InvalidateWholeDocument {
+        °define •document: •KioskDocument;
+        °set •document.canvas = •CanvasMarkAllDirty(•document.canvas);
+        °return •document;
+      };
+
+      °function •RenderDocument {
+        °define •document: •KioskDocument;
+        °set •document.ctx = •ContextPresent(•document.ctx);
+        °return •document;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,84 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/timer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.timer",
+      kind: "library",
+      namespace: "gui.runtime.timer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.tick",
+      target: "windows-native-window",
+      notes: "Defines deterministic runtime timers for kiosk scheduling, delayed redraws, blinking cursors, animations, and future async coordination."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RuntimeTimer --> RuntimeTick
+      %%   RuntimeTimer --> TimerState
+      %%   StartTimer --> RuntimeTimer
+      %%   StopTimer --> RuntimeTimer
+      %%   TickTimer --> RuntimeClock
+      %%   TimerExpired --> RuntimeTimer
+    };
+
+    <book>{
+      °enum •TimerState {
+        •stopped,
+        •running,
+        •expired
+      };
+
+      °struct •RuntimeTimer {
+        °define •startTick: °usize;
+        °define •duration: °usize;
+        °define •state: •TimerState;
+      };
+
+      °function •MakeRuntimeTimer {
+        °define •duration: °usize;
+        °return •RuntimeTimer;
+      };
+
+      °function •StartTimer {
+        °define •timer: •RuntimeTimer;
+        °define •tick: •RuntimeTick;
+        °set •timer.startTick = •tick.index;
+        °set •timer.state = •running;
+        °return •timer;
+      };
+
+      °function •StopTimer {
+        °define •timer: •RuntimeTimer;
+        °set •timer.state = •stopped;
+        °return •timer;
+      };
+
+      °function •TickTimer {
+        °define •timer: •RuntimeTimer;
+        °define •tick: •RuntimeTick;
+
+        °if { •timer.state != •running } {
+          °return •timer;
+        };
+
+        °if { •tick.index >= •timer.startTick + •timer.duration } {
+          °set •timer.state = •expired;
+        };
+
+        °return •timer;
+      };
+
+      °function •TimerExpired {
+        °define •timer: •RuntimeTimer;
+
+        °if { •timer.state == •expired } {
+          °return true;
+        };
+
+        °return false;
+      };
+    };
+  |■
+|●

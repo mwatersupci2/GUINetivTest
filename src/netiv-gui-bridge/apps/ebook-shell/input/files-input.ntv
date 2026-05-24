@@ -1,0 +1,44 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/input/files-input.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.input.files_input",
+      kind: "application-input",
+      namespace: "apps.ebook_shell.input.files_input",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.pages.files_page,apps.ebook_shell.widgets.file_tree,gui.document.hit_region,gui.document.link_map",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines file-tree interaction routing for the ebook-shell files browser page."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FilesInput --> FilesPage
+      %%   FilesInput --> FileTree
+      %%   FilesInput --> HitRegion
+      %%   SelectFileNode --> FilesPage
+    };
+
+    <book>{
+      °struct •FilesInput {
+        °define •selectionCount: °usize;
+      };
+
+      °function •MakeFilesInput {
+        °return •FilesInput;
+      };
+
+      °function •SelectFileNode {
+        °define •input: •FilesInput;
+        °define •page: •FilesPage;
+        °define •region: •HitRegion;
+
+        °set •input.selectionCount = •input.selectionCount + 1;
+
+        °return •page;
+      };
+    };
+  |■
+|●

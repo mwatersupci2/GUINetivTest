@@ -1,0 +1,64 @@
+<Netiv="research/netiv-gui-bridge/lib/net/manifest.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.net.manifest",
+      kind: "library",
+      namespace: "gui.net.manifest",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.assets.pack",
+      target: "windows-native-window",
+      notes: "Defines deterministic remote content manifests for Netiv kiosk asset synchronization."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RemoteManifest --> ManifestEntry
+      %%   ManifestEntry --> AssetPack
+      %%   LoadRemoteManifest --> RemoteManifest
+      %%   ValidateRemoteManifest --> RemoteManifest
+      %%   CompareRemoteManifest --> RemoteManifest
+    };
+
+    <book>{
+      °struct •ManifestEntry {
+        °define •assetOrdinal: °usize;
+        °define •revision: °usize;
+      };
+
+      °struct •RemoteManifest {
+        °define •entryCount: °usize;
+        °define •validated: °bool;
+      };
+
+      °function •MakeManifestEntry {
+        °define •assetOrdinal: °usize;
+        °define •revision: °usize;
+        °return •ManifestEntry;
+      };
+
+      °function •MakeRemoteManifest {
+        °return •RemoteManifest;
+      };
+
+      °function •LoadRemoteManifest {
+        °define •manifest: •RemoteManifest;
+        °return •manifest;
+      };
+
+      °function •ValidateRemoteManifest {
+        °define •manifest: •RemoteManifest;
+        °set •manifest.validated = true;
+        °return •manifest;
+      };
+
+      °function •CompareRemoteManifest {
+        °define •local: •RemoteManifest;
+        °define •remote: •RemoteManifest;
+        °return •remote;
+      };
+    };
+  |■
+|●

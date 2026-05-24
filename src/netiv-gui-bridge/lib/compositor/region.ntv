@@ -1,0 +1,100 @@
+<Netiv="research/netiv-gui-bridge/lib/compositor/region.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.compositor.region",
+      kind: "library",
+      namespace: "gui.compositor.region",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.compositor.dirty_rect,gui.kiosk.element",
+      target: "windows-native-window",
+      notes: "Defines compositor regions for layered kiosk rendering. Regions bind element bounds to z-order, visibility, and dirty redraw behavior."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CompositorRegion --> DisplayRect
+      %%   CompositorRegion --> KioskElement
+      %%   CompositorRegion --> RegionState
+      %%   RegionStack --> CompositorRegion
+      %%   RegionMarkDirty --> DirtyRectQueue
+      %%   RegionHitTest --> ElementHitTest
+      %%   RegionStackInvalidate --> DirtyRectQueue
+    };
+
+    <book>{
+      °struct •RegionState {
+        °define •visible: °bool;
+        °define •opaque: °bool;
+        °define •dirty: °bool;
+      };
+
+      °struct •CompositorRegion {
+        °define •bounds: •DisplayRect;
+        °define •zIndex: °i64;
+        °define •state: •RegionState;
+        °define •element: •KioskElement;
+      };
+
+      °struct •RegionStack {
+        °define •screenBounds: •DisplayRect;
+        °define •count: °usize;
+      };
+
+      °function •MakeRegionState {
+        °define •visible: °bool;
+        °define •opaque: °bool;
+        °define •dirty: °bool;
+        °return •RegionState;
+      };
+
+      °function •MakeCompositorRegion {
+        °define •bounds: •DisplayRect;
+        °define •zIndex: °i64;
+        °define •state: •RegionState;
+        °define •element: •KioskElement;
+        °return •CompositorRegion;
+      };
+
+      °function •MakeRegionStack {
+        °define •screenBounds: •DisplayRect;
+        °return •RegionStack;
+      };
+
+      °function •RegionIsVisible {
+        °define •region: •CompositorRegion;
+        °return •region.state.visible;
+      };
+
+      °function •RegionMarkDirty {
+        °define •queue: •DirtyRectQueue;
+        °define •region: •CompositorRegion;
+
+        °if { •RegionIsVisible(•region) == false } {
+          °return •queue;
+        };
+
+        °return •MarkDirtyRect(•queue, •region.bounds);
+      };
+
+      °function •RegionHitTest {
+        °define •region: •CompositorRegion;
+        °define •point: •RectPoint;
+
+        °if { •RegionIsVisible(•region) == false } {
+          °return false;
+        };
+
+        °return •ElementHitTest(•region.element, •point);
+      };
+
+      °function •RegionStackInvalidate {
+        °define •queue: •DirtyRectQueue;
+        °define •stack: •RegionStack;
+        °return •MarkDirtyRect(•queue, •stack.screenBounds);
+      };
+    };
+  |■
+|●

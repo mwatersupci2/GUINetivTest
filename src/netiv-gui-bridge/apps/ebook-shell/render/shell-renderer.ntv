@@ -1,0 +1,47 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/render/shell-renderer.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.render.shell_renderer",
+      kind: "application-renderer",
+      namespace: "apps.ebook_shell.render.shell_renderer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.home_shell,apps.ebook_shell.widgets.tab_bar,apps.ebook_shell.widgets.name_bar,apps.ebook_shell.widgets.page_container,gui.display.frame_surface",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the top-level shell composition path for the full fourteen-tab ebook-shell interface."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   ShellRenderer --> HomeShell
+      %%   ShellRenderer --> TabBar
+      %%   ShellRenderer --> NameBar
+      %%   ShellRenderer --> PageContainer
+      %%   RenderShell --> FrameSurface
+    };
+
+    <book>{
+      °struct •ShellRenderer {
+        °define •renderCount: °usize;
+      };
+
+      °function •MakeShellRenderer {
+        °return •ShellRenderer;
+      };
+
+      °function •RenderShell {
+        °define •renderer: •ShellRenderer;
+        °define •shell: •HomeShell;
+        °define •surface: •FrameSurface;
+
+        °set •shell = •BuildHomeShell(•shell);
+        °set •surface.dirty = true;
+        °set •renderer.renderCount = •renderer.renderCount + 1;
+
+        °return •surface;
+      };
+    };
+  |■
+|●

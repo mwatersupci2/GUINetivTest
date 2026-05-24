@@ -1,0 +1,47 @@
+<Netiv="research/netiv-gui-bridge/lib/document/render-tree.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.render_tree",
+      kind: "library",
+      namespace: "gui.document.render_tree",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.render_token",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Hierarchical render structures built from render tokens."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RenderTree --> RenderToken
+    };
+
+    <book>{
+      °struct •RenderNode {
+        °define •ordinal: °usize;
+      };
+
+      °struct •RenderTree {
+        °define •nodeCount: °usize;
+        °define •built: °bool;
+      };
+
+      °function •MakeRenderNode {
+        °define •ordinal: °usize;
+        °return •RenderNode;
+      };
+
+      °function •MakeRenderTree {
+        °return •RenderTree;
+      };
+
+      °function •BuildRenderTree {
+        °define •tree: •RenderTree;
+        °set •tree.built = true;
+        °return •tree;
+      };
+    };
+  |■
+|●

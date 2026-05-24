@@ -1,0 +1,150 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/app-contract.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.app_contract",
+      kind: "gui-application-contract",
+      namespace: "apps.ebook_shell.app_contract",
+      version: "0.1.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core,apps.ebook_shell.state.tab_state,gui.layout.tachyon_layout",
+      target: "windows-native-window",
+      notes: "Owns the application-specific GUI contract lowered by the generic Netiv Windows target."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   AppContract --> TabState
+      %%   AppContract --> TachyonLayoutEngine
+      %%   AppContract --> FileExplorerContract
+    };
+
+    <book>{
+      °define •guiTitle: °string = "Netiv E-Book Shell";
+      °define •guiClass: °string = "NetivEBookShellWindow";
+      °define •guiFileExplorerTab: °string = "Files";
+      °define •guiLogicalWidth: °i32 = 1920;
+      °define •guiLogicalHeight: °i32 = 1080;
+
+      °call •GuiAction { label: "New Document" };
+      °call •GuiAction { label: "New Graph" };
+      °call •GuiAction { label: "Import File" };
+      °call •GuiAction { label: "Search" };
+      °call •GuiAction { label: "Settings" };
+
+      °call •GuiPage {
+        tab: "Home",
+        heading: "Welcome to Netiv",
+        body: "Home dashboard with recent documents, quick actions, system info, and tips.",
+        tools: "Recent Documents|Quick Actions|System Info|Tips",
+        kind: "dashboard"
+      };
+
+      °call •GuiPage {
+        tab: "Wiki",
+        heading: "Welcome.netiv",
+        body: "Document outline, reading surface, links, and page metadata.",
+        tools: "Select|Open|Refresh|Trace|Export",
+        kind: "reader"
+      };
+
+      °call •GuiPage {
+        tab: "Graph",
+        heading: "Graph Canvas",
+        body: "Graph nodes, graph edges, layout controls, and inspector state.",
+        tools: "Select|Pan|Add Node|Add Edge|Run Layout",
+        kind: "graph"
+      };
+
+      °call •GuiPage {
+        tab: "Files",
+        heading: "Current folder",
+        body: "Live filesystem explorer rooted at the executable working directory.",
+        tools: "Open folder|Select file|Refresh|Preview|Trace",
+        kind: "file-explorer"
+      };
+
+      °call •GuiPage {
+        tab: "Console",
+        heading: "> netiv write",
+        body: "Runtime log stream and command output surface.",
+        tools: "Run|Clear|Copy|Trace|Export",
+        shell: "powershell.exe",
+        kind: "console"
+      };
+
+      °call •GuiPage {
+        tab: "Compiler",
+        heading: "Build pipeline",
+        body: "Language contracts, libraries, and executable emission state.",
+        tools: "Check|Write|Libraries|Reserved|Contract",
+        kind: "compiler"
+      };
+
+      °call •GuiPage {
+        tab: "Observability",
+        heading: "Frame metrics",
+        body: "Dirty rectangles, events, frame time, and trace stream.",
+        tools: "Frames|Events|Trace|Metrics|Export",
+        kind: "observability"
+      };
+
+      °call •GuiPage {
+        tab: "Systems",
+        heading: "Host capabilities",
+        body: "Windows host, runtime map, storage, and platform state.",
+        tools: "Host|Runtime|Storage|Platform|Refresh",
+        kind: "systems"
+      };
+
+      °call •GuiPage {
+        tab: "Pods",
+        heading: "Pod orchestration",
+        body: "Pod health, runtimes, and workload state.",
+        tools: "Start|Stop|Inspect|Logs|Health",
+        kind: "pods"
+      };
+
+      °call •GuiPage {
+        tab: "Network",
+        heading: "Network map",
+        body: "Endpoints, local mirror, sync queue, and download channels.",
+        tools: "Endpoints|Mirror|Sync|Download|Trace",
+        kind: "network"
+      };
+
+      °call •GuiPage {
+        tab: "Notes",
+        heading: "Scratch document",
+        body: "Editable notes surface and local document state.",
+        tools: "New|Open|Save|Link|Trace",
+        kind: "notes"
+      };
+
+      °call •GuiPage {
+        tab: "Todo",
+        heading: "Todo board",
+        body: "Checkbox regions, priorities, and line items.",
+        tools: "Add|Check|Priority|Archive|Trace",
+        kind: "todo"
+      };
+
+      °call •GuiPage {
+        tab: "Chat",
+        heading: "Chat",
+        body: "Transcript, streaming message state, and input panel.",
+        tools: "Send|Stop|Clear|Attach|Trace",
+        kind: "chat"
+      };
+
+      °call •GuiPage {
+        tab: "Settings",
+        heading: "Runtime settings",
+        body: "Workspace, theme, and provider configuration.",
+        tools: "Workspace|Theme|Provider|Storage|Save",
+        kind: "settings"
+      };
+    };
+  |■
+|●

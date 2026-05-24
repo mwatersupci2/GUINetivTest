@@ -1,0 +1,70 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/boot.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.boot",
+      kind: "library",
+      namespace: "gui.runtime.boot",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.host.windows,gui.host.windows_window,gui.runtime.loop,gui.runtime.scheduler,gui.storage.settings,gui.assets.cache",
+      target: "windows-native-window",
+      notes: "Defines the Windows end-to-end boot context for the Netiv trinary GUI runtime."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RuntimeBootContext --> WindowsHost
+      %%   RuntimeBootContext --> WindowsWindow
+      %%   RuntimeBootContext --> RuntimeLoop
+      %%   RuntimeBootContext --> RuntimeScheduler
+      %%   RuntimeBootContext --> StorageSettings
+      %%   RuntimeBootContext --> AssetCache
+      %%   BootRuntime --> RuntimeBootContext
+      %%   ShutdownRuntime --> RuntimeBootContext
+    };
+
+    <book>{
+      °struct •RuntimeBootContext {
+        °define •host: •WindowsHost;
+        °define •window: •WindowsWindow;
+        °define •loop: •RuntimeLoop;
+        °define •scheduler: •RuntimeScheduler;
+        °define •settings: •StorageSettings;
+        °define •cache: •AssetCache;
+        °define •ready: °bool;
+      };
+
+      °function •MakeRuntimeBootContext {
+        °define •host: •WindowsHost;
+        °define •window: •WindowsWindow;
+        °define •loop: •RuntimeLoop;
+        °define •scheduler: •RuntimeScheduler;
+        °define •settings: •StorageSettings;
+        °define •cache: •AssetCache;
+        °return •RuntimeBootContext;
+      };
+
+      °function •BootRuntime {
+        °define •ctx: •RuntimeBootContext;
+        °set •ctx.settings = •LoadSettings(•ctx.settings);
+        °set •ctx.window = •WindowsOpenWindow(•ctx.window);
+        °set •ctx.window = •WindowsCreateBackbuffer(•ctx.window);
+        °set •ctx.host = •HostBootWindow(•ctx.host, •ctx.loop);
+        °set •ctx.scheduler = •SchedulerStart(•ctx.scheduler);
+        °set •ctx.ready = true;
+        °return •ctx;
+      };
+
+      °function •ShutdownRuntime {
+        °define •ctx: •RuntimeBootContext;
+        °set •ctx.scheduler = •SchedulerStop(•ctx.scheduler);
+        °set •ctx.window = •WindowsCloseWindow(•ctx.window);
+        °set •ctx.host = •HostShutdownWindow(•ctx.host);
+        °set •ctx.ready = false;
+        °return •ctx;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,65 @@
+<Netiv="research/netiv-gui-bridge/lib/document/netiv-tokenizer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.netiv_tokenizer",
+      kind: "library",
+      namespace: "gui.document.netiv_tokenizer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.document_buffer,gui.document.token_buffer,gui.graph.flatfile_graph",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines Netiv flatfile token extraction for the intra-file browser. Extracts headers, metadata, imports, edges, book sections, and graph navigation tokens."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   NetivTokenizer --> DocumentBuffer
+      %%   NetivTokenizer --> TokenBuffer
+      %%   NetivTokenizer --> FlatfileGraph
+      %%   TokenizeNetivFlatfile --> DocumentBuffer
+      %%   TokenizeNetivFlatfile --> TokenBuffer
+      %%   ExtractNetivGraphTokens --> FlatfileGraph
+    };
+
+    <book>{
+      °enum •NetivTokenKind {
+        •header,
+        •meta,
+        •import,
+        •edge,
+        •book,
+        •functionNode,
+        •methodNode,
+        •pageNode
+      };
+
+      °struct •NetivTokenizer {
+        °define •tokenCount: °usize;
+        °define •graphNodeCount: °usize;
+        °define •completed: °bool;
+      };
+
+      °function •MakeNetivTokenizer {
+        °return •NetivTokenizer;
+      };
+
+      °function •TokenizeNetivFlatfile {
+        °define •tokenizer: •NetivTokenizer;
+        °define •document: •DocumentBuffer;
+        °define •tokens: •TokenBuffer;
+        °set •tokens = •BuildTokenBuffer(•tokens);
+        °set •tokenizer.completed = true;
+        °return •tokenizer;
+      };
+
+      °function •ExtractNetivGraphTokens {
+        °define •tokenizer: •NetivTokenizer;
+        °define •graph: •FlatfileGraph;
+        °set •tokenizer.graphNodeCount = •graph.nodeCount;
+        °return •tokenizer;
+      };
+    };
+  |■
+|●

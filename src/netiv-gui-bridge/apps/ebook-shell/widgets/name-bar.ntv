@@ -1,0 +1,40 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/widgets/name-bar.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.widgets.name_bar",
+      kind: "application-widget",
+      namespace: "apps.ebook_shell.widgets.name_bar",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.frame_surface,gui.display.draw_text_run",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the visible file and path name bar for ebook-shell navigation."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   NameBar --> FrameSurface
+      %%   RenderNameBar --> DrawTextRun
+    };
+
+    <book>{
+      °struct •NameBar {
+        °define •pathVisible: °bool;
+        °define •pathLength: °usize;
+      };
+
+      °function •MakeNameBar {
+        °return •NameBar;
+      };
+
+      °function •RenderNameBar {
+        °define •bar: •NameBar;
+        °define •surface: •FrameSurface;
+        °set •surface.dirty = true;
+        °return •surface;
+      };
+    };
+  |■
+|●

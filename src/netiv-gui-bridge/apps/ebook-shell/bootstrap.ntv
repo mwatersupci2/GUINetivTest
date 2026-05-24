@@ -1,0 +1,58 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/bootstrap.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.bootstrap",
+      kind: "application-bootstrap",
+      namespace: "apps.ebook_shell.bootstrap",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.boot,apps.ebook_shell.state.app_state,apps.ebook_shell.views.home_view,apps.ebook_shell.views.reader_view",
+      target: "windows-native-window",
+      notes: "Defines the Windows ebook-shell bootstrap sequence for the Netiv GUI proving application."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   EbookShellBootstrap --> RuntimeBootContext
+      %%   EbookShellBootstrap --> EbookShellState
+      %%   EbookShellBootstrap --> HomeView
+      %%   EbookShellBootstrap --> ReaderView
+      %%   StartEbookShell --> RuntimeBootContext
+      %%   StopEbookShell --> RuntimeBootContext
+    };
+
+    <book>{
+      °struct •EbookShellBootstrap {
+        °define •state: •EbookShellState;
+        °define •booted: °bool;
+      };
+
+      °function •MakeEbookShellBootstrap {
+        °return •EbookShellBootstrap;
+      };
+
+      °function •StartEbookShell {
+        °define •bootstrap: •EbookShellBootstrap;
+        °define •ctx: •RuntimeBootContext;
+
+        °set •ctx = •BootRuntime(•ctx);
+        °set •bootstrap.state = •InitEbookShellState();
+        °set •bootstrap.booted = true;
+
+        °return •bootstrap;
+      };
+
+      °function •StopEbookShell {
+        °define •bootstrap: •EbookShellBootstrap;
+        °define •ctx: •RuntimeBootContext;
+
+        °set •ctx = •ShutdownRuntime(•ctx);
+        °set •bootstrap.booted = false;
+
+        °return •bootstrap;
+      };
+    };
+  |■
+|●

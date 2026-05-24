@@ -1,0 +1,62 @@
+<Netiv="research/netiv-gui-bridge/lib/document/render-token.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.render_token",
+      kind: "library",
+      namespace: "gui.document.render_token",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.token_buffer,gui.display.rect,gui.display.text",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines renderable document token units produced from source token buffers. This does not execute book code; it only prepares visible display units."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RenderToken --> DocumentToken
+      %%   RenderToken --> DisplayRect
+      %%   RenderToken --> TextRun
+      %%   BuildRenderToken --> DocumentToken
+      %%   RenderTokenBounds --> DisplayRect
+    };
+
+    <book>{
+      °enum •RenderTokenKind {
+        •textRun,
+        •blockBox,
+        •inlineBox,
+        •graphNode,
+        •graphEdge,
+        •codeBlock,
+        •imageBox
+      };
+
+      °struct •RenderToken {
+        °define •kind: •RenderTokenKind;
+        °define •sourceOrdinal: °usize;
+        °define •bounds: •DisplayRect;
+        °define •visible: °bool;
+      };
+
+      °function •MakeRenderToken {
+        °define •kind: •RenderTokenKind;
+        °define •sourceOrdinal: °usize;
+        °define •bounds: •DisplayRect;
+        °return •RenderToken;
+      };
+
+      °function •BuildRenderToken {
+        °define •token: •DocumentToken;
+        °define •bounds: •DisplayRect;
+        °return •MakeRenderToken(•textRun, •token.ordinal, •bounds);
+      };
+
+      °function •RenderTokenBounds {
+        °define •token: •RenderToken;
+        °return •token.bounds;
+      };
+    };
+  |■
+|●

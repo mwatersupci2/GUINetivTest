@@ -1,0 +1,105 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/journal.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.journal",
+      kind: "library",
+      namespace: "gui.runtime.journal",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.tick,gui.kiosk.event,gui.compositor.dirty_rect",
+      target: "windows-native-window",
+      notes: "Defines monotonic GUI runtime journal records for deterministic replay, debugging, dirty-rect provenance, and AI-readable runtime inspection."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RuntimeJournal --> JournalEntry
+      %%   JournalEntry --> RuntimeTick
+      %%   JournalEntry --> JournalEntryKind
+      %%   JournalRecordTick --> RuntimeJournal
+      %%   JournalRecordEvent --> KioskEvent
+      %%   JournalRecordDirtyFlush --> DirtyRectQueue
+      %%   JournalReplay --> RuntimeJournal
+    };
+
+    <book>{
+      °enum •JournalEntryKind {
+        •tick,
+        •event,
+        •layout,
+        •render,
+        •dirtyFlush,
+        •warning,
+        •error
+      };
+
+      °struct •JournalEntry {
+        °define •tick: •RuntimeTick;
+        °define •kind: •JournalEntryKind;
+        °define •ordinal: °usize;
+      };
+
+      °struct •RuntimeJournal {
+        °define •entryCount: °usize;
+        °define •enabled: °bool;
+      };
+
+      °function •MakeJournalEntry {
+        °define •tick: •RuntimeTick;
+        °define •kind: •JournalEntryKind;
+        °define •ordinal: °usize;
+        °return •JournalEntry;
+      };
+
+      °function •MakeRuntimeJournal {
+        °define •enabled: °bool;
+        °return •RuntimeJournal;
+      };
+
+      °function •JournalAppend {
+        °define •journal: •RuntimeJournal;
+        °define •entry: •JournalEntry;
+
+        °if { •journal.enabled == false } {
+          °return •journal;
+        };
+
+        °set •journal.entryCount = •journal.entryCount + 1;
+        °return •journal;
+      };
+
+      °function •JournalRecordTick {
+        °define •journal: •RuntimeJournal;
+        °define •tick: •RuntimeTick;
+        °define •entry: •JournalEntry;
+        °set •entry = •MakeJournalEntry(•tick, •tick, •journal.entryCount);
+        °return •JournalAppend(•journal, •entry);
+      };
+
+      °function •JournalRecordEvent {
+        °define •journal: •RuntimeJournal;
+        °define •tick: •RuntimeTick;
+        °define •event: •KioskEvent;
+        °define •entry: •JournalEntry;
+        °set •entry = •MakeJournalEntry(•tick, •event, •journal.entryCount);
+        °return •JournalAppend(•journal, •entry);
+      };
+
+      °function •JournalRecordDirtyFlush {
+        °define •journal: •RuntimeJournal;
+        °define •tick: •RuntimeTick;
+        °define •queue: •DirtyRectQueue;
+        °define •entry: •JournalEntry;
+        °set •entry = •MakeJournalEntry(•tick, •dirtyFlush, •journal.entryCount);
+        °return •JournalAppend(•journal, •entry);
+      };
+
+      °function •JournalReplay {
+        °define •journal: •RuntimeJournal;
+        °return •journal;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,44 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/renderer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.renderer",
+      kind: "library",
+      namespace: "gui.runtime.renderer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.canvas.context2d,gui.runtime.frame_present,apps.ebook_shell.views.home_view,apps.ebook_shell.views.reader_view",
+      target: "windows-native-window",
+      notes: "Defines renderer orchestration for Netiv kiosk frame rendering."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RuntimeRenderer --> CanvasContext2D
+      %%   RuntimeRenderer --> FramePresent
+      %%   RuntimeRenderer --> HomeView
+      %%   RuntimeRenderer --> ReaderView
+      %%   RenderRuntimeFrame --> CanvasContext2D
+      %%   RenderRuntimeFrame --> PresentFrame
+    };
+
+    <book>{
+      °struct •RuntimeRenderer {
+        °define •frameCount: °usize;
+      };
+
+      °function •MakeRuntimeRenderer {
+        °return •RuntimeRenderer;
+      };
+
+      °function •RenderRuntimeFrame {
+        °define •renderer: •RuntimeRenderer;
+        °define •ctx: •CanvasContext2D;
+
+        °set •renderer.frameCount = •renderer.frameCount + 1;
+        °return •renderer;
+      };
+    };
+  |■
+|●

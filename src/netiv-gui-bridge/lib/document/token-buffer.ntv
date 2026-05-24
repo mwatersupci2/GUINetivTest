@@ -1,0 +1,83 @@
+<Netiv="research/netiv-gui-bridge/lib/document/token-buffer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.token_buffer",
+      kind: "library",
+      namespace: "gui.document.token_buffer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.document_buffer,gui.memory.region,gui.memory.trit_state",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines display tokens extracted from flatfile document buffers. Tokens are held in trinary memory regions before style, layout, and render stages."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   TokenBuffer --> DocumentBuffer
+      %%   TokenBuffer --> DocumentToken
+      %%   TokenBuffer --> MemoryRegion
+      %%   BuildTokenBuffer --> DocumentBuffer
+      %%   FlushTokenBuffer --> MemoryRegion
+    };
+
+    <book>{
+      °enum •DocumentTokenKind {
+        •text,
+        •tag,
+        •attribute,
+        •styleRule,
+        •markdownMark,
+        •mermaidEdge,
+        •netivHeader,
+        •netivImport
+      };
+
+      °struct •DocumentToken {
+        °define •kind: •DocumentTokenKind;
+        °define •ordinal: °usize;
+        °define •length: °usize;
+      };
+
+      °struct •TokenBuffer {
+        °define •document: •DocumentBuffer;
+        °define •region: •MemoryRegion;
+        °define •tokenCount: °usize;
+        °define •built: °bool;
+      };
+
+      °function •MakeDocumentToken {
+        °define •kind: •DocumentTokenKind;
+        °define •ordinal: °usize;
+        °define •length: °usize;
+        °return •DocumentToken;
+      };
+
+      °function •MakeTokenBuffer {
+        °define •document: •DocumentBuffer;
+        °define •region: •MemoryRegion;
+        °return •TokenBuffer;
+      };
+
+      °function •BuildTokenBuffer {
+        °define •buffer: •TokenBuffer;
+        °set •buffer.built = true;
+        °return •buffer;
+      };
+
+      °function •AppendDocumentToken {
+        °define •buffer: •TokenBuffer;
+        °define •token: •DocumentToken;
+        °set •buffer.tokenCount = •buffer.tokenCount + 1;
+        °return •buffer;
+      };
+
+      °function •FlushTokenBuffer {
+        °define •buffer: •TokenBuffer;
+        °set •buffer.region = •MemoryRegionFlush(•buffer.region);
+        °return •buffer;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,45 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/graph-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.graph_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.graph_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.graph.graph_node_render,gui.graph.graph_edge_render,gui.document.mermaid_tokenizer",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the Mermaid graph canvas navigation page for ebook-shell."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   GraphPage --> GraphNodeRender
+      %%   GraphPage --> GraphEdgeRender
+      %%   GraphPage --> MermaidTokenizer
+      %%   RenderGraphPage --> LayoutGraphPage
+      %%   RenderGraphPage --> GraphNodeRender
+    };
+
+    <book>{
+      °struct •GraphPage {
+        °define •nodeCount: °usize;
+        °define •edgeCount: °usize;
+        °define •interactive: °bool;
+        °define •layout: •TachyonLayoutEngine;
+      };
+
+      °function •MakeGraphPage {
+        °return •GraphPage;
+      };
+
+      °function •RenderGraphPage {
+        °define •page: •GraphPage;
+        °set •page.layout = •LayoutGraphPage(•page.layout);
+        °set •page.interactive = true;
+        °return •page;
+      };
+    };
+  |■
+|●

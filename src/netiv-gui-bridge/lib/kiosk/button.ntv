@@ -1,0 +1,62 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/button.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.button",
+      kind: "library",
+      namespace: "gui.kiosk.button",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.text,gui.kiosk.element,gui.kiosk.style,gui.input.pointer,gui.canvas.shape",
+      target: "windows-native-window",
+      notes: "Defines the first interactive button primitive for the Netiv kiosk runtime."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   KioskButton --> KioskElement
+      %%   KioskButton --> TextRun
+      %%   KioskButton --> KioskStyle
+      %%   ButtonHandlePointer --> PointerEvent
+      %%   ButtonHandlePointer --> ElementHitTest
+      %%   RenderButton --> ShapeFillRect
+      %%   RenderButton --> DrawTextRun
+    };
+
+    <book>{
+      °struct •KioskButton {
+        °define •element: •KioskElement;
+        °define •label: •TextRun;
+        °define •style: •KioskStyle;
+      };
+
+      °function •MakeKioskButton {
+        °define •element: •KioskElement;
+        °define •label: •TextRun;
+        °define •style: •KioskStyle;
+        °return •KioskButton;
+      };
+
+      °function •ButtonHandlePointer {
+        °define •button: •KioskButton;
+        °define •event: •PointerEvent;
+
+        °if { •ElementHitTest(•button.element, •event.position) == false } {
+          °return •button;
+        };
+
+        °set •button.element.state.pressed = true;
+        °return •button;
+      };
+
+      °function •RenderButton {
+        °define •ctx: •CanvasContext2D;
+        °define •button: •KioskButton;
+        °set •ctx = •ContextSetFillPixel(•ctx, •button.style.background);
+        °set •ctx = •ShapeFillRect(•ctx, •button.element.bounds);
+        °return •DrawTextRun(•ctx, •button.label);
+      };
+    };
+  |■
+|●

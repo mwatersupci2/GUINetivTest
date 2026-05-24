@@ -1,0 +1,75 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/scheduler.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.scheduler",
+      kind: "library",
+      namespace: "gui.runtime.scheduler",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.tick,gui.runtime.loop,gui.runtime.timer,gui.runtime.journal",
+      target: "windows-native-window",
+      notes: "Defines deterministic scheduler contracts for kiosk runtime tasks, timers, and frame progression."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RuntimeScheduler --> RuntimeLoop
+      %%   RuntimeScheduler --> RuntimeClock
+      %%   RuntimeScheduler --> SchedulerState
+      %%   SchedulerStep --> RuntimeLoopFrame
+      %%   SchedulerRecord --> RuntimeJournal
+    };
+
+    <book>{
+      °enum •SchedulerState {
+        •idle,
+        •running,
+        •paused,
+        •stopped,
+        •error
+      };
+
+      °struct •RuntimeScheduler {
+        °define •state: •SchedulerState;
+        °define •frameCount: °usize;
+      };
+
+      °function •MakeRuntimeScheduler {
+        °return •RuntimeScheduler;
+      };
+
+      °function •SchedulerStart {
+        °define •scheduler: •RuntimeScheduler;
+        °set •scheduler.state = •running;
+        °return •scheduler;
+      };
+
+      °function •SchedulerPause {
+        °define •scheduler: •RuntimeScheduler;
+        °set •scheduler.state = •paused;
+        °return •scheduler;
+      };
+
+      °function •SchedulerStop {
+        °define •scheduler: •RuntimeScheduler;
+        °set •scheduler.state = •stopped;
+        °return •scheduler;
+      };
+
+      °function •SchedulerStep {
+        °define •scheduler: •RuntimeScheduler;
+        °define •loop: •RuntimeLoop;
+
+        °if { •scheduler.state != •running } {
+          °return •loop;
+        };
+
+        °set •loop = •RuntimeLoopFrame(•loop);
+        °set •scheduler.frameCount = •scheduler.frameCount + 1;
+        °return •loop;
+      };
+    };
+  |■
+|●

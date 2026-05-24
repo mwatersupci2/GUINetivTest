@@ -1,0 +1,46 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/demo-scene.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.demo_scene",
+      kind: "application",
+      namespace: "ebook_shell.demo_scene",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "gui.display.frame_surface,gui.document.document_page_render,gui.graph.graph_node_render,gui.graph.graph_edge_render",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the first deterministic visible rendering scene for ebook-shell testing."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DemoScene --> FrameSurface
+      %%   DemoScene --> DocumentPageRender
+      %%   DemoScene --> GraphNodeRender
+      %%   DemoScene --> GraphEdgeRender
+      %%   BuildDemoScene --> RenderDocumentPage
+    };
+
+    <book>{
+      °struct •DemoScene {
+        °define •frameOrdinal: °usize;
+        °define •built: °bool;
+      };
+
+      °function •MakeDemoScene {
+        °return •DemoScene;
+      };
+
+      °function •BuildDemoScene {
+        °define •scene: •DemoScene;
+        °define •surface: •FrameSurface;
+
+        °set •scene.built = true;
+        °set •surface.dirty = true;
+
+        °return •scene;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,49 @@
+<Netiv="research/netiv-gui-bridge/lib/display/glyph-raster.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.glyph_raster",
+      kind: "library",
+      namespace: "gui.display.glyph_raster",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.assets.font,gui.display.pixel,gui.display.text",
+      target: "windows-native-window",
+      notes: "Defines glyph raster contracts for Netiv text rendering."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   GlyphRaster --> FontAsset
+      %%   GlyphRaster --> GlyphCell
+      %%   RasterGlyph --> GlyphCell
+      %%   RasterGlyph --> TritPixel
+      %%   RasterTextRun --> TextRun
+    };
+
+    <book>{
+      °struct •GlyphRaster {
+        °define •glyphCount: °usize;
+        °define •pixelCount: °usize;
+      };
+
+      °function •MakeGlyphRaster {
+        °return •GlyphRaster;
+      };
+
+      °function •RasterGlyph {
+        °define •raster: •GlyphRaster;
+        °define •glyph: •GlyphCell;
+        °set •raster.glyphCount = •raster.glyphCount + 1;
+        °return •raster;
+      };
+
+      °function •RasterTextRun {
+        °define •raster: •GlyphRaster;
+        °define •run: •TextRun;
+        °return •raster;
+      };
+    };
+  |■
+|●

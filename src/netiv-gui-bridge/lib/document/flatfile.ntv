@@ -1,0 +1,70 @@
+<Netiv="research/netiv-gui-bridge/lib/document/flatfile.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.flatfile",
+      kind: "library",
+      namespace: "gui.document.flatfile",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.memory.trit_state,gui.memory.tryte_tile,gui.memory.region",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines flatfile document content as graphically displayable content held in trinary memory or disk-backed trinary storage."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FlatfileDocument --> FlatfileKind
+      %%   FlatfileDocument --> FlatfileStorageMode
+      %%   FlatfileDocument --> MemoryRegion
+      %%   FlatfileDocument --> TryteTile
+      %%   LoadFlatfileDocument --> FlatfileDocument
+      %%   FlushFlatfileDocument --> MemoryRegion
+    };
+
+    <book>{
+      °enum •FlatfileKind {
+        •html,
+        •markdown,
+        •css,
+        •plainText,
+        •netiv
+      };
+
+      °enum •FlatfileStorageMode {
+        •ram,
+        •disk,
+        •streamed,
+        •cached
+      };
+
+      °struct •FlatfileDocument {
+        °define •kind: •FlatfileKind;
+        °define •mode: •FlatfileStorageMode;
+        °define •region: •MemoryRegion;
+        °define •tileCount: °usize;
+        °define •loaded: °bool;
+      };
+
+      °function •MakeFlatfileDocument {
+        °define •kind: •FlatfileKind;
+        °define •mode: •FlatfileStorageMode;
+        °define •region: •MemoryRegion;
+        °return •FlatfileDocument;
+      };
+
+      °function •LoadFlatfileDocument {
+        °define •document: •FlatfileDocument;
+        °set •document.loaded = true;
+        °return •document;
+      };
+
+      °function •FlushFlatfileDocument {
+        °define •document: •FlatfileDocument;
+        °set •document.region = •MemoryRegionFlush(•document.region);
+        °return •document;
+      };
+    };
+  |■
+|●

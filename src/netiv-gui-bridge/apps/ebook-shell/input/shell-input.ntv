@@ -1,0 +1,55 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/input/shell-input.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.input.shell_input",
+      kind: "application-input",
+      namespace: "apps.ebook_shell.input.shell_input",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.widgets.tab_bar,gui.input.pointer,gui.input.keyboard,gui.document.hit_region",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines top-level input routing for the full fourteen-tab ebook-shell interface."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   ShellInput --> TabState
+      %%   ShellInput --> TabBar
+      %%   ShellInput --> PointerEvent
+      %%   ShellInput --> KeyboardEvent
+      %%   RouteShellPointer --> TabState
+      %%   RouteShellKeyboard --> TabState
+    };
+
+    <book>{
+      °struct •ShellInput {
+        °define •handledCount: °usize;
+        °define •lastHandled: °bool;
+      };
+
+      °function •MakeShellInput {
+        °return •ShellInput;
+      };
+
+      °function •RouteShellPointer {
+        °define •input: •ShellInput;
+        °define •state: •TabState;
+        °define •event: •PointerEvent;
+        °set •input.handledCount = •input.handledCount + 1;
+        °set •input.lastHandled = true;
+        °return •state;
+      };
+
+      °function •RouteShellKeyboard {
+        °define •input: •ShellInput;
+        °define •state: •TabState;
+        °define •event: •KeyboardEvent;
+        °set •input.handledCount = •input.handledCount + 1;
+        °set •input.lastHandled = true;
+        °return •state;
+      };
+    };
+  |■
+|●

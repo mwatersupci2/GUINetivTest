@@ -1,0 +1,48 @@
+<Netiv="research/netiv-gui-bridge/lib/standards/markdown-contract.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.standards.markdown_contract",
+      kind: "library",
+      namespace: "gui.standards.markdown_contract",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.document_buffer",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines Markdown interpretation behavior for the Netiv intra-file browser runtime."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   MarkdownContract --> MarkdownCompatibilityMode
+      %%   MarkdownContract --> DocumentBuffer
+      %%   ApplyMarkdownContract --> DocumentBuffer
+    };
+
+    <book>{
+      °enum •MarkdownCompatibilityMode {
+        •strict,
+        •extended,
+        •netivCustom
+      };
+
+      °struct •MarkdownContract {
+        °define •mode: •MarkdownCompatibilityMode;
+        °define •validated: °bool;
+      };
+
+      °function •MakeMarkdownContract {
+        °define •mode: •MarkdownCompatibilityMode;
+        °return •MarkdownContract;
+      };
+
+      °function •ApplyMarkdownContract {
+        °define •contract: •MarkdownContract;
+        °define •document: •DocumentBuffer;
+        °set •contract.validated = true;
+        °return •document;
+      };
+    };
+  |■
+|●

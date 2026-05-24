@@ -1,0 +1,73 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/layout.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.layout",
+      kind: "library",
+      namespace: "gui.kiosk.layout",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.kiosk.document,gui.kiosk.element",
+      target: "windows-native-window",
+      notes: "Defines deterministic kiosk layout primitives for offline Netiv documents."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   LayoutRegion --> DisplayRect
+      %%   LayoutRegion --> KioskElement
+      %%   LayoutDirection --> LayoutRegion
+      %%   LayoutApplyDockFill --> KioskElement
+      %%   LayoutApplyVerticalStack --> KioskElement
+      %%   LayoutApplyHorizontalStack --> KioskElement
+      %%   LayoutInvalidate --> KioskDocument
+    };
+
+    <book>{
+      °enum •LayoutDirection {
+        •horizontal,
+        •vertical
+      };
+
+      °struct •LayoutRegion {
+        °define •bounds: •DisplayRect;
+        °define •padding: °i64;
+        °define •spacing: °i64;
+      };
+
+      °function •MakeLayoutRegion {
+        °define •bounds: •DisplayRect;
+        °define •padding: °i64;
+        °define •spacing: °i64;
+        °return •LayoutRegion;
+      };
+
+      °function •LayoutApplyDockFill {
+        °define •region: •LayoutRegion;
+        °define •element: •KioskElement;
+        °return •ElementSetBounds(•element, •region.bounds);
+      };
+
+      °function •LayoutApplyVerticalStack {
+        °define •region: •LayoutRegion;
+        °define •element: •KioskElement;
+        °define •index: °usize;
+        °return •element;
+      };
+
+      °function •LayoutApplyHorizontalStack {
+        °define •region: •LayoutRegion;
+        °define •element: •KioskElement;
+        °define •index: °usize;
+        °return •element;
+      };
+
+      °function •LayoutInvalidate {
+        °define •document: •KioskDocument;
+        °define •region: •LayoutRegion;
+        °return •InvalidateDocument(•document, •region.bounds);
+      };
+    };
+  |■
+|●

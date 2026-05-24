@@ -1,0 +1,44 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/input/graph-input.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.input.graph_input",
+      kind: "application-input",
+      namespace: "apps.ebook_shell.input.graph_input",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.pages.graph_page,gui.document.hit_region,gui.document.link_map,gui.input.pointer",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines graph node interaction routing for Mermaid canvas navigation."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   GraphInput --> GraphPage
+      %%   GraphInput --> HitRegion
+      %%   GraphInput --> LinkMap
+      %%   SelectGraphNode --> LinkMap
+    };
+
+    <book>{
+      °struct •GraphInput {
+        °define •selectionCount: °usize;
+      };
+
+      °function •MakeGraphInput {
+        °return •GraphInput;
+      };
+
+      °function •SelectGraphNode {
+        °define •input: •GraphInput;
+        °define •page: •GraphPage;
+        °define •region: •HitRegion;
+
+        °set •input.selectionCount = •input.selectionCount + 1;
+
+        °return •page;
+      };
+    };
+  |■
+|●

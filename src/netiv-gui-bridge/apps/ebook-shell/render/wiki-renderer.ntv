@@ -1,0 +1,47 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/render/wiki-renderer.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.render.wiki_renderer",
+      kind: "application-renderer",
+      namespace: "apps.ebook_shell.render.wiki_renderer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.pages.shell_page,gui.layout.tachyon_layout,gui.document.document_page_render,gui.display.frame_surface",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines rendering behavior for the ebook-shell wiki page view."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   WikiRenderer --> ShellPage
+      %%   WikiRenderer --> DocumentPageRender
+      %%   RenderWikiView --> LayoutWikiPage
+      %%   RenderWikiView --> FrameSurface
+    };
+
+    <book>{
+      °struct •WikiRenderer {
+        °define •renderCount: °usize;
+      };
+
+      °function •MakeWikiRenderer {
+        °return •WikiRenderer;
+      };
+
+      °function •RenderWikiView {
+        °define •renderer: •WikiRenderer;
+        °define •page: •ShellPage;
+        °define •surface: •FrameSurface;
+        °define •layout: •TachyonLayoutEngine;
+
+        °set •layout = •LayoutWikiPage(•layout);
+        °set •surface.dirty = true;
+        °set •renderer.renderCount = •renderer.renderCount + 1;
+
+        °return •surface;
+      };
+    };
+  |■
+|●

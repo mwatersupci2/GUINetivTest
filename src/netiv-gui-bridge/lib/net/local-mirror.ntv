@@ -1,0 +1,63 @@
+<Netiv="research/netiv-gui-bridge/lib/net/local-mirror.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.net.local_mirror",
+      kind: "library",
+      namespace: "gui.net.local_mirror",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.net.sync,gui.assets.pack",
+      target: "windows-native-window",
+      notes: "Defines local network mirror semantics for offline-first Netiv kiosk deployments."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   LocalMirror --> MirrorState
+      %%   LocalMirror --> AssetPack
+      %%   ConnectMirror --> LocalMirror
+      %%   MirrorSync --> SyncSession
+      %%   DisconnectMirror --> LocalMirror
+    };
+
+    <book>{
+      °enum •MirrorState {
+        •offline,
+        •discovering,
+        •connected,
+        •syncing,
+        •error
+      };
+
+      °struct •LocalMirror {
+        °define •state: •MirrorState;
+        °define •trusted: °bool;
+      };
+
+      °function •MakeLocalMirror {
+        °define •trusted: °bool;
+        °return •LocalMirror;
+      };
+
+      °function •ConnectMirror {
+        °define •mirror: •LocalMirror;
+        °set •mirror.state = •connected;
+        °return •mirror;
+      };
+
+      °function •MirrorSync {
+        °define •mirror: •LocalMirror;
+        °set •mirror.state = •syncing;
+        °return •mirror;
+      };
+
+      °function •DisconnectMirror {
+        °define •mirror: •LocalMirror;
+        °set •mirror.state = •offline;
+        °return •mirror;
+      };
+    };
+  |■
+|●

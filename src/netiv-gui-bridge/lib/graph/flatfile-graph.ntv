@@ -1,0 +1,67 @@
+<Netiv="research/netiv-gui-bridge/lib/graph/flatfile-graph.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.graph.flatfile_graph",
+      kind: "library",
+      namespace: "gui.graph.flatfile_graph",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.flatfile,gui.memory.region",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines graph metadata extracted from Netiv flatfiles including filename, imports, and edge sections."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FlatfileGraph --> FlatfileDocument
+      %%   FlatfileGraph --> GraphNode
+      %%   FlatfileGraph --> GraphEdge
+      %%   ExtractFlatfileGraph --> FlatfileDocument
+      %%   ExtractFlatfileGraph --> FlatfileGraph
+    };
+
+    <book>{
+      °struct •GraphNode {
+        °define •ordinal: °usize;
+        °define •linked: °bool;
+      };
+
+      °struct •GraphEdge {
+        °define •fromOrdinal: °usize;
+        °define •toOrdinal: °usize;
+      };
+
+      °struct •FlatfileGraph {
+        °define •document: •FlatfileDocument;
+        °define •nodeCount: °usize;
+        °define •edgeCount: °usize;
+        °define •importCount: °usize;
+      };
+
+      °function •MakeGraphNode {
+        °define •ordinal: °usize;
+        °return •GraphNode;
+      };
+
+      °function •MakeGraphEdge {
+        °define •fromOrdinal: °usize;
+        °define •toOrdinal: °usize;
+        °return •GraphEdge;
+      };
+
+      °function •MakeFlatfileGraph {
+        °define •document: •FlatfileDocument;
+        °return •FlatfileGraph;
+      };
+
+      °function •ExtractFlatfileGraph {
+        °define •document: •FlatfileDocument;
+        °define •graph: •FlatfileGraph;
+        °set •graph = •MakeFlatfileGraph(•document);
+        °return •graph;
+      };
+    };
+  |■
+|●

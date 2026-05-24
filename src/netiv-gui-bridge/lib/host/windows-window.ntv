@@ -1,0 +1,99 @@
+<Netiv="research/netiv-gui-bridge/lib/host/windows-window.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.host.windows_window",
+      kind: "library",
+      namespace: "gui.host.windows_window",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.framebuffer,gui.compositor.dirty_rect",
+      target: "windows-native-window",
+      notes: "Defines the Windows HWND and DIB-section backbuffer bridge for Netiv GUI rendering. Standard logical target and preferred backbuffer size is 1920x1080. The actual Windows client area may be smaller, so the host must scale the Tachyon layout from logical coordinates into the current client rectangle."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   WindowsWindow --> FramebufferSurface
+      %%   WindowsWindow --> WindowsWindowState
+      %%   WindowsOpenWindow --> WindowsWindow
+      %%   WindowsCreateBackbuffer --> FramebufferSurface
+      %%   WindowsFlushDirtyRects --> DirtyRectQueue
+      %%   WindowsPresentFrame --> FramebufferSurface
+      %%   WindowsCloseWindow --> WindowsWindow
+    };
+
+    <book>{
+      °enum •WindowsWindowState {
+        •closed,
+        •created,
+        •visible,
+        •error
+      };
+
+      °struct •WindowsWindow {
+        °define •surface: •FramebufferSurface;
+        °define •state: •WindowsWindowState;
+        °define •backbufferReady: °bool;
+        °define •width: °i64;
+        °define •height: °i64;
+        °define •logicalWidth: °i64;
+        °define •logicalHeight: °i64;
+        °define •clientWidth: °i64;
+        °define •clientHeight: °i64;
+      };
+
+      °function •MakeWindowsWindow {
+        °define •surface: •FramebufferSurface;
+        °return •WindowsWindow;
+      };
+
+      °function •WindowsOpenWindow {
+        °define •window: •WindowsWindow;
+        °set •window.state = •created;
+        °return •window;
+      };
+
+      °function •WindowsCreateBackbuffer {
+        °define •window: •WindowsWindow;
+        °set •window.state = •visible;
+        °set •window.backbufferReady = true;
+        °set •window.logicalWidth = 1920;
+        °set •window.logicalHeight = 1080;
+        °set •window.width = •window.logicalWidth;
+        °set •window.height = •window.logicalHeight;
+        °set •window.clientWidth = •window.logicalWidth;
+        °set •window.clientHeight = •window.logicalHeight;
+        °return •window;
+      };
+
+      °function •WindowsResizeClient {
+        °define •window: •WindowsWindow;
+        °define •clientWidth: °i64;
+        °define •clientHeight: °i64;
+        °set •window.clientWidth = •clientWidth;
+        °set •window.clientHeight = •clientHeight;
+        °return •window;
+      };
+
+      °function •WindowsFlushDirtyRects {
+        °define •window: •WindowsWindow;
+        °define •queue: •DirtyRectQueue;
+        °return •window;
+      };
+
+      °function •WindowsPresentFrame {
+        °define •window: •WindowsWindow;
+        °return •window;
+      };
+
+      °function •WindowsCloseWindow {
+        °define •window: •WindowsWindow;
+        °set •window.state = •closed;
+        °set •window.backbufferReady = false;
+        °return •window;
+      };
+    };
+  |■
+|●

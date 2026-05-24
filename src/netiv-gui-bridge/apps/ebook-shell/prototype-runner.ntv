@@ -1,0 +1,65 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/prototype-runner.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.prototype_runner",
+      kind: "application-runner",
+      namespace: "apps.ebook_shell.prototype_runner",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.bootstrap,gui.runtime.scheduler,gui.runtime.renderer,gui.runtime.frame_present,gui.sim.fake_framebuffer,gui.sim.fake_input",
+      target: "simulation",
+      notes: "Defines the first simulated execution runner for the Netiv ebook-shell proving application."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   PrototypeRunner --> EbookShellBootstrap
+      %%   PrototypeRunner --> RuntimeScheduler
+      %%   PrototypeRunner --> RuntimeRenderer
+      %%   PrototypeRunner --> FakeFramebuffer
+      %%   PrototypeRunner --> FakeInput
+      %%   PrototypeStep --> SchedulerStep
+      %%   PrototypeStep --> RenderRuntimeFrame
+      %%   PrototypeStep --> FakeFramebufferPresent
+    };
+
+    <book>{
+      °struct •PrototypeRunner {
+        °define •frameCount: °usize;
+        °define •running: °bool;
+      };
+
+      °function •MakePrototypeRunner {
+        °return •PrototypeRunner;
+      };
+
+      °function •PrototypeStart {
+        °define •runner: •PrototypeRunner;
+        °set •runner.running = true;
+        °return •runner;
+      };
+
+      °function •PrototypeStop {
+        °define •runner: •PrototypeRunner;
+        °set •runner.running = false;
+        °return •runner;
+      };
+
+      °function •PrototypeStep {
+        °define •runner: •PrototypeRunner;
+        °define •scheduler: •RuntimeScheduler;
+        °define •renderer: •RuntimeRenderer;
+        °define •fake: •FakeFramebuffer;
+
+        °if { •runner.running == false } {
+          °return •runner;
+        };
+
+        °set •runner.frameCount = •runner.frameCount + 1;
+        °return •runner;
+      };
+    };
+  |■
+|●

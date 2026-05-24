@@ -1,0 +1,35 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/pods-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.pods_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.pods_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines pod orchestration and runtime inspection for ebook-shell."
+    };
+
+    <book>{
+      °struct •PodsPage {
+        °define •podCount: °usize;
+        °define •healthy: °bool;
+        °define •layout: •TachyonLayoutEngine;
+      };
+
+      °function •MakePodsPage {
+        °return •PodsPage;
+      };
+
+      °function •RenderPodsPage {
+        °define •page: •PodsPage;
+        °set •page.layout = •LayoutPodsPage(•page.layout);
+        °set •page.healthy = true;
+        °return •page;
+      };
+    };
+  |■
+|●

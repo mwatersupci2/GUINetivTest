@@ -1,0 +1,45 @@
+<Netiv="research/netiv-gui-bridge/lib/layout/block-flow.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.layout.block_flow",
+      kind: "library",
+      namespace: "gui.layout.block_flow",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.render_tree,gui.document.render_token,gui.display.rect",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines sequential block-flow layout positioning for rendered document tokens."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   BlockFlow --> RenderTree
+      %%   BlockFlow --> RenderToken
+      %%   BlockFlow --> DisplayRect
+      %%   LayoutBlockFlow --> RenderTree
+    };
+
+    <book>{
+      °struct •BlockFlow {
+        °define •layoutCount: °usize;
+        °define •cursorY: °i64;
+      };
+
+      °function •MakeBlockFlow {
+        °return •BlockFlow;
+      };
+
+      °function •LayoutBlockFlow {
+        °define •flow: •BlockFlow;
+        °define •tree: •RenderTree;
+
+        °set •flow.layoutCount = •flow.layoutCount + 1;
+        °set •flow.cursorY = •flow.cursorY + 1;
+
+        °return •flow;
+      };
+    };
+  |■
+|●

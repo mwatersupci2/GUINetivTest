@@ -1,0 +1,53 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/state/page-asset.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.state.page_asset",
+      kind: "application-state",
+      namespace: "apps.ebook_shell.state.page_asset",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.text,gui.assets.image",
+      target: "windows-native-window",
+      notes: "Defines ebook page assets for the Netiv kiosk proving application."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   EbookPageAsset --> TextRun
+      %%   EbookPageAsset --> ImageAsset
+      %%   EbookPageAsset --> PageKind
+      %%   LoadPageAsset --> EbookPageAsset
+      %%   RenderPageAsset --> DrawTextRun
+      %%   RenderPageAsset --> BlitImageAsset
+    };
+
+    <book>{
+      °enum •PageKind {
+        •cover,
+        •chapter,
+        •content,
+        •appendix
+      };
+
+      °struct •EbookPageAsset {
+        °define •kind: •PageKind;
+        °define •textRunCount: °usize;
+        °define •imageCount: °usize;
+      };
+
+      °function •MakeEbookPageAsset {
+        °define •kind: •PageKind;
+        °define •textRunCount: °usize;
+        °define •imageCount: °usize;
+        °return •EbookPageAsset;
+      };
+
+      °function •LoadPageAsset {
+        °define •page: •EbookPageAsset;
+        °return •page;
+      };
+    };
+  |■
+|●

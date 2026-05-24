@@ -1,0 +1,63 @@
+<Netiv="research/netiv-gui-bridge/lib/assets/pack.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.assets.pack",
+      kind: "library",
+      namespace: "gui.assets.pack",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.assets.font,gui.assets.image,gui.assets.palette",
+      target: "windows-native-window",
+      notes: "Defines deterministic offline asset packs for Netiv kiosk applications and ebook-shell content bundles."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   AssetPack --> AssetPackKind
+      %%   AssetPack --> AssetCache
+      %%   LoadAssetPack --> AssetPack
+      %%   MountAssetPack --> AssetPack
+      %%   UnmountAssetPack --> AssetPack
+    };
+
+    <book>{
+      °enum •AssetPackKind {
+        •ebook,
+        •theme,
+        •debug,
+        •system
+      };
+
+      °struct •AssetPack {
+        °define •kind: •AssetPackKind;
+        °define •assetCount: °usize;
+        °define •mounted: °bool;
+      };
+
+      °function •MakeAssetPack {
+        °define •kind: •AssetPackKind;
+        °define •assetCount: °usize;
+        °return •AssetPack;
+      };
+
+      °function •LoadAssetPack {
+        °define •pack: •AssetPack;
+        °return •pack;
+      };
+
+      °function •MountAssetPack {
+        °define •pack: •AssetPack;
+        °set •pack.mounted = true;
+        °return •pack;
+      };
+
+      °function •UnmountAssetPack {
+        °define •pack: •AssetPack;
+        °set •pack.mounted = false;
+        °return •pack;
+      };
+    };
+  |■
+|●

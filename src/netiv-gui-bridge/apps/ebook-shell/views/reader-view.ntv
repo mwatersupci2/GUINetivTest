@@ -1,0 +1,42 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/views/reader-view.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.views.reader_view",
+      kind: "application-view",
+      namespace: "apps.ebook_shell.views.reader_view",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.text,gui.kiosk.scroll,apps.ebook_shell.state.app_state",
+      target: "windows-native-window",
+      notes: "Defines the ebook reader rendering view for the Netiv kiosk runtime proving application."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   ReaderView --> ScrollRegion
+      %%   ReaderView --> TextRun
+      %%   RenderReaderView --> EbookShellState
+      %%   RenderReaderView --> ScrollRegion
+      %%   RenderReaderView --> DrawTextRun
+    };
+
+    <book>{
+      °struct •ReaderView {
+        °define •pageLength: °usize;
+      };
+
+      °function •MakeReaderView {
+        °return •ReaderView;
+      };
+
+      °function •RenderReaderView {
+        °define •ctx: •CanvasContext2D;
+        °define •state: •EbookShellState;
+        °define •view: •ReaderView;
+        °return •ctx;
+      };
+    };
+  |■
+|●

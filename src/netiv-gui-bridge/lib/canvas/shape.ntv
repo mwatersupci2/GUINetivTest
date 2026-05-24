@@ -1,0 +1,88 @@
+<Netiv="research/netiv-gui-bridge/lib/canvas/shape.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.canvas.shape",
+      kind: "library",
+      namespace: "gui.canvas.shape",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.canvas.context2d,gui.canvas.path",
+      target: "windows-native-window",
+      notes: "Defines shape helper contracts for the Netiv kiosk canvas. Shapes lower into context2d and path operations."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CanvasShape --> CanvasContext2D
+      %%   ShapeFillRect --> ContextFillRect
+      %%   ShapeClearRect --> ContextClearRect
+      %%   ShapeDrawLine --> CanvasPath
+      %%   ShapeDrawLine --> ContextStrokePath
+      %%   ShapeDrawTriangle --> CanvasPath
+      %%   ShapeFillCircle --> CanvasContext2D
+    };
+
+    <book>{
+      °function •ShapeFillRect {
+        °define •ctx: •CanvasContext2D;
+        °define •rect: •DisplayRect;
+        °return •ContextFillRect(•ctx, •rect);
+      };
+
+      °function •ShapeClearRect {
+        °define •ctx: •CanvasContext2D;
+        °define •rect: •DisplayRect;
+        °return •ContextClearRect(•ctx, •rect);
+      };
+
+      °function •ShapeDrawLine {
+        °define •ctx: •CanvasContext2D;
+        °define •from: •RectPoint;
+        °define •to: •RectPoint;
+        °define •path: •CanvasPath;
+        °set •path = •MakeCanvasPath(•from);
+        °set •path = •PathMoveTo(•path, •from);
+        °set •path = •PathLineTo(•path, •to);
+        °return •ContextStrokePath(•ctx, •path);
+      };
+
+      °function •ShapeDrawTriangle {
+        °define •ctx: •CanvasContext2D;
+        °define •a: •RectPoint;
+        °define •b: •RectPoint;
+        °define •c: •RectPoint;
+        °define •path: •CanvasPath;
+        °set •path = •MakeCanvasPath(•a);
+        °set •path = •PathMoveTo(•path, •a);
+        °set •path = •PathLineTo(•path, •b);
+        °set •path = •PathLineTo(•path, •c);
+        °set •path = •PathClose(•path);
+        °return •ContextStrokePath(•ctx, •path);
+      };
+
+      °function •ShapeFillTriangle {
+        °define •ctx: •CanvasContext2D;
+        °define •a: •RectPoint;
+        °define •b: •RectPoint;
+        °define •c: •RectPoint;
+        °return •ShapeDrawTriangle(•ctx, •a, •b, •c);
+      };
+
+      °function •ShapeDrawCircle {
+        °define •ctx: •CanvasContext2D;
+        °define •center: •RectPoint;
+        °define •radius: °i64;
+        °return •ctx;
+      };
+
+      °function •ShapeFillCircle {
+        °define •ctx: •CanvasContext2D;
+        °define •center: •RectPoint;
+        °define •radius: °i64;
+        °return •ctx;
+      };
+    };
+  |■
+|●

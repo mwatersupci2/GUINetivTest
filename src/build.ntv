@@ -1,0 +1,6 @@
+module build
+
+fn run_build() -> void {
+    rax = 0
+    ~
+}

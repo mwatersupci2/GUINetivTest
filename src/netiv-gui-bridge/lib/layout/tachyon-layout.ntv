@@ -1,0 +1,251 @@
+<Netiv="research/netiv-gui-bridge/lib/layout/tachyon-layout.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.layout.tachyon_layout",
+      kind: "library",
+      namespace: "gui.layout.tachyon_layout",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.styles.tachyon_contract",
+      target: "windows-native-window",
+      notes: "Tachyons.css-inspired Netiv layout engine. Standard screen target is 1920x1080. It resolves small utility atoms into deterministic screen rectangles for rows, columns, top tabs, sidebar file trees, content cards, quick-action buttons, and bottom status strips."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   TachyonLayoutEngine --> TachyonContract
+      %%   TachyonLayoutEngine --> TachyonBox
+      %%   TachyonBox --> DisplayRect
+      %%   LayoutRow --> TachyonBox
+      %%   LayoutColumn --> TachyonBox
+      %%   LayoutTopTabs --> TachyonBox
+      %%   LayoutDashboardCards --> TachyonBox
+    };
+
+    <book>{
+      °enum •TachyonRole {
+        •shellRoot,
+        •topbar,
+        •tabButton,
+        •pathbar,
+        •sidebar,
+        •fileTreeRow,
+        •mainColumn,
+        •documentOutline,
+        •documentReader,
+        •metadataPanel,
+        •graphToolbar,
+        •graphCanvas,
+        •graphInspector,
+        •directoryTree,
+        •directoryList,
+        •filePreview,
+        •terminalSurface,
+        •pipelinePanel,
+        •metricCard,
+        •tracePanel,
+        •systemsMap,
+        •podsPanel,
+        •networkMap,
+        •notesEditor,
+        •todoBoard,
+        •chatTranscript,
+        •settingsForm,
+        •card,
+        •button,
+        •statusbar
+      };
+
+      °struct •TachyonBox {
+        °define •role: •TachyonRole;
+        °define •bounds: •DisplayRect;
+        °define •style: •TachyonStyleAtom;
+        °define •childCount: °usize;
+        °define •visible: °bool;
+      };
+
+      °struct •TachyonLayoutEngine {
+        °define •contract: •TachyonContract;
+        °define •root: •TachyonBox;
+        °define •boxCount: °usize;
+        °define •gap: °i64;
+        °define •screenWidth: °i64;
+        °define •screenHeight: °i64;
+        °define •validated: °bool;
+      };
+
+      °function •MakeTachyonBox {
+        °define •role: •TachyonRole;
+        °define •bounds: •DisplayRect;
+        °define •style: •TachyonStyleAtom;
+        °return •TachyonBox;
+      };
+
+      °function •MakeTachyonLayoutEngine {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine.screenWidth = 1920;
+        °set •engine.screenHeight = 1080;
+        °set •engine.gap = 8;
+        °set •engine.validated = true;
+        °return •engine;
+      };
+
+      °function •ApplyUtility {
+        °define •box: •TachyonBox;
+        °define •class: •UtilityClass;
+        °set •box.style = •ResolveUtilityStyleAtom(•class);
+        °return •box;
+      };
+
+      °function •LayoutRow {
+        °define •engine: •TachyonLayoutEngine;
+        °define •parent: •TachyonBox;
+        °define •childCount: °usize;
+        °set •parent.style = •ResolveUtilityStyleAtom(•flexRow);
+        °set •parent.childCount = •childCount;
+        °set •engine.boxCount = •engine.boxCount + •childCount;
+        °return •engine;
+      };
+
+      °function •LayoutColumn {
+        °define •engine: •TachyonLayoutEngine;
+        °define •parent: •TachyonBox;
+        °define •childCount: °usize;
+        °set •parent.style = •ResolveUtilityStyleAtom(•flexColumn);
+        °set •parent.childCount = •childCount;
+        °set •engine.boxCount = •engine.boxCount + •childCount;
+        °return •engine;
+      };
+
+      °function •LayoutTopTabs {
+        °define •engine: •TachyonLayoutEngine;
+        °define •tabCount: °usize;
+        °set •engine = •LayoutRow(•engine, •engine.root, •tabCount);
+        °return •engine;
+      };
+
+      °function •LayoutDashboardCards {
+        °define •engine: •TachyonLayoutEngine;
+        °define •cardCount: °usize;
+        °set •engine = •LayoutRow(•engine, •engine.root, •cardCount);
+        °return •engine;
+      };
+
+      °function •LayoutEbookShellDashboard {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine.screenWidth = 1920;
+        °set •engine.screenHeight = 1080;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutColumn(•engine, •engine.root, 4);
+        °set •engine = •LayoutDashboardCards(•engine, 3);
+        °return •engine;
+      };
+
+      °function •LayoutWikiPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutRow(•engine, •engine.root, 3);
+        °set •engine.boxCount = •engine.boxCount + 3;
+        °return •engine;
+      };
+
+      °function •LayoutGraphPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutRow(•engine, •engine.root, 3);
+        °set •engine.boxCount = •engine.boxCount + 5;
+        °return •engine;
+      };
+
+      °function •LayoutFilesPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutRow(•engine, •engine.root, 3);
+        °set •engine.boxCount = •engine.boxCount + 3;
+        °return •engine;
+      };
+
+      °function •LayoutConsolePage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutColumn(•engine, •engine.root, 2);
+        °set •engine.boxCount = •engine.boxCount + 1;
+        °return •engine;
+      };
+
+      °function •LayoutCompilerPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutDashboardCards(•engine, 3);
+        °set •engine = •LayoutColumn(•engine, •engine.root, 2);
+        °return •engine;
+      };
+
+      °function •LayoutObservabilityPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutDashboardCards(•engine, 4);
+        °set •engine = •LayoutColumn(•engine, •engine.root, 2);
+        °return •engine;
+      };
+
+      °function •LayoutSystemsPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutRow(•engine, •engine.root, 2);
+        °set •engine.boxCount = •engine.boxCount + 4;
+        °return •engine;
+      };
+
+      °function •LayoutPodsPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutDashboardCards(•engine, 3);
+        °set •engine.boxCount = •engine.boxCount + 3;
+        °return •engine;
+      };
+
+      °function •LayoutNetworkPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutRow(•engine, •engine.root, 3);
+        °set •engine.boxCount = •engine.boxCount + 4;
+        °return •engine;
+      };
+
+      °function •LayoutNotesPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutRow(•engine, •engine.root, 2);
+        °set •engine.boxCount = •engine.boxCount + 2;
+        °return •engine;
+      };
+
+      °function •LayoutTodoPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutColumn(•engine, •engine.root, 3);
+        °set •engine.boxCount = •engine.boxCount + 5;
+        °return •engine;
+      };
+
+      °function •LayoutChatPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutColumn(•engine, •engine.root, 3);
+        °set •engine.boxCount = •engine.boxCount + 3;
+        °return •engine;
+      };
+
+      °function •LayoutSettingsPage {
+        °define •engine: •TachyonLayoutEngine;
+        °set •engine = •LayoutTopTabs(•engine, 14);
+        °set •engine = •LayoutRow(•engine, •engine.root, 2);
+        °set •engine.boxCount = •engine.boxCount + 4;
+        °return •engine;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,53 @@
+<Netiv="research/netiv-gui-bridge/lib/document/viewport.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.viewport",
+      kind: "library",
+      namespace: "gui.document.viewport",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.document.layout_buffer",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines visible viewport regions for rendered document content."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DocumentViewport --> DisplayRect
+      %%   DocumentViewport --> LayoutBuffer
+      %%   MoveViewport --> DisplayRect
+      %%   ResizeViewport --> DisplayRect
+    };
+
+    <book>{
+      °struct •DocumentViewport {
+        °define •bounds: •DisplayRect;
+        °define •scrollX: °i64;
+        °define •scrollY: °i64;
+      };
+
+      °function •MakeDocumentViewport {
+        °define •bounds: •DisplayRect;
+        °return •DocumentViewport;
+      };
+
+      °function •MoveViewport {
+        °define •viewport: •DocumentViewport;
+        °define •x: °i64;
+        °define •y: °i64;
+        °set •viewport.scrollX = •x;
+        °set •viewport.scrollY = •y;
+        °return •viewport;
+      };
+
+      °function •ResizeViewport {
+        °define •viewport: •DocumentViewport;
+        °define •bounds: •DisplayRect;
+        °set •viewport.bounds = •bounds;
+        °return •viewport;
+      };
+    };
+  |■
+|●

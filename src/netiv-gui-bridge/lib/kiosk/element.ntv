@@ -1,0 +1,111 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/element.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.element",
+      kind: "library",
+      namespace: "gui.kiosk.element",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.display.text,gui.kiosk.document",
+      target: "windows-native-window",
+      notes: "Defines the basic offline kiosk element primitive. Elements are the document nodes used by layout, rendering, focus, and input routing."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   KioskElement --> ElementKind
+      %%   KioskElement --> ElementState
+      %%   KioskElement --> DisplayRect
+      %%   KioskElement --> TextRun
+      %%   KioskDocument --> KioskElement
+      %%   ElementHitTest --> DisplayRect
+      %%   ElementInvalidate --> KioskDocument
+    };
+
+    <book>{
+      °enum •ElementKind {
+        •root,
+        •panel,
+        •label,
+        •button,
+        •canvas,
+        •image,
+        •custom
+      };
+
+      °struct •ElementState {
+        °define •visible: °bool;
+        °define •enabled: °bool;
+        °define •focused: °bool;
+        °define •pressed: °bool;
+      };
+
+      °struct •KioskElement {
+        °define •kind: •ElementKind;
+        °define •bounds: •DisplayRect;
+        °define •state: •ElementState;
+        °define •childCount: °usize;
+      };
+
+      °function •MakeElementState {
+        °define •visible: °bool;
+        °define •enabled: °bool;
+        °define •focused: °bool;
+        °define •pressed: °bool;
+        °return •ElementState;
+      };
+
+      °function •MakeKioskElement {
+        °define •kind: •ElementKind;
+        °define •bounds: •DisplayRect;
+        °define •state: •ElementState;
+        °return •KioskElement;
+      };
+
+      °function •ElementIsVisible {
+        °define •element: •KioskElement;
+        °return •element.state.visible;
+      };
+
+      °function •ElementIsInteractive {
+        °define •element: •KioskElement;
+
+        °if { •element.state.visible == false } {
+          °return false;
+        };
+
+        °if { •element.state.enabled == false } {
+          °return false;
+        };
+
+        °return true;
+      };
+
+      °function •ElementHitTest {
+        °define •element: •KioskElement;
+        °define •point: •RectPoint;
+
+        °if { •ElementIsInteractive(•element) == false } {
+          °return false;
+        };
+
+        °return •RectContainsPoint(•element.bounds, •point);
+      };
+
+      °function •ElementSetBounds {
+        °define •element: •KioskElement;
+        °define •bounds: •DisplayRect;
+        °set •element.bounds = •bounds;
+        °return •element;
+      };
+
+      °function •ElementInvalidate {
+        °define •document: •KioskDocument;
+        °define •element: •KioskElement;
+        °return •InvalidateDocument(•document, •element.bounds);
+      };
+    };
+  |■
+|●

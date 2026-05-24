@@ -1,0 +1,78 @@
+<Netiv="research/netiv-gui-bridge/lib/input/pointer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.input.pointer",
+      kind: "library",
+      namespace: "gui.input.pointer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.kiosk.document,gui.kiosk.element",
+      target: "windows-native-window",
+      notes: "Defines pointer input contracts for the Netiv offline kiosk runtime. Pointer events are routed through element hit testing."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   PointerEvent --> RectPoint
+      %%   PointerEvent --> PointerAction
+      %%   PointerState --> PointerEvent
+      %%   RoutePointerEvent --> ElementHitTest
+      %%   RoutePointerEvent --> KioskDocument
+      %%   RoutePointerEvent --> KioskElement
+    };
+
+    <book>{
+      °enum •PointerAction {
+        •move,
+        •down,
+        •up,
+        •drag
+      };
+
+      °struct •PointerEvent {
+        °define •position: •RectPoint;
+        °define •action: •PointerAction;
+        °define •handled: °bool;
+      };
+
+      °struct •PointerState {
+        °define •position: •RectPoint;
+        °define •pressed: °bool;
+        °define •eventCount: °usize;
+      };
+
+      °function •MakePointerEvent {
+        °define •position: •RectPoint;
+        °define •action: •PointerAction;
+        °return •PointerEvent;
+      };
+
+      °function •MakePointerState {
+        °define •position: •RectPoint;
+        °define •pressed: °bool;
+        °return •PointerState;
+      };
+
+      °function •PointerMarkHandled {
+        °define •event: •PointerEvent;
+        °set •event.handled = true;
+        °return •event;
+      };
+
+      °function •RoutePointerEvent {
+        °define •document: •KioskDocument;
+        °define •element: •KioskElement;
+        °define •event: •PointerEvent;
+
+        °if { •ElementHitTest(•element, •event.position) == false } {
+          °return •document;
+        };
+
+        °set •event = •PointerMarkHandled(•event);
+        °return •document;
+      };
+    };
+  |■
+|●

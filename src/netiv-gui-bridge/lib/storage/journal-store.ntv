@@ -1,0 +1,63 @@
+<Netiv="research/netiv-gui-bridge/lib/storage/journal-store.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.storage.journal_store",
+      kind: "library",
+      namespace: "gui.storage.journal_store",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.journal",
+      target: "windows-native-window",
+      notes: "Defines persistent runtime journal storage for replayable Netiv kiosk sessions."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   JournalStore --> RuntimeJournal
+      %%   JournalStore --> JournalStoreState
+      %%   LoadJournalStore --> JournalStore
+      %%   SaveJournalStore --> JournalStore
+      %%   AppendJournalStore --> RuntimeJournal
+    };
+
+    <book>{
+      °enum •JournalStoreState {
+        •closed,
+        •opened,
+        •dirty,
+        •error
+      };
+
+      °struct •JournalStore {
+        °define •state: •JournalStoreState;
+        °define •entryCount: °usize;
+      };
+
+      °function •MakeJournalStore {
+        °return •JournalStore;
+      };
+
+      °function •LoadJournalStore {
+        °define •store: •JournalStore;
+        °set •store.state = •opened;
+        °return •store;
+      };
+
+      °function •SaveJournalStore {
+        °define •store: •JournalStore;
+        °set •store.state = •opened;
+        °return •store;
+      };
+
+      °function •AppendJournalStore {
+        °define •store: •JournalStore;
+        °define •journal: •RuntimeJournal;
+        °set •store.entryCount = •journal.entryCount;
+        °set •store.state = •dirty;
+        °return •store;
+      };
+    };
+  |■
+|●

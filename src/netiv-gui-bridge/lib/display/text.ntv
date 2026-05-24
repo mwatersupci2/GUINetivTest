@@ -1,0 +1,90 @@
+<Netiv="research/netiv-gui-bridge/lib/display/text.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.text",
+      kind: "library",
+      namespace: "gui.display.text",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.pixel,gui.display.rect,gui.canvas.context2d,gui.canvas.shape",
+      target: "windows-native-window",
+      notes: "Defines first-pass text rendering contracts for the Netiv offline kiosk runtime. This is glyph-cell text, not full font shaping."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   TextStyle --> TritPixel
+      %%   TextRun --> TextStyle
+      %%   GlyphCell --> TrytePixelTile3x3
+      %%   MeasureTextRun --> DisplayRect
+      %%   DrawTextRun --> CanvasContext2D
+      %%   DrawGlyphCell --> CanvasContext2D
+      %%   DrawGlyphCell --> ShapeFillRect
+    };
+
+    <book>{
+      °struct •GlyphCell {
+        °define •tile: •TrytePixelTile3x3;
+        °define •width: °i64;
+        °define •height: °i64;
+      };
+
+      °struct •TextStyle {
+        °define •foreground: •TritPixel;
+        °define •background: •TritPixel;
+        °define •cellWidth: °i64;
+        °define •cellHeight: °i64;
+      };
+
+      °struct •TextRun {
+        °define •origin: •RectPoint;
+        °define •length: °usize;
+        °define •style: •TextStyle;
+      };
+
+      °function •MakeTextStyle {
+        °define •foreground: •TritPixel;
+        °define •background: •TritPixel;
+        °define •cellWidth: °i64;
+        °define •cellHeight: °i64;
+        °return •TextStyle;
+      };
+
+      °function •MakeTextRun {
+        °define •origin: •RectPoint;
+        °define •length: °usize;
+        °define •style: •TextStyle;
+        °return •TextRun;
+      };
+
+      °function •MeasureTextRun {
+        °define •run: •TextRun;
+        °define •width: °i64;
+        °define •height: °i64;
+        °set •width = •run.length * •run.style.cellWidth;
+        °set •height = •run.style.cellHeight;
+        °return •MakeDisplayRect(•run.origin.x, •run.origin.y, •width, •height);
+      };
+
+      °function •DrawGlyphCell {
+        °define •ctx: •CanvasContext2D;
+        °define •origin: •RectPoint;
+        °define •glyph: •GlyphCell;
+        °define •style: •TextStyle;
+        °return •ctx;
+      };
+
+      °function •DrawTextRun {
+        °define •ctx: •CanvasContext2D;
+        °define •run: •TextRun;
+        °define •bounds: •DisplayRect;
+        °set •bounds = •MeasureTextRun(•run);
+        °set •ctx = •ContextSetFillPixel(•ctx, •run.style.background);
+        °set •ctx = •ShapeFillRect(•ctx, •bounds);
+        °return •ctx;
+      };
+    };
+  |■
+|●

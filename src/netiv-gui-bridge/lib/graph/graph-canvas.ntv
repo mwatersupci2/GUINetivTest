@@ -1,0 +1,46 @@
+<Netiv="research/netiv-gui-bridge/lib/graph/graph-canvas.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.graph.graph_canvas",
+      kind: "library",
+      namespace: "gui.graph.graph_canvas",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.graph.flatfile_graph,gui.canvas.context2d,gui.display.rect",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines graphical rendering of flatfile graph structures into canvas regions."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   GraphCanvas --> FlatfileGraph
+      %%   GraphCanvas --> CanvasContext2D
+      %%   GraphCanvas --> DisplayRect
+      %%   RenderGraphCanvas --> FlatfileGraph
+      %%   RenderGraphCanvas --> CanvasContext2D
+    };
+
+    <book>{
+      °struct •GraphCanvas {
+        °define •graph: •FlatfileGraph;
+        °define •bounds: •DisplayRect;
+        °define •rendered: °bool;
+      };
+
+      °function •MakeGraphCanvas {
+        °define •graph: •FlatfileGraph;
+        °define •bounds: •DisplayRect;
+        °return •GraphCanvas;
+      };
+
+      °function •RenderGraphCanvas {
+        °define •canvas: •GraphCanvas;
+        °define •ctx: •CanvasContext2D;
+        °set •canvas.rendered = true;
+        °return •canvas;
+      };
+    };
+  |■
+|●

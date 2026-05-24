@@ -1,0 +1,87 @@
+<Netiv="research/netiv-gui-bridge/lib/display/framebuffer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.framebuffer",
+      kind: "library",
+      namespace: "gui.display.framebuffer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.pixel,gui.display.rect,gui.compositor.dirty_rect",
+      target: "windows-native-window",
+      notes: "Defines the framebuffer boundary for the Netiv trinary GUI bridge. Trit pixels are decoded through a palette before host framebuffer writes."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FramebufferSurface --> DisplayRect
+      %%   FramebufferSurface --> PixelPalette
+      %%   FramebufferPutTritPixel --> DecodeTritPixelToRgb
+      %%   FramebufferPutTritPixel --> FramebufferPutHostRgbPixel
+      %%   FramebufferFillRect --> FramebufferPutTritPixel
+      %%   FramebufferFlushDirtyRects --> DirtyRectQueue
+      %%   FramebufferFlushDirtyRects --> FramebufferSurface
+    };
+
+    <book>{
+      °struct •FramebufferSurface {
+        °define •width: °i64;
+        °define •height: °i64;
+        °define •stride: °i64;
+        °define •bounds: •DisplayRect;
+        °define •palette: •PixelPalette;
+      };
+
+      °function •MakeFramebufferSurface {
+        °define •width: °i64;
+        °define •height: °i64;
+        °define •stride: °i64;
+        °define •palette: •PixelPalette;
+        °return •FramebufferSurface;
+      };
+
+      °function •FramebufferContainsPoint {
+        °define •surface: •FramebufferSurface;
+        °define •point: •RectPoint;
+        °return •RectContainsPoint(•surface.bounds, •point);
+      };
+
+      °function •FramebufferPutHostRgbPixel {
+        °define •surface: •FramebufferSurface;
+        °define •point: •RectPoint;
+        °define •rgb: •HostRgbPixel;
+        °return •surface;
+      };
+
+      °function •FramebufferPutTritPixel {
+        °define •surface: •FramebufferSurface;
+        °define •point: •RectPoint;
+        °define •pixel: •TritPixel;
+
+        °if { •FramebufferContainsPoint(•surface, •point) == false } {
+          °return •surface;
+        };
+
+        °define •rgb: •HostRgbPixel;
+        °set •rgb = •DecodeTritPixelToRgb(•pixel, •surface.palette);
+        °return •FramebufferPutHostRgbPixel(•surface, •point, •rgb);
+      };
+
+      °function •FramebufferFillRect {
+        °define •surface: •FramebufferSurface;
+        °define •rect: •DisplayRect;
+        °define •pixel: •TritPixel;
+        °define •clipped: •DisplayRect;
+        °set •clipped = •RectClip(•rect, •surface.bounds);
+        °return •surface;
+      };
+
+      °function •FramebufferFlushDirtyRects {
+        °define •surface: •FramebufferSurface;
+        °define •queue: •DirtyRectQueue;
+        °return •surface;
+      };
+    };
+  |■
+|●

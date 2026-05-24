@@ -1,0 +1,60 @@
+<Netiv="research/netiv-gui-bridge/lib/net/delta.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.net.delta",
+      kind: "library",
+      namespace: "gui.net.delta",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.assets.pack,gui.net.manifest",
+      target: "windows-native-window",
+      notes: "Defines incremental delta update semantics for Netiv kiosk asset synchronization."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DeltaUpdate --> DeltaState
+      %%   DeltaUpdate --> AssetPack
+      %%   BuildDeltaUpdate --> DeltaUpdate
+      %%   ApplyDeltaUpdate --> DeltaUpdate
+      %%   ValidateDeltaUpdate --> DeltaUpdate
+    };
+
+    <book>{
+      °enum •DeltaState {
+        •pending,
+        •applying,
+        •completed,
+        •error
+      };
+
+      °struct •DeltaUpdate {
+        °define •state: •DeltaState;
+        °define •changeCount: °usize;
+      };
+
+      °function •MakeDeltaUpdate {
+        °define •changeCount: °usize;
+        °return •DeltaUpdate;
+      };
+
+      °function •BuildDeltaUpdate {
+        °define •delta: •DeltaUpdate;
+        °return •delta;
+      };
+
+      °function •ApplyDeltaUpdate {
+        °define •delta: •DeltaUpdate;
+        °set •delta.state = •completed;
+        °return •delta;
+      };
+
+      °function •ValidateDeltaUpdate {
+        °define •delta: •DeltaUpdate;
+        °return true;
+      };
+    };
+  |■
+|●

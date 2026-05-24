@@ -1,0 +1,52 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/main.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.main",
+      kind: "application-entry",
+      namespace: "apps.ebook_shell.main",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.home_shell,apps.ebook_shell.render.shell_renderer,apps.ebook_shell.render.active_page_renderer,apps.ebook_shell.state.tab_state,gui.display.frame_surface,gui.runtime.loop,gui.host.windows,gui.host.windows_window",
+      target: "windows-native-window",
+      notes: "Defines the Windows compile target scaffold for the Netiv E-Book Shell dark dashboard runtime."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   EbookShellMain --> HomeShell
+      %%   EbookShellMain --> ShellRenderer
+      %%   EbookShellMain --> ActivePageRenderer
+      %%   EbookShellMain --> FrameSurface
+    };
+
+    <book>{
+      °method •BootEbookShell {
+        °define •shell: •HomeShell;
+        °define •tabs: •TabState;
+        °define •surface: •FrameSurface;
+        °define •loop: •RuntimeLoop;
+        °define •host: •WindowsHost;
+        °define •window: •WindowsWindow;
+
+        °set •shell = •BuildHomeShell(•shell);
+        °set •host = •HostBootWindow(•host, •loop);
+        °set •window = •WindowsOpenWindow(•window);
+        °set •window = •WindowsCreateBackbuffer(•window);
+        °set •surface.dirty = true;
+
+        °return •surface;
+      };
+
+      °method •RunEbookShellLoop {
+        °define •surface: •FrameSurface;
+        °define •host: •WindowsHost;
+        °define •window: •WindowsWindow;
+        °set •host = •HostPumpMessages(•host);
+        °set •window = •WindowsPresentFrame(•window);
+        °return •surface;
+      };
+    };
+  |■
+|●

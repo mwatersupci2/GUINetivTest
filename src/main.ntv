@@ -1,0 +1,82 @@
+<Netiv="main.ntv">
+○|
+  □|
+    <meta>{
+      name: "counter_applet",
+      kind: "applet",
+      version: "0.2.0",
+      error: "recoverable",
+      observability: "logs",
+      entry: "LaunchCounterApplet",
+      state: "count"
+    };
+
+    <edges>{
+      %% graph TD
+      %%   LaunchCounterApplet --> LoadInitialState
+      %%   LaunchCounterApplet --> RenderHomePage
+      %%   RenderHomePage --> CounterPage
+      %%   CounterPage --> IncrementCount
+      %%   CounterPage --> ResetCount
+      %%   CounterPage --> RenderCounterState
+      %%   RenderCounterState --> CountState
+    };
+
+    <book>{
+      °page •HomePage {
+        title: "Counter Applet",
+        route: "/",
+        component: •CounterPage
+      };
+
+      °page •CounterPage {
+        title: "Counter",
+        route: "/counter",
+        state: •CountState
+      };
+
+      °method •LaunchCounterApplet() -> °void {
+        °observe {
+          stage: "launch",
+          node: •LaunchCounterApplet
+        };
+
+        °call •LoadInitialState();
+        °call •RenderHomePage();
+        °return;
+      };
+
+      °method •RenderHomePage() -> °void {
+        °observe {
+          stage: "render",
+          node: •HomePage
+        };
+
+        °call •RenderCounterState();
+        °return;
+      };
+
+      °function •LoadInitialState() -> °i64 {
+        °define •count: °i64 = 0;
+        °return •count;
+      };
+
+      °function •IncrementCount(°i64 •count) -> °i64 {
+        °return •count + 1;
+      };
+
+      °function •ResetCount() -> °i64 {
+        °return 0;
+      };
+
+      °function •RenderCounterState() -> °i64 {
+        °define •visible_count: °i64 = 0;
+        °return •visible_count;
+      };
+
+      °function •ReturnStatus() -> °i64 {
+        °return 0;
+      };
+    };
+  |■
+|●

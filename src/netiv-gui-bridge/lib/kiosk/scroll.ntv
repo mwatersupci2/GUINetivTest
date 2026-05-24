@@ -1,0 +1,71 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/scroll.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.scroll",
+      kind: "library",
+      namespace: "gui.kiosk.scroll",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.kiosk.element,gui.input.pointer",
+      target: "windows-native-window",
+      notes: "Defines deterministic scroll regions for ebook pages and kiosk content navigation."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   ScrollRegion --> KioskElement
+      %%   ScrollRegion --> DisplayRect
+      %%   ScrollRegion --> ScrollState
+      %%   ScrollHandlePointer --> PointerEvent
+      %%   ScrollHandlePointer --> ElementHitTest
+      %%   ScrollClamp --> ScrollRegion
+    };
+
+    <book>{
+      °struct •ScrollState {
+        °define •offsetX: °i64;
+        °define •offsetY: °i64;
+        °define •dragging: °bool;
+      };
+
+      °struct •ScrollRegion {
+        °define •element: •KioskElement;
+        °define •contentBounds: •DisplayRect;
+        °define •state: •ScrollState;
+      };
+
+      °function •MakeScrollState {
+        °define •offsetX: °i64;
+        °define •offsetY: °i64;
+        °define •dragging: °bool;
+        °return •ScrollState;
+      };
+
+      °function •MakeScrollRegion {
+        °define •element: •KioskElement;
+        °define •contentBounds: •DisplayRect;
+        °define •state: •ScrollState;
+        °return •ScrollRegion;
+      };
+
+      °function •ScrollClamp {
+        °define •region: •ScrollRegion;
+        °return •region;
+      };
+
+      °function •ScrollHandlePointer {
+        °define •region: •ScrollRegion;
+        °define •event: •PointerEvent;
+
+        °if { •ElementHitTest(•region.element, •event.position) == false } {
+          °return •region;
+        };
+
+        °set •region.state.dragging = true;
+        °return •ScrollClamp(•region);
+      };
+    };
+  |■
+|●

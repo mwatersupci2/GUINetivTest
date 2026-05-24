@@ -1,0 +1,43 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/shell-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.shell_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.shell_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.state.tab_state,gui.document.document_page_render",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines renderable page contracts for ebook-shell tab pages."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   ShellPage --> ShellTab
+      %%   ShellPage --> DocumentPageRender
+      %%   BuildShellPage --> ShellPage
+    };
+
+    <book>{
+      °struct •ShellPage {
+        °define •tab: •ShellTab;
+        °define •pageOrdinal: °usize;
+        °define •visible: °bool;
+      };
+
+      °function •MakeShellPage {
+        °define •tab: •ShellTab;
+        °define •pageOrdinal: °usize;
+        °return •ShellPage;
+      };
+
+      °function •BuildShellPage {
+        °define •page: •ShellPage;
+        °set •page.visible = true;
+        °return •page;
+      };
+    };
+  |■
+|●

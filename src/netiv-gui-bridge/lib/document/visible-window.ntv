@@ -1,0 +1,50 @@
+<Netiv="research/netiv-gui-bridge/lib/document/visible-window.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.visible_window",
+      kind: "library",
+      namespace: "gui.document.visible_window",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.viewport,gui.document.layout_buffer,gui.display.rect",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines extraction of visible layout regions from larger document surfaces."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   VisibleWindow --> DocumentViewport
+      %%   VisibleWindow --> LayoutBuffer
+      %%   BuildVisibleWindow --> DocumentViewport
+      %%   ClipVisibleWindow --> DisplayRect
+    };
+
+    <book>{
+      °struct •VisibleWindow {
+        °define •viewport: •DocumentViewport;
+        °define •layout: •LayoutBuffer;
+        °define •visibleCount: °usize;
+      };
+
+      °function •MakeVisibleWindow {
+        °define •viewport: •DocumentViewport;
+        °define •layout: •LayoutBuffer;
+        °return •VisibleWindow;
+      };
+
+      °function •BuildVisibleWindow {
+        °define •window: •VisibleWindow;
+        °set •window.visibleCount = •window.visibleCount + 1;
+        °return •window;
+      };
+
+      °function •ClipVisibleWindow {
+        °define •window: •VisibleWindow;
+        °define •bounds: •DisplayRect;
+        °return •window;
+      };
+    };
+  |■
+|●

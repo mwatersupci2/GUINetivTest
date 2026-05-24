@@ -1,0 +1,65 @@
+<Netiv="research/netiv-gui-bridge/lib/storage/page-index.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.storage.page_index",
+      kind: "library",
+      namespace: "gui.storage.page_index",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.state.page_asset",
+      target: "windows-native-window",
+      notes: "Defines offline page indexing contracts for ebook-shell navigation and lookup."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   PageIndex --> PageIndexEntry
+      %%   PageIndexEntry --> EbookPageAsset
+      %%   BuildPageIndex --> PageIndex
+      %%   FindPageIndex --> PageIndex
+      %%   LoadPageIndex --> PageIndex
+    };
+
+    <book>{
+      °struct •PageIndexEntry {
+        °define •pageIndex: °usize;
+        °define •chapterIndex: °usize;
+      };
+
+      °struct •PageIndex {
+        °define •entryCount: °usize;
+        °define •loaded: °bool;
+      };
+
+      °function •MakePageIndexEntry {
+        °define •pageIndex: °usize;
+        °define •chapterIndex: °usize;
+        °return •PageIndexEntry;
+      };
+
+      °function •MakePageIndex {
+        °return •PageIndex;
+      };
+
+      °function •BuildPageIndex {
+        °define •index: •PageIndex;
+        °set •index.loaded = true;
+        °return •index;
+      };
+
+      °function •FindPageIndex {
+        °define •index: •PageIndex;
+        °define •pageIndex: °usize;
+        °return •PageIndexEntry;
+      };
+
+      °function •LoadPageIndex {
+        °define •index: •PageIndex;
+        °set •index.loaded = true;
+        °return •index;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,64 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/debug.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.debug",
+      kind: "library",
+      namespace: "gui.runtime.debug",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.tick,gui.runtime.journal,gui.kiosk.screen",
+      target: "windows-native-window",
+      notes: "Defines debug inspection contracts for the Netiv trinary kiosk runtime."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DebugSnapshot --> RuntimeTick
+      %%   DebugSnapshot --> KioskScreen
+      %%   DebugSnapshot --> RuntimeJournal
+      %%   CaptureDebugSnapshot --> DebugSnapshot
+      %%   DebugMarkWarning --> RuntimeJournal
+      %%   DebugMarkError --> RuntimeJournal
+    };
+
+    <book>{
+      °struct •DebugSnapshot {
+        °define •tick: •RuntimeTick;
+        °define •screenRunning: °bool;
+        °define •journalEntries: °usize;
+      };
+
+      °function •MakeDebugSnapshot {
+        °define •tick: •RuntimeTick;
+        °define •screen: •KioskScreen;
+        °define •journal: •RuntimeJournal;
+        °return •DebugSnapshot;
+      };
+
+      °function •CaptureDebugSnapshot {
+        °define •tick: •RuntimeTick;
+        °define •screen: •KioskScreen;
+        °define •journal: •RuntimeJournal;
+        °return •MakeDebugSnapshot(•tick, •screen, •journal);
+      };
+
+      °function •DebugMarkWarning {
+        °define •journal: •RuntimeJournal;
+        °define •tick: •RuntimeTick;
+        °define •entry: •JournalEntry;
+        °set •entry = •MakeJournalEntry(•tick, •warning, •journal.entryCount);
+        °return •JournalAppend(•journal, •entry);
+      };
+
+      °function •DebugMarkError {
+        °define •journal: •RuntimeJournal;
+        °define •tick: •RuntimeTick;
+        °define •entry: •JournalEntry;
+        °set •entry = •MakeJournalEntry(•tick, •error, •journal.entryCount);
+        °return •JournalAppend(•journal, •entry);
+      };
+    };
+  |■
+|●

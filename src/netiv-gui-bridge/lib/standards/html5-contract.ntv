@@ -1,0 +1,81 @@
+<Netiv="research/netiv-gui-bridge/lib/standards/html5-contract.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.standards.html5_contract",
+      kind: "library",
+      namespace: "gui.standards.html5_contract",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.flatfile",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the default HTML5 compatibility contract for the Netiv intra-file GUI browser. Netiv may customize interpretation through settings, but the default baseline should remain HTML5-oriented."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   Html5Contract --> Html5CompatibilityMode
+      %%   Html5Contract --> Html5FeaturePolicy
+      %%   Html5Contract --> FlatfileDocument
+      %%   ValidateHtml5Document --> Html5Contract
+      %%   ApplyHtml5Contract --> FlatfileDocument
+    };
+
+    <book>{
+      °enum •Html5CompatibilityMode {
+        •strict,
+        •kioskSafe,
+        •netivCustom
+      };
+
+      °struct •Html5FeaturePolicy {
+        °define •allowForms: °bool;
+        °define •allowCanvas: °bool;
+        °define •allowMedia: °bool;
+        °define •allowScript: °bool;
+        °define •allowExternalNetwork: °bool;
+      };
+
+      °struct •Html5Contract {
+        °define •mode: •Html5CompatibilityMode;
+        °define •policy: •Html5FeaturePolicy;
+        °define •validated: °bool;
+      };
+
+      °function •MakeHtml5FeaturePolicy {
+        °define •allowForms: °bool;
+        °define •allowCanvas: °bool;
+        °define •allowMedia: °bool;
+        °define •allowScript: °bool;
+        °define •allowExternalNetwork: °bool;
+        °return •Html5FeaturePolicy;
+      };
+
+      °function •MakeHtml5Contract {
+        °define •mode: •Html5CompatibilityMode;
+        °define •policy: •Html5FeaturePolicy;
+        °return •Html5Contract;
+      };
+
+      °function •MakeDefaultHtml5Contract {
+        °define •policy: •Html5FeaturePolicy;
+        °set •policy = •MakeHtml5FeaturePolicy(true, true, false, false, false);
+        °return •MakeHtml5Contract(•kioskSafe, •policy);
+      };
+
+      °function •ValidateHtml5Document {
+        °define •contract: •Html5Contract;
+        °define •document: •FlatfileDocument;
+        °set •contract.validated = true;
+        °return •contract;
+      };
+
+      °function •ApplyHtml5Contract {
+        °define •contract: •Html5Contract;
+        °define •document: •FlatfileDocument;
+        °return •document;
+      };
+    };
+  |■
+|●

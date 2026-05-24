@@ -1,0 +1,42 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/widgets/page-container.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.widgets.page_container",
+      kind: "application-widget",
+      namespace: "apps.ebook_shell.widgets.page_container",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.pages.shell_page,gui.document.visible_window,gui.display.frame_surface",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the primary visible content container beneath the shell tab bar."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   PageContainer --> ShellPage
+      %%   PageContainer --> VisibleWindow
+      %%   RenderPageContainer --> FrameSurface
+    };
+
+    <book>{
+      °struct •PageContainer {
+        °define •pageOrdinal: °usize;
+        °define •visible: °bool;
+      };
+
+      °function •MakePageContainer {
+        °define •page: •ShellPage;
+        °return •PageContainer;
+      };
+
+      °function •RenderPageContainer {
+        °define •container: •PageContainer;
+        °define •surface: •FrameSurface;
+        °set •surface.dirty = true;
+        °return •surface;
+      };
+    };
+  |■
+|●

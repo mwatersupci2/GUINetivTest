@@ -1,0 +1,57 @@
+<Netiv="research/netiv-gui-bridge/lib/kiosk/screen.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.kiosk.screen",
+      kind: "library",
+      namespace: "gui.kiosk.screen",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.kiosk.document,gui.kiosk.event",
+      target: "windows-native-window",
+      notes: "Defines fullscreen kiosk screens for the Netiv offline runtime. Screens host documents and coordinate rendering/event loops."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   KioskScreen --> KioskDocument
+      %%   KioskScreen --> DisplayRect
+      %%   ScreenRender --> RenderDocument
+      %%   ScreenDispatchEvent --> DispatchEvent
+      %%   ScreenInvalidate --> InvalidateWholeDocument
+    };
+
+    <book>{
+      °struct •KioskScreen {
+        °define •bounds: •DisplayRect;
+        °define •document: •KioskDocument;
+        °define •running: °bool;
+      };
+
+      °function •MakeKioskScreen {
+        °define •bounds: •DisplayRect;
+        °define •document: •KioskDocument;
+        °return •KioskScreen;
+      };
+
+      °function •ScreenInvalidate {
+        °define •screen: •KioskScreen;
+        °set •screen.document = •InvalidateWholeDocument(•screen.document);
+        °return •screen;
+      };
+
+      °function •ScreenRender {
+        °define •screen: •KioskScreen;
+        °set •screen.document = •RenderDocument(•screen.document);
+        °return •screen;
+      };
+
+      °function •ScreenDispatchEvent {
+        °define •screen: •KioskScreen;
+        °define •event: •KioskEvent;
+        °return •screen;
+      };
+    };
+  |■
+|●

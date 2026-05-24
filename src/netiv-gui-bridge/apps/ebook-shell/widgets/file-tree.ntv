@@ -1,0 +1,49 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/widgets/file-tree.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.widgets.file_tree",
+      kind: "application-widget",
+      namespace: "apps.ebook_shell.widgets.file_tree",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.hit_region,gui.document.link_map,gui.display.frame_surface",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the navigable file-tree widget for local document browsing."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FileTree --> HitRegion
+      %%   FileTree --> LinkMap
+      %%   RenderFileTree --> FrameSurface
+      %%   SelectFileTreeNode --> LinkMap
+    };
+
+    <book>{
+      °struct •FileTree {
+        °define •nodeCount: °usize;
+        °define •selectedOrdinal: °usize;
+        °define •visible: °bool;
+      };
+
+      °function •MakeFileTree {
+        °return •FileTree;
+      };
+
+      °function •RenderFileTree {
+        °define •tree: •FileTree;
+        °define •surface: •FrameSurface;
+        °set •surface.dirty = true;
+        °return •surface;
+      };
+
+      °function •SelectFileTreeNode {
+        °define •tree: •FileTree;
+        °define •region: •HitRegion;
+        °return •tree;
+      };
+    };
+  |■
+|●

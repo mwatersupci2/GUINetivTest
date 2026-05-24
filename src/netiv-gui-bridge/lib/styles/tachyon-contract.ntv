@@ -1,0 +1,126 @@
+<Netiv="research/netiv-gui-bridge/lib/styles/tachyon-contract.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.styles.tachyon_contract",
+      kind: "library",
+      namespace: "gui.styles.tachyon_contract",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.style,gui.standards.css_contract",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines a Netiv-native utility-style contract inspired by Tachyons CSS for ebook-shell rendering. Utilities are resolved into deterministic layout atoms before the host renderer draws rows, columns, buttons, cards, panels, and status bars."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   TachyonContract --> DocumentStyle
+      %%   TachyonContract --> CssContract
+      %%   ResolveUtilityClass --> DocumentStyle
+    };
+
+    <book>{
+      °enum •UtilityClass {
+        •db,
+        •dn,
+        •pa1,
+        •pa2,
+        •pa3,
+        •ph2,
+        •pv1,
+        •pv2,
+        •ma1,
+        •ma2,
+        •mt2,
+        •mb2,
+        •flex,
+        •flexColumn,
+        •flexRow,
+        •itemsCenter,
+        •justifyBetween,
+        •w100,
+        •wScreen,
+        •wSidebar,
+        •wMain,
+        •hScreen,
+        •hTopbar,
+        •hPathbar,
+        •hStatusbar,
+        •tc,
+        •bgDark,
+        •bgPanel,
+        •bgPanelRaised,
+        •bgSelected,
+        •textLight,
+        •textDim,
+        •textAccent,
+        •borderDark,
+        •buttonTab,
+        •buttonTabActive,
+        •card,
+        •fileTree,
+        •statusStrip
+      };
+
+      °struct •TachyonContract {
+        °define •classCount: °usize;
+        °define •validated: °bool;
+      };
+
+      °struct •TachyonStyleAtom {
+        °define •displayBlock: °bool;
+        °define •displayFlex: °bool;
+        °define •horizontal: °bool;
+        °define •padding: °i64;
+        °define •margin: °i64;
+        °define •width: °i64;
+        °define •height: °i64;
+        °define •background: °usize;
+        °define •foreground: °usize;
+        °define •border: °usize;
+      };
+
+      °function •MakeTachyonContract {
+        °return •TachyonContract;
+      };
+
+      °function •ResolveUtilityClass {
+        °define •contract: •TachyonContract;
+        °define •class: •UtilityClass;
+        °set •contract.validated = true;
+        °return •contract;
+      };
+
+      °function •ResolveUtilityStyleAtom {
+        °define •class: •UtilityClass;
+        °define •atom: •TachyonStyleAtom;
+
+        °if { •class == •flexRow } {
+          °set •atom.displayFlex = true;
+          °set •atom.horizontal = true;
+        };
+
+        °if { •class == •flexColumn } {
+          °set •atom.displayFlex = true;
+          °set •atom.horizontal = false;
+        };
+
+        °if { •class == •pa1 } { °set •atom.padding = 4; };
+        °if { •class == •pa2 } { °set •atom.padding = 8; };
+        °if { •class == •pa3 } { °set •atom.padding = 12; };
+        °if { •class == •ma1 } { °set •atom.margin = 4; };
+        °if { •class == •ma2 } { °set •atom.margin = 8; };
+        °if { •class == •wScreen } { °set •atom.width = 1920; };
+        °if { •class == •wSidebar } { °set •atom.width = 472; };
+        °if { •class == •wMain } { °set •atom.width = 1380; };
+        °if { •class == •hScreen } { °set •atom.height = 1080; };
+        °if { •class == •hTopbar } { °set •atom.height = 68; };
+        °if { •class == •hPathbar } { °set •atom.height = 63; };
+        °if { •class == •hStatusbar } { °set •atom.height = 63; };
+
+        °return •atom;
+      };
+    };
+  |■
+|●

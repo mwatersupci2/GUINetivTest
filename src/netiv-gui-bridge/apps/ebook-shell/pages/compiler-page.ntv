@@ -1,0 +1,41 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/compiler-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.compiler_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.compiler_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the compiler output and build inspection page for ebook-shell."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CompilerPage --> PipelinePanel
+      %%   RenderCompilerPage --> LayoutCompilerPage
+    };
+
+    <book>{
+      °struct •CompilerPage {
+        °define •buildCount: °usize;
+        °define •visible: °bool;
+        °define •layout: •TachyonLayoutEngine;
+      };
+
+      °function •MakeCompilerPage {
+        °return •CompilerPage;
+      };
+
+      °function •RenderCompilerPage {
+        °define •page: •CompilerPage;
+        °set •page.layout = •LayoutCompilerPage(•page.layout);
+        °set •page.visible = true;
+        °return •page;
+      };
+    };
+  |■
+|●

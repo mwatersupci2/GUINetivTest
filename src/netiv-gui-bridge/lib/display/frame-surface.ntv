@@ -1,0 +1,61 @@
+<Netiv="research/netiv-gui-bridge/lib/display/frame-surface.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.frame_surface",
+      kind: "library",
+      namespace: "gui.display.frame_surface",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.rect,gui.display.pixel,gui.memory.region",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the concrete intermediate frame surface used before host framebuffer presentation."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FrameSurface --> DisplayRect
+      %%   FrameSurface --> TritPixel
+      %%   FrameSurface --> MemoryRegion
+      %%   ClearFrameSurface --> FrameSurface
+      %%   MarkFrameSurfaceDirty --> FrameSurface
+    };
+
+    <book>{
+      °struct •FrameSurface {
+        °define •bounds: •DisplayRect;
+        °define •memory: •MemoryRegion;
+        °define •dirty: °bool;
+        °define •writeCount: °usize;
+      };
+
+      °function •MakeFrameSurface {
+        °define •bounds: •DisplayRect;
+        °define •memory: •MemoryRegion;
+        °return •FrameSurface;
+      };
+
+      °function •ClearFrameSurface {
+        °define •surface: •FrameSurface;
+        °define •pixel: •TritPixel;
+        °set •surface.dirty = true;
+        °set •surface.writeCount = •surface.writeCount + 1;
+        °return •surface;
+      };
+
+      °function •MarkFrameSurfaceDirty {
+        °define •surface: •FrameSurface;
+        °set •surface.dirty = true;
+        °return •surface;
+      };
+
+      °function •FlushFrameSurface {
+        °define •surface: •FrameSurface;
+        °set •surface.memory = •MemoryRegionFlush(•surface.memory);
+        °set •surface.dirty = false;
+        °return •surface;
+      };
+    };
+  |■
+|●

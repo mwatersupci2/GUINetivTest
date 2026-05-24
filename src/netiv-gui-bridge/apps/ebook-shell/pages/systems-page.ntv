@@ -1,0 +1,41 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/systems-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.systems_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.systems_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the systems management and runtime inspection page for ebook-shell."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   SystemsPage --> SystemsMap
+      %%   RenderSystemsPage --> LayoutSystemsPage
+    };
+
+    <book>{
+      °struct •SystemsPage {
+        °define •serviceCount: °usize;
+        °define •runtimeVisible: °bool;
+        °define •layout: •TachyonLayoutEngine;
+      };
+
+      °function •MakeSystemsPage {
+        °return •SystemsPage;
+      };
+
+      °function •RenderSystemsPage {
+        °define •page: •SystemsPage;
+        °set •page.layout = •LayoutSystemsPage(•page.layout);
+        °set •page.runtimeVisible = true;
+        °return •page;
+      };
+    };
+  |■
+|●

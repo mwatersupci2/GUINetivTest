@@ -1,0 +1,70 @@
+<Netiv="research/netiv-gui-bridge/lib/storage/bookmark.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.storage.bookmark",
+      kind: "library",
+      namespace: "gui.storage.bookmark",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.state.page_asset",
+      target: "windows-native-window",
+      notes: "Defines offline bookmark persistence for ebook-shell page navigation."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   BookmarkEntry --> EbookPageAsset
+      %%   BookmarkStore --> BookmarkEntry
+      %%   AddBookmark --> BookmarkStore
+      %%   RemoveBookmark --> BookmarkStore
+      %%   LoadBookmarks --> BookmarkStore
+    };
+
+    <book>{
+      °struct •BookmarkEntry {
+        °define •pageIndex: °usize;
+        °define •chapterIndex: °usize;
+      };
+
+      °struct •BookmarkStore {
+        °define •count: °usize;
+        °define •loaded: °bool;
+      };
+
+      °function •MakeBookmarkEntry {
+        °define •pageIndex: °usize;
+        °define •chapterIndex: °usize;
+        °return •BookmarkEntry;
+      };
+
+      °function •MakeBookmarkStore {
+        °return •BookmarkStore;
+      };
+
+      °function •LoadBookmarks {
+        °define •store: •BookmarkStore;
+        °set •store.loaded = true;
+        °return •store;
+      };
+
+      °function •AddBookmark {
+        °define •store: •BookmarkStore;
+        °define •entry: •BookmarkEntry;
+        °set •store.count = •store.count + 1;
+        °return •store;
+      };
+
+      °function •RemoveBookmark {
+        °define •store: •BookmarkStore;
+
+        °if { •store.count > 0 } {
+          °set •store.count = •store.count - 1;
+        };
+
+        °return •store;
+      };
+    };
+  |■
+|●

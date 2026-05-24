@@ -1,0 +1,41 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/layout/tab-layout.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.layout.tab_layout",
+      kind: "application-layout",
+      namespace: "apps.ebook_shell.layout.tab_layout",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.widgets.tab_bar,gui.display.rect",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines deterministic layout rules for ebook-shell tab placement."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   TabLayout --> TabBar
+      %%   TabLayout --> DisplayRect
+      %%   LayoutTabs --> DisplayRect
+    };
+
+    <book>{
+      °struct •TabLayout {
+        °define •tabWidth: °i64;
+        °define •tabHeight: °i64;
+      };
+
+      °function •MakeTabLayout {
+        °return •TabLayout;
+      };
+
+      °function •LayoutTabs {
+        °define •layout: •TabLayout;
+        °set •layout.tabWidth = 1;
+        °set •layout.tabHeight = 1;
+        °return •layout;
+      };
+    };
+  |■
+|●

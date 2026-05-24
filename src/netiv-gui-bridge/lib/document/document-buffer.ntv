@@ -1,0 +1,79 @@
+<Netiv="research/netiv-gui-bridge/lib/document/document-buffer.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.document.document_buffer",
+      kind: "library",
+      namespace: "gui.document.document_buffer",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.document.flatfile,gui.memory.region,gui.memory.tryte_tile,gui.standards.html5_contract",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the trinary document buffer that sits between flatfile storage and visible GUI rendering."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DocumentBuffer --> FlatfileDocument
+      %%   DocumentBuffer --> MemoryRegion
+      %%   DocumentBuffer --> Html5Contract
+      %%   LoadDocumentBuffer --> FlatfileDocument
+      %%   NormalizeDocumentBuffer --> Html5Contract
+      %%   FlushDocumentBuffer --> MemoryRegion
+    };
+
+    <book>{
+      °enum •DocumentBufferState {
+        •empty,
+        •loaded,
+        •normalized,
+        •dirty,
+        •flushed
+      };
+
+      °struct •DocumentBuffer {
+        °define •document: •FlatfileDocument;
+        °define •region: •MemoryRegion;
+        °define •state: •DocumentBufferState;
+        °define •lineCount: °usize;
+        °define •tokenCount: °usize;
+      };
+
+      °function •MakeDocumentBuffer {
+        °define •document: •FlatfileDocument;
+        °define •region: •MemoryRegion;
+        °return •DocumentBuffer;
+      };
+
+      °function •LoadDocumentBuffer {
+        °define •buffer: •DocumentBuffer;
+        °set •buffer.document = •LoadFlatfileDocument(•buffer.document);
+        °set •buffer.state = •loaded;
+        °return •buffer;
+      };
+
+      °function •NormalizeDocumentBuffer {
+        °define •buffer: •DocumentBuffer;
+        °define •contract: •Html5Contract;
+        °set •contract = •ValidateHtml5Document(•contract, •buffer.document);
+        °set •buffer.document = •ApplyHtml5Contract(•contract, •buffer.document);
+        °set •buffer.state = •normalized;
+        °return •buffer;
+      };
+
+      °function •MarkDocumentBufferDirty {
+        °define •buffer: •DocumentBuffer;
+        °set •buffer.state = •dirty;
+        °return •buffer;
+      };
+
+      °function •FlushDocumentBuffer {
+        °define •buffer: •DocumentBuffer;
+        °set •buffer.region = •MemoryRegionFlush(•buffer.region);
+        °set •buffer.state = •flushed;
+        °return •buffer;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,55 @@
+<Netiv="research/netiv-gui-bridge/lib/runtime/trace.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.runtime.trace",
+      kind: "library",
+      namespace: "gui.runtime.trace",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.runtime.tick,gui.runtime.journal",
+      target: "windows-native-window",
+      notes: "Defines structured runtime traces for deterministic kiosk execution flow inspection."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RuntimeTrace --> RuntimeTick
+      %%   RuntimeTrace --> TraceKind
+      %%   TraceAppend --> RuntimeJournal
+      %%   TraceRender --> RuntimeTrace
+      %%   TraceInput --> RuntimeTrace
+      %%   TraceLayout --> RuntimeTrace
+    };
+
+    <book>{
+      °enum •TraceKind {
+        •input,
+        •layout,
+        •render,
+        •present,
+        •flush
+      };
+
+      °struct •RuntimeTrace {
+        °define •tick: •RuntimeTick;
+        °define •kind: •TraceKind;
+        °define •ordinal: °usize;
+      };
+
+      °function •MakeRuntimeTrace {
+        °define •tick: •RuntimeTick;
+        °define •kind: •TraceKind;
+        °define •ordinal: °usize;
+        °return •RuntimeTrace;
+      };
+
+      °function •TraceAppend {
+        °define •journal: •RuntimeJournal;
+        °define •trace: •RuntimeTrace;
+        °return •journal;
+      };
+    };
+  |■
+|●

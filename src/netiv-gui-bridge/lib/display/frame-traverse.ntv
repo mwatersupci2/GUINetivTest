@@ -1,0 +1,42 @@
+<Netiv="research/netiv-gui-bridge/lib/display/frame-traverse.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.display.frame_traverse",
+      kind: "library",
+      namespace: "gui.display.frame_traverse",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.frame_surface,gui.display.rect,gui.display.pixel",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines deterministic frame surface traversal for future framebuffer writes."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   FrameTraverse --> FrameSurface
+      %%   FrameTraverse --> DisplayRect
+      %%   TraverseFrameSurface --> FrameSurface
+    };
+
+    <book>{
+      °struct •FrameTraverse {
+        °define •visitedCount: °usize;
+      };
+
+      °function •MakeFrameTraverse {
+        °return •FrameTraverse;
+      };
+
+      °function •TraverseFrameSurface {
+        °define •traverse: •FrameTraverse;
+        °define •surface: •FrameSurface;
+
+        °set •traverse.visitedCount = •traverse.visitedCount + 1;
+
+        °return •traverse;
+      };
+    };
+  |■
+|●

@@ -1,0 +1,89 @@
+<Netiv="research/netiv-gui-bridge/lib/canvas/context2d.ntv">
+○|
+  □|
+    <meta>{
+      name: "gui.canvas.context2d",
+      kind: "library",
+      namespace: "gui.canvas.context2d",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.display.pixel,gui.display.rect,gui.display.framebuffer,gui.canvas.canvas",
+      target: "windows-native-window",
+      notes: "Defines the immediate-mode 2D drawing context for Netiv kiosk canvas surfaces."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CanvasContext2D --> CanvasSurface
+      %%   CanvasContext2D --> TritPixel
+      %%   CanvasContext2D --> DisplayRect
+      %%   ContextSetFillPixel --> CanvasContext2D
+      %%   ContextFillRect --> FramebufferFillRect
+      %%   ContextFillRect --> CanvasMarkDirty
+      %%   ContextClearRect --> ContextFillRect
+      %%   ContextPresent --> CanvasPresent
+    };
+
+    <book>{
+      °struct •CanvasContext2D {
+        °define •canvas: •CanvasSurface;
+        °define •fillPixel: •TritPixel;
+        °define •clearPixel: •TritPixel;
+      };
+
+      °function •MakeCanvasContext2D {
+        °define •canvas: •CanvasSurface;
+        °define •fillPixel: •TritPixel;
+        °define •clearPixel: •TritPixel;
+        °return •CanvasContext2D;
+      };
+
+      °function •ContextSetFillPixel {
+        °define •ctx: •CanvasContext2D;
+        °define •pixel: •TritPixel;
+        °set •ctx.fillPixel = •pixel;
+        °return •ctx;
+      };
+
+      °function •ContextSetClearPixel {
+        °define •ctx: •CanvasContext2D;
+        °define •pixel: •TritPixel;
+        °set •ctx.clearPixel = •pixel;
+        °return •ctx;
+      };
+
+      °function •ContextFillRect {
+        °define •ctx: •CanvasContext2D;
+        °define •rect: •DisplayRect;
+        °define •clipped: •DisplayRect;
+        °set •clipped = •RectClip(•rect, •ctx.canvas.bounds);
+        °set •ctx.canvas.framebuffer = •FramebufferFillRect(•ctx.canvas.framebuffer, •clipped, •ctx.fillPixel);
+        °set •ctx.canvas = •CanvasMarkDirty(•ctx.canvas, •clipped);
+        °return •ctx;
+      };
+
+      °function •ContextClearRect {
+        °define •ctx: •CanvasContext2D;
+        °define •rect: •DisplayRect;
+        °define •savedFill: •TritPixel;
+        °set •savedFill = •ctx.fillPixel;
+        °set •ctx.fillPixel = •ctx.clearPixel;
+        °set •ctx = •ContextFillRect(•ctx, •rect);
+        °set •ctx.fillPixel = •savedFill;
+        °return •ctx;
+      };
+
+      °function •ContextClearCanvas {
+        °define •ctx: •CanvasContext2D;
+        °return •ContextClearRect(•ctx, •ctx.canvas.bounds);
+      };
+
+      °function •ContextPresent {
+        °define •ctx: •CanvasContext2D;
+        °set •ctx.canvas = •CanvasPresent(•ctx.canvas);
+        °return •ctx;
+      };
+    };
+  |■
+|●
