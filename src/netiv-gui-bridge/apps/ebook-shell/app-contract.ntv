@@ -61,10 +61,12 @@
       °call •GuiPage {
         tab: "Notes",
         heading: "Scratch document",
-        body: "Compatible note files are listed in a left-side selector and the selected markdown note renders in the main viewport.",
-        tools: "New|Open|Save|Link|Trace",
+        body: "Compatible note files are listed in a left-side selector and the selected markdown note opens in an editable viewport with markdown heading rendering.",
+        tools: "New|Open|Save|Link|Format|Trace",
         lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Notes/*.md",
-        kind: "notes"
+        kind: "notes-editor",
+        editMode: "markdown",
+        markdownHeadings: "H1|H2|H3|H4"
       };
 
       °call •GuiPage {

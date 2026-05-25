@@ -10,7 +10,7 @@
       status: "future-active-draft",
       imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines the notes reader/editor page with a left-side file selector and markdown viewport.",
+      notes: "Defines the notes markdown editor with a left-side file selector, editable viewport, and rendered H1-H4 headings.",
       lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Notes/*.md"
     };
 
@@ -18,6 +18,12 @@
       °struct •NotesPage {
         °define •lineCount: °usize;
         °define •editable: °bool;
+        °define •dirty: °bool;
+        °define •newVisible: °bool;
+        °define •saveVisible: °bool;
+        °define •selectedOrdinal: °usize;
+        °define •activeFile: •string;
+        °define •editorMode: •string;
         °define •lexography: •string;
         °define •layout: •TachyonLayoutEngine;
       };
@@ -31,6 +37,41 @@
         °set •page.lexography = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Notes/*.md";
         °set •page.layout = •LayoutNotesPage(•page.layout);
         °set •page.editable = true;
+        °set •page.dirty = false;
+        °set •page.newVisible = true;
+        °set •page.saveVisible = true;
+        °set •page.editorMode = "markdown";
+        °return •page;
+      };
+
+      °function •SelectNotesDocument {
+        °define •page: •NotesPage;
+        °define •ordinal: •usize;
+        °define •fileName: •string;
+        °set •page.selectedOrdinal = •ordinal;
+        °set •page.activeFile = •fileName;
+        °return •page;
+      };
+
+      °function •BeginNotesEdit {
+        °define •page: •NotesPage;
+        °set •page.editable = true;
+        °set •page.dirty = true;
+        °return •page;
+      };
+
+      °function •CreateNotesDocument {
+        °define •page: •NotesPage;
+        °set •page.newVisible = true;
+        °set •page.dirty = false;
+        °set •page.activeFile = "Untitled.md";
+        °return •page;
+      };
+
+      °function •SaveNotesDocument {
+        °define •page: •NotesPage;
+        °set •page.saveVisible = true;
+        °set •page.dirty = false;
         °return •page;
       };
     };

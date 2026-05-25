@@ -1,0 +1,77 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/input/notes-input.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.input.notes_input",
+      kind: "application-input",
+      namespace: "apps.ebook_shell.input.notes_input",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.pages.notes_page,gui.document.hit_region,gui.input.pointer,gui.input.keyboard",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines notes selector clicks, markdown editing, and save/new routing for the Notes page."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   NotesInput --> NotesPage
+      %%   NotesInput --> HitRegion
+      %%   NotesInput --> PointerEvent
+      %%   NotesInput --> KeyboardEvent
+      %%   SelectNotesDocument --> NotesPage
+      %%   SaveNotesDocument --> NotesPage
+    };
+
+    <book>{
+      °struct •NotesInput {
+        °define •selectionCount: °usize;
+        °define •editCount: °usize;
+        °define •saveCount: °usize;
+        °define •newCount: °usize;
+        °define •lastFile: •string;
+      };
+
+      °function •MakeNotesInput {
+        °return •NotesInput;
+      };
+
+      °function •SelectNotesDocument {
+        °define •input: •NotesInput;
+        °define •page: •NotesPage;
+        °define •region: •HitRegion;
+        °set •input.selectionCount = •input.selectionCount + 1;
+        °return •page;
+      };
+
+      °function •BeginNotesEdit {
+        °define •input: •NotesInput;
+        °define •page: •NotesPage;
+        °define •event: •KeyboardEvent;
+        °set •input.editCount = •input.editCount + 1;
+        °set •page.editable = true;
+        °set •page.dirty = true;
+        °return •page;
+      };
+
+      °function •CreateNotesDocument {
+        °define •input: •NotesInput;
+        °define •page: •NotesPage;
+        °set •input.newCount = •input.newCount + 1;
+        °set •page.newVisible = true;
+        °set •page.activeFile = "Untitled.md";
+        °set •page.dirty = false;
+        °return •page;
+      };
+
+      °function •SaveNotesDocument {
+        °define •input: •NotesInput;
+        °define •page: •NotesPage;
+        °set •input.saveCount = •input.saveCount + 1;
+        °set •page.saveVisible = true;
+        °set •page.dirty = false;
+        °return •page;
+      };
+    };
+  |■
+|●

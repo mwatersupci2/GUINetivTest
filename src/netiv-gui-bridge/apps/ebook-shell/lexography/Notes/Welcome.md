@@ -1,6 +1,6 @@
 # Welcome
 
-This folder strictly uses `.md` files for notebook-style notes.
+This folder strictly uses `.md` files for notebook-style notes with editable markdown headings.
 
 ## Example
 
@@ -10,6 +10,9 @@ This folder strictly uses `.md` files for notebook-style notes.
 
 ```markdown
 # Sample Note
+## Subheading
+### Detail Heading
+#### Small Heading
 - item one
 - item two
 ```
@@ -19,4 +22,5 @@ This folder strictly uses `.md` files for notebook-style notes.
 | Field | Value |
 |---|---|
 | Selector | Left-side file list |
-| Viewport | Selected note content |
+| Viewport | Selected note content with markdown rendering |
+| Actions | New, Open, Save, Format |
