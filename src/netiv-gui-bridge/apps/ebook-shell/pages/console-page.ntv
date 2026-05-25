@@ -67,6 +67,40 @@
         °return •page;
       };
 
+      °function •ConsoleClearTranscript {
+        °define •page: •ConsolePage;
+        °set •page.transcript = "";
+        °set •page.outputDirty = true;
+        °return •page;
+      };
+
+      °function •ConsoleIsClearCommand {
+        °define •command: •string;
+        °if { •command == "clear" } {
+          °return true;
+        };
+        °if { •command == "cls" } {
+          °return true;
+        };
+        °if { •command == "clear-host" } {
+          °return true;
+        };
+        °return false;
+      };
+
+      °function •ConsoleExecuteCommand {
+        °define •page: •ConsolePage;
+        °define •command: •string;
+        °if { •ConsoleIsClearCommand(•command) == true } {
+          °set •page = •ConsoleClearTranscript(•page);
+          °set •page.input = "";
+          °return •page;
+        };
+        °set •page = •ConsoleAppendTranscriptLine(•page, •page.prompt + •command);
+        °set •page.input = "";
+        °return •page;
+      };
+
       °function •ConsoleAppendInputChar {
         °define •page: •ConsolePage;
         °define •ch: •string;
@@ -85,8 +119,7 @@
         °define •command: •string;
         °set •command = •page.input;
         °if { •command != "" } {
-          °set •page = •ConsoleAppendTranscriptLine(•page, •page.prompt + •command);
-          °set •page.input = "";
+          °set •page = •ConsoleExecuteCommand(•page, •command);
         };
         °set •page.outputDirty = true;
         °return •page;
