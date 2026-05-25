@@ -1,0 +1,40 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/index.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.lexography.wiki_index",
+      kind: "wiki-document",
+      namespace: "apps.ebook_shell.lexography.wiki",
+      version: "0.2.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core,gui.layout.tachyon_layout",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Wiki documents use Netiv sections and render from the books block."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   WikiIndex --> DriftCore
+      %%   WikiIndex --> VectorSpine
+      %%   WikiIndex --> RelayMesh
+      %%   WikiIndex --> EchoVault
+    };
+
+    <books>{
+      °define •wikiFormat: °string = ".ntv";
+      °define •wikiPurpose: °string = "Document outline and live wiki content rendered from Netiv source.";
+
+      ```netiv
+      <books>{
+        °define •layoutStyle: •string = "two-pane document reader";
+        °define •selectorPlacement: •string = "left";
+        °define •viewportPlacement: •string = "right";
+      };
+      ```
+
+      The wiki tab displays only files that match the wiki contract.
+      The selected article renders in the main viewport.
+    };
+  |■
+|●

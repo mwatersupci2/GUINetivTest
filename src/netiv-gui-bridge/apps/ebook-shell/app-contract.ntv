@@ -42,11 +42,59 @@
       };
 
       °call •GuiPage {
+        tab: "Files",
+        heading: "Current folder",
+        body: "Live filesystem explorer rooted at the executable working directory.",
+        tools: "Open folder|Select file|Refresh|Preview|Trace",
+        kind: "file-explorer"
+      };
+
+      °call •GuiPage {
         tab: "Wiki",
         heading: "Welcome.netiv",
-        body: "Document outline, reading surface, links, and page metadata.",
+        body: "Compatible wiki files are listed in a left-side selector and the selected wiki renders in the main viewport.",
         tools: "Select|Open|Refresh|Trace|Export",
+        lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/*.ntv",
         kind: "reader"
+      };
+
+      °call •GuiPage {
+        tab: "Notes",
+        heading: "Scratch document",
+        body: "Compatible note files are listed in a left-side selector and the selected markdown note renders in the main viewport.",
+        tools: "New|Open|Save|Link|Trace",
+        lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Notes/*.md",
+        kind: "notes"
+      };
+
+      °call •GuiPage {
+        tab: "Todo",
+        heading: "Todo board",
+        body: "Compatible todo files are listed in a left-side selector and the selected todo list renders with checkboxes and padded columns.",
+        tools: "Add|Check|Priority|Archive|Trace",
+        lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Todos/*.list",
+        kind: "todo"
+      };
+
+      °call •GuiPage {
+        tab: "Lessons",
+        heading: "Lessons",
+        body: "Compatible lesson files are listed in a left-side selector and the selected lesson renders in the main viewport.",
+        tools: "Open|Refresh|Trace|Export|Study",
+        lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Lessons/*.ntv",
+        kind: "lessons"
+      };
+
+      °call •GuiPage {
+        tab: "CSV",
+        heading: "CSV Grid",
+        body: "Compatible CSV files are listed in a left-side selector and the selected file renders as a direct-edit cell grid in the main viewport.",
+        tools: "Open|Refresh|Trace|Export|Edit|Save",
+        lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/CSV/*.csv",
+        kind: "csv",
+        maxRows: "200",
+        maxColumns: "200",
+        gridMode: "editable"
       };
 
       °call •GuiPage {
@@ -58,19 +106,11 @@
       };
 
       °call •GuiPage {
-        tab: "Files",
-        heading: "Current folder",
-        body: "Live filesystem explorer rooted at the executable working directory.",
-        tools: "Open folder|Select file|Refresh|Preview|Trace",
-        kind: "file-explorer"
-      };
-
-      °call •GuiPage {
         tab: "Console",
-        heading: "> netiv write",
-        body: "Full-bleed runtime log stream and command output surface with no side panels.",
-        tools: "Run|Clear|Copy|Trace|Export",
-        shell: "powershell.exe",
+        heading: "Command Prompt",
+        body: "Full-bleed passthrough to cmd.exe with live shell output and no side panels.",
+        tools: "Run|Copy|Trace|Export|Focus",
+        shell: "cmd.exe",
         kind: "console"
       };
 
@@ -112,22 +152,6 @@
         body: "Endpoints, local mirror, sync queue, and download channels.",
         tools: "Endpoints|Mirror|Sync|Download|Trace",
         kind: "network"
-      };
-
-      °call •GuiPage {
-        tab: "Notes",
-        heading: "Scratch document",
-        body: "Editable notes surface and local document state.",
-        tools: "New|Open|Save|Link|Trace",
-        kind: "notes"
-      };
-
-      °call •GuiPage {
-        tab: "Todo",
-        heading: "Todo board",
-        body: "Checkbox regions, priorities, and line items.",
-        tools: "Add|Check|Priority|Archive|Trace",
-        kind: "todo"
       };
 
       °call •GuiPage {

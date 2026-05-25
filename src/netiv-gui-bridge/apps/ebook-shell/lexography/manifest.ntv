@@ -1,0 +1,24 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/lexography/manifest.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.lexography_manifest",
+      kind: "lexography-contract",
+      namespace: "apps.ebook_shell.lexography.manifest",
+      version: "0.1.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the strict file extension contract for ebook-shell lexography folders."
+    };
+
+    <book>{
+      °define •notesFolder: °string = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Notes/*.md";
+      °define •todosFolder: °string = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Todos/*.list";
+      °define •wikiFolder: °string = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/*.ntv";
+      °define •lessonsFolder: °string = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Lessons/*.ntv";
+      °define •csvFolder: °string = "src/netiv-gui-bridge/apps/ebook-shell/lexography/CSV/*.csv";
+    };
+  |■
+|●

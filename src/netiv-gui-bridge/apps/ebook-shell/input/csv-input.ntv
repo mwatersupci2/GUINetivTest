@@ -1,0 +1,81 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/input/csv-input.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.input.csv_input",
+      kind: "application-input",
+      namespace: "apps.ebook_shell.input.csv_input",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,apps.ebook_shell.pages.csv_page,gui.document.hit_region,gui.input.pointer,gui.input.keyboard",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines CSV selector clicks, direct cell editing, and save routing for the CSV page."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CsvInput --> CsvPage
+      %%   CsvInput --> HitRegion
+      %%   CsvInput --> PointerEvent
+      %%   CsvInput --> KeyboardEvent
+      %%   SelectCsvCell --> CsvPage
+      %%   SaveCsvPage --> CsvPage
+    };
+
+    <book>{
+      °struct •CsvInput {
+        °define •selectionCount: °usize;
+        °define •editCount: °usize;
+        °define •saveCount: °usize;
+        °define •lastRow: °usize;
+        °define •lastColumn: °usize;
+      };
+
+      °function •MakeCsvInput {
+        °return •CsvInput;
+      };
+
+      °function •SelectCsvCell {
+        °define •input: •CsvInput;
+        °define •page: •CsvPage;
+        °define •region: •HitRegion;
+        °set •input.selectionCount = •input.selectionCount + 1;
+        °return •page;
+      };
+
+      °function •EditCsvCell {
+        °define •input: •CsvInput;
+        °define •page: •CsvPage;
+        °define •event: •KeyboardEvent;
+        °set •input.editCount = •input.editCount + 1;
+        °set •page.editable = true;
+        °return •page;
+      };
+
+      °function •SaveCsvPage {
+        °define •input: •CsvInput;
+        °define •page: •CsvPage;
+        °set •input.saveCount = •input.saveCount + 1;
+        °set •page.saveVisible = true;
+        °return •page;
+      };
+
+      °function •RouteCsvPointer {
+        °define •input: •CsvInput;
+        °define •page: •CsvPage;
+        °define •event: •PointerEvent;
+        °set •input.selectionCount = •input.selectionCount + 1;
+        °return •page;
+      };
+
+      °function •RouteCsvKeyboard {
+        °define •input: •CsvInput;
+        °define •page: •CsvPage;
+        °define •event: •KeyboardEvent;
+        °set •input.editCount = •input.editCount + 1;
+        °return •page;
+      };
+    };
+  |■
+|●

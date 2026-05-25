@@ -1,0 +1,26 @@
+# Project: Helios Media Server
+# Columns: Ref | Category | Severity | Assigned | Environment | Comments
+
+[ ] HEL-001 | transcoding | critical | Omar | staging | GPU fallback crashing
+[ ] HEL-002 | ui | medium | Jade | prod | Playlist drag glitch
+[ ] HEL-003 | streaming | high | Luis | dev | HLS segment mismatch
+[ ] HEL-004 | backup | low | Omar | prod | Cleanup old snapshots
+[ ] HEL-005 | auth | critical | Jade | staging | Refresh token expiry issue
+[ ] HEL-006 | storage | medium | Luis | dev | Investigate inode growth
+[ ] HEL-007 | analytics | low | Omar | prod | Add retention chart
+[ ] HEL-008 | metadata | medium | Jade | dev | Movie poster mismatch
+[ ] HEL-009 | networking | high | Luis | staging | LAN discovery instability
+[ ] HEL-010 | transcoding | medium | Omar | prod | Tune bitrate presets
+[ ] HEL-011 | subtitles | low | Jade | dev | Improve SRT parsing
+[ ] HEL-012 | security | critical | Luis | prod | Audit exposed endpoints
+[ ] HEL-013 | indexing | medium | Omar | staging | Speed up initial scans
+[ ] HEL-014 | audio | low | Jade | dev | Normalize volume peaks
+[ ] HEL-015 | caching | high | Luis | prod | Memory pressure under load
+[ ] HEL-016 | api | medium | Omar | staging | Add webhook retries
+[ ] HEL-017 | dashboard | low | Jade | dev | Compact card layout
+[ ] HEL-018 | streaming | high | Luis | prod | Investigate dropped frames
+[ ] HEL-019 | docs | low | Omar | prod | Expand install manual
+[ ] HEL-020 | sync | medium | Jade | staging | Multi-device playback state
+[ ] HEL-021 | search | high | Luis | dev | Fuzzy search tuning
+[ ] HEL-022 | transcoding | medium | Omar | prod | Queue starvation edge case
+[ ] HEL-023 | plugins | low | Jade | staging | Sandbox plugin execution

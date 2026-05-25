@@ -10,7 +10,8 @@
       status: "future-active-draft",
       imports: "trit.core,apps.ebook_shell.pages.shell_page,gui.layout.tachyon_layout,gui.document.document_page_render,gui.display.frame_surface",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines rendering behavior for the ebook-shell wiki page view."
+      notes: "Defines rendering behavior for the wiki page view with a left-side file selector and document viewport.",
+      lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/*.ntv"
     };
 
     <edges>{
@@ -24,6 +25,7 @@
     <book>{
       °struct •WikiRenderer {
         °define •renderCount: °usize;
+        °define •lexography: •string;
       };
 
       °function •MakeWikiRenderer {
@@ -36,6 +38,7 @@
         °define •surface: •FrameSurface;
         °define •layout: •TachyonLayoutEngine;
 
+        °set •renderer.lexography = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/*.ntv";
         °set •layout = •LayoutWikiPage(•layout);
         °set •surface.dirty = true;
         °set •renderer.renderCount = •renderer.renderCount + 1;

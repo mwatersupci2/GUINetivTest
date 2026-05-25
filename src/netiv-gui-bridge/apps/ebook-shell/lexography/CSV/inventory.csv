@@ -1,0 +1,11 @@
+Item,Category,Qty,Location,Status
+Notebook,Office,12,Shelf A,Ready
+Pen,Office,48,Shelf A,Ready
+Binder,Office,15,Shelf B,Low
+Mouse,Hardware,9,Shelf C,Ready
+Keyboard,Hardware,7,Shelf C,Ready
+Display,Hardware,4,Shelf D,Reserved
+Cable,Hardware,120,Shelf D,Ready
+Adapter,Hardware,33,Shelf E,Ready
+Chair,Furniture,6,Floor,Low
+Lamp,Furniture,11,Floor,Ready

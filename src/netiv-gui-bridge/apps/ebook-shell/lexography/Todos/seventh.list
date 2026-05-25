@@ -1,0 +1,23 @@
+# Project: Echo Smart Home Stack
+# Columns: Todo | Device | Firmware | Location | Status | LastCheck
+
+[ ] Pair kitchen thermostat | THM-22 | v1.0.4 | Kitchen | pending | 2026-05-20
+[ ] Replace hallway sensor battery | SNS-18 | v0.9.8 | Hallway | active | 2026-05-19
+[ ] Update garage controller | GRC-44 | v2.1.0 | Garage | pending | 2026-05-18
+[ ] Add patio light schedules | LGT-12 | v1.3.1 | Patio | review | 2026-05-21
+[ ] Audit camera permissions | CAM-77 | v3.0.0 | Exterior | active | 2026-05-22
+[ ] Fix duplicate automation trigger | HUB-01 | v4.5.2 | Core | blocked | 2026-05-17
+[ ] Tune bedroom humidity sensor | HUM-19 | v1.1.2 | Bedroom | pending | 2026-05-20
+[ ] Improve voice wake detection | SPK-30 | v2.4.0 | LivingRoom | active | 2026-05-16
+[ ] Replace damaged smart plug | PLG-15 | v1.0.1 | Office | review | 2026-05-15
+[ ] Validate backup battery runtime | UPS-02 | v0.8.4 | Utility | active | 2026-05-21
+[ ] Add motion alerts to app | SNS-21 | v1.5.0 | Backyard | pending | 2026-05-20
+[ ] Reduce false camera alerts | CAM-91 | v2.8.3 | Driveway | blocked | 2026-05-19
+[ ] Create firmware rollback tool | HUB-01 | v4.5.2 | Core | active | 2026-05-18
+[ ] Test local LAN failover | NET-07 | v5.0.0 | ServerRack | review | 2026-05-22
+[ ] Add energy consumption graphs | MTR-66 | v1.9.1 | Utility | pending | 2026-05-23
+[ ] Rebuild automation templates | HUB-01 | v4.5.2 | Core | active | 2026-05-22
+[ ] Optimize Bluetooth scanning | BT-04 | v2.2.2 | HouseWide | pending | 2026-05-21
+[ ] Verify encrypted device sync | HUB-01 | v4.5.2 | Core | review | 2026-05-23
+[ ] Add guest network isolation | NET-07 | v5.0.0 | ServerRack | active | 2026-05-22
+[ ] Improve mobile notification timing | APP-11 | v3.3.4 | Mobile | pending | 2026-05-24

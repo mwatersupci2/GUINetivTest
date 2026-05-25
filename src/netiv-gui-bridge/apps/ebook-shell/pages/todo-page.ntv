@@ -10,7 +10,8 @@
       status: "future-active-draft",
       imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render,gui.document.hit_region,gui.display.rect",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines the Cornell-style todo list page where every todo item owns a visible checkbox region."
+      notes: "Defines the todo list page with a left-side file selector, checkbox rows, and padded pipe-delimited columns.",
+      lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Todos/*.list"
     };
 
     <edges>{
@@ -39,6 +40,7 @@
       °struct •TodoPage {
         °define •itemCount: °usize;
         °define •cornellMode: °bool;
+        °define •lexography: •string;
         °define •layout: •TachyonLayoutEngine;
       };
 
@@ -56,6 +58,7 @@
 
       °function •RenderTodoPage {
         °define •page: •TodoPage;
+        °set •page.lexography = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Todos/*.list";
         °set •page.layout = •LayoutTodoPage(•page.layout);
         °set •page.cornellMode = true;
         °return •page;

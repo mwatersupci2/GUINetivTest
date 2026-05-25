@@ -8,9 +8,9 @@
       version: "0.1.0",
       error: "terminal",
       status: "future-active-draft",
-      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.widgets.tab_bar,gui.input.pointer,gui.input.keyboard,gui.document.hit_region",
+      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.widgets.tab_bar,apps.ebook_shell.input.csv_input,gui.input.pointer,gui.input.keyboard,gui.document.hit_region",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines top-level input routing for the full fourteen-tab ebook-shell interface."
+      notes: "Defines top-level input routing for the grouped sixteen-tab ebook-shell interface."
     };
 
     <edges>{

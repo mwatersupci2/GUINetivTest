@@ -8,7 +8,7 @@
       version: "0.1.0",
       error: "terminal",
       status: "future-active-draft",
-      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.pages.shell_page,apps.ebook_shell.pages.graph_page,apps.ebook_shell.pages.files_page,apps.ebook_shell.pages.console_page,apps.ebook_shell.pages.compiler_page,apps.ebook_shell.pages.observability_page,apps.ebook_shell.pages.systems_page,apps.ebook_shell.pages.pods_page,apps.ebook_shell.pages.network_page,apps.ebook_shell.pages.notes_page,apps.ebook_shell.pages.todo_page,apps.ebook_shell.pages.chat_page,apps.ebook_shell.pages.settings_page,apps.ebook_shell.render.home_renderer,apps.ebook_shell.render.wiki_renderer,gui.display.frame_surface",
+      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.pages.shell_page,apps.ebook_shell.pages.graph_page,apps.ebook_shell.pages.files_page,apps.ebook_shell.pages.console_page,apps.ebook_shell.pages.compiler_page,apps.ebook_shell.pages.observability_page,apps.ebook_shell.pages.systems_page,apps.ebook_shell.pages.pods_page,apps.ebook_shell.pages.network_page,apps.ebook_shell.pages.notes_page,apps.ebook_shell.pages.todo_page,apps.ebook_shell.pages.lessons_page,apps.ebook_shell.pages.csv_page,apps.ebook_shell.pages.chat_page,apps.ebook_shell.pages.settings_page,apps.ebook_shell.render.home_renderer,apps.ebook_shell.render.wiki_renderer,gui.display.frame_surface",
       target: "binary-hosted-trinary-runtime",
       notes: "Renders the selected ebook-shell page from tab state."
     };
@@ -29,6 +29,7 @@
       %%   ActivePageRenderer --> NotesPage
       %%   ActivePageRenderer --> TodoPage
       %%   ActivePageRenderer --> ChatPage
+      %%   ActivePageRenderer --> CsvPage
       %%   ActivePageRenderer --> SettingsPage
       %%   RenderActivePage --> FrameSurface
     };
@@ -56,6 +57,8 @@
         °define •networkPage: •NetworkPage;
         °define •notesPage: •NotesPage;
         °define •todoPage: •TodoPage;
+        °define •lessonsPage: •LessonsPage;
+        °define •csvPage: •CsvPage;
         °define •chatPage: •ChatPage;
         °define •settingsPage: •SettingsPage;
 
@@ -114,6 +117,16 @@
 
         °if { •state.active == •todo } {
           °set •todoPage = •RenderTodoPage(•todoPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •lessons } {
+          °set •lessonsPage = •RenderLessonsPage(•lessonsPage);
+          °set •surface.dirty = true;
+        };
+
+        °if { •state.active == •csv } {
+          °set •csvPage = •RenderCsvPage(•csvPage);
           °set •surface.dirty = true;
         };
 

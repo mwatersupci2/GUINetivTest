@@ -1,0 +1,31 @@
+# Project: Forge Robotics Lab
+# Columns: Item | Stage | Risk | Cost | Lead | Approval
+
+[ ] Assemble armature frame | fabrication | medium | $1200 | Victor | pending
+[ ] Tune servo controller | testing | high | $450 | Nina | approved
+[ ] Replace damaged sensor cable | repair | low | $60 | Evan | approved
+[ ] Add emergency stop logic | firmware | critical | $300 | Victor | pending
+[ ] Design battery enclosure | cad | medium | $180 | Nina | approved
+[ ] Improve wheel traction | mechanical | medium | $90 | Evan | pending
+[ ] Validate thermal load | testing | high | $240 | Victor | pending
+[ ] Add lidar calibration routine | software | medium | $500 | Nina | approved
+[ ] Refactor telemetry packets | software | low | $120 | Evan | approved
+[ ] Test autonomous pathing | ai | critical | $900 | Victor | pending
+[ ] Add backup power rail | electrical | medium | $350 | Nina | approved
+[ ] Replace failed actuator | repair | high | $600 | Evan | pending
+[ ] Create assembly manual | docs | low | $80 | Victor | approved
+[ ] Improve chassis stability | mechanical | medium | $400 | Nina | pending
+[ ] Benchmark object detection | ai | medium | $700 | Evan | approved
+[ ] Add diagnostics dashboard | software | low | $200 | Victor | pending
+[ ] Validate radio range | networking | medium | $110 | Nina | approved
+[ ] Reduce idle power draw | electrical | medium | $150 | Evan | approved
+[ ] Finalize production BOM | procurement | high | $0 | Victor | pending
+[ ] Create maintenance checklist | ops | low | $30 | Nina | approved
+[ ] Audit firmware rollback path | firmware | critical | $210 | Evan | pending
+[ ] Package demo build | release | low | $95 | Victor | approved
+[ ] Improve camera stabilization | hardware | medium | $275 | Nina | pending
+[ ] Simulate terrain obstacles | testing | medium | $140 | Evan | approved
+[ ] Verify safety compliance docs | legal | high | $0 | Victor | pending
+[ ] Prepare investor demo kit | marketing | medium | $320 | Nina | approved
+[ ] Add remote diagnostics API | backend | medium | $280 | Evan | pending
+[ ] Replace worn wheel bearings | repair | low | $70 | Victor | approved

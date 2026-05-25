@@ -1,0 +1,23 @@
+# Project: Titan Inventory Platform
+# Columns: Task | Team | Difficulty | ETA | Dependency | Progress
+
+[ ] Build inventory sync worker | Backend | Hard | 5d | none | 0%
+[ ] Add warehouse heatmap | Frontend | Medium | 2d | API-v2 | 15%
+[ ] Create reorder threshold alerts | Backend | Medium | 3d | cache-layer | 40%
+[ ] Validate barcode parser | QA | Easy | 1d | scanner-lib | 0%
+[ ] Add handheld scanner pairing | Hardware | Hard | 4d | firmware | 5%
+[ ] Refactor item detail page | Frontend | Medium | 2d | ui-kit | 60%
+[ ] Compress image thumbnails | Infra | Medium | 1d | storage | 0%
+[ ] Add product expiration tracking | Backend | Hard | 4d | db-migration | 10%
+[ ] Improve stock movement logs | Backend | Medium | 2d | logging | 30%
+[ ] Create audit discrepancy report | Analytics | Hard | 3d | reports-api | 0%
+[ ] Add supplier ranking table | Analytics | Medium | 2d | metrics | 0%
+[ ] Replace old import wizard | Frontend | Hard | 5d | csv-parser | 20%
+[ ] Add offline warehouse mode | Mobile | Hard | 6d | sync-worker | 0%
+[ ] Improve API throttling | Backend | Medium | 2d | auth-layer | 55%
+[ ] Create bulk label printer tool | Tools | Medium | 2d | printer-driver | 0%
+[ ] Benchmark query latency | DBA | Medium | 1d | replica-db | 0%
+[ ] Add multilingual item names | Frontend | Easy | 1d | translation-json | 0%
+[ ] Improve warehouse map rendering | Graphics | Hard | 3d | gpu-tests | 5%
+[ ] Add item archival rules | Backend | Medium | 2d | retention-policy | 0%
+[ ] Finalize onboarding guide | Docs | Easy | 1d | screenshots | 0%

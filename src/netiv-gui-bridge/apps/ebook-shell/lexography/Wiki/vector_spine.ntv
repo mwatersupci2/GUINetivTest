@@ -1,0 +1,54 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/vector_spine.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.lexography.wiki_vector_spine",
+      kind: "wiki-document",
+      namespace: "apps.ebook_shell.lexography.wiki.vector_spine",
+      version: "0.2.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core,gui.layout.tachyon_layout",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Vector Spine is the shared navigation lattice rendered through the wiki books section."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   VectorSpine --> RelayMesh
+      %%   VectorSpine --> DriftCore
+      %%   VectorSpine --> HeliosOverview
+    };
+
+    <books>{
+      # Vector Spine
+
+      The Vector Spine was the geometric navigation lattice shared across all Helios fleet vessels.
+
+      ## Components
+
+      | Component | Purpose |
+      |---|---|
+      | Spine Nodes | Spatial anchor points |
+      | Transit Threads | Predicted route vectors |
+      | Gravity Wells | Dynamic hazard markers |
+      | Fold Gates | High-speed route shortcuts |
+
+      ```netiv
+      °define •spineMode: •string = "predictive lattice";
+      °define •spineRender: •string = "books content can carry code blocks";
+      ```
+
+      ## Incident Behavior
+
+      - vessel route maps no longer matched
+      - predictive overlays conflicted
+      - emergency routing loops formed
+      - several support ships became isolated
+
+      ## Historical Impact
+
+      Modern interstellar systems now isolate navigation consensus layers to avoid recursive amplification failures.
+    };
+  |■
+|●

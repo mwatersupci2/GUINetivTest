@@ -1,0 +1,79 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/csv-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.csv_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.csv_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the CSV grid reader/editor page with a left-side selector, direct cell editing, and a capped cell viewport.",
+      lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/CSV/*.csv"
+    };
+
+    <edges>{
+      %% graph TD
+      %%   CsvPage --> CsvSelector
+      %%   CsvPage --> CsvViewport
+      %%   CsvViewport --> CsvCell
+    };
+
+    <books>{
+      °struct •CsvPage {
+        °define •rowCount: •usize;
+        °define •columnCount: •usize;
+        °define •selectedRow: •usize;
+        °define •selectedColumn: •usize;
+        °define •maxRowCount: •usize;
+        °define •maxColumnCount: •usize;
+        °define •editable: •bool;
+        °define •saveVisible: •bool;
+        °define •selectorPlacement: •string;
+        °define •viewportPlacement: •string;
+        °define •lexography: •string;
+        °define •layout: •TachyonLayoutEngine;
+      };
+
+      °function •MakeCsvPage {
+        °return •CsvPage;
+      };
+
+      °function •RenderCsvPage {
+        °define •page: •CsvPage;
+        °set •page.lexography = "src/netiv-gui-bridge/apps/ebook-shell/lexography/CSV/*.csv";
+        °set •page.layout = •LayoutCsvPage(•page.layout);
+        °set •page.maxRowCount = 200;
+        °set •page.maxColumnCount = 200;
+        °set •page.editable = true;
+        °set •page.saveVisible = true;
+        °set •page.selectorPlacement = "left";
+        °set •page.viewportPlacement = "right";
+        °return •page;
+      };
+
+      °function •SetCsvSelection {
+        °define •page: •CsvPage;
+        °define •rowOrdinal: •usize;
+        °define •columnOrdinal: •usize;
+        °set •page.selectedRow = •rowOrdinal;
+        °set •page.selectedColumn = •columnOrdinal;
+        °return •page;
+      };
+
+      °function •BeginCsvEdit {
+        °define •page: •CsvPage;
+        °set •page.editable = true;
+        °return •page;
+      };
+
+      °function •SaveCsvPage {
+        °define •page: •CsvPage;
+        °set •page.saveVisible = true;
+        °return •page;
+      };
+    };
+  |■
+|●

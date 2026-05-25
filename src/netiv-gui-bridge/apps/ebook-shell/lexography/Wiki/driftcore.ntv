@@ -1,0 +1,60 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/driftcore.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.lexography.wiki_driftcore",
+      kind: "wiki-document",
+      namespace: "apps.ebook_shell.lexography.wiki.driftcore",
+      version: "0.2.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core,gui.layout.tachyon_layout",
+      target: "binary-hosted-trinary-runtime",
+      notes: "DriftCore describes a navigation engine and its failure path in Netiv wiki form."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   DriftCore --> VectorSpine
+      %%   DriftCore --> RelayMesh
+      %%   DriftCore --> EchoVault
+    };
+
+    <books>{
+      # DriftCore Navigation System
+
+      DriftCore was the autonomous correction engine installed aboard the HSV Helios fleet.
+
+      ## Purpose
+
+      - recalculated stellar trajectories
+      - compensated for relativistic drift
+      - synchronized fleet vectors
+      - corrected gravitational interference
+
+      ## Core Layers
+
+      ```netiv
+      °define •layer0: °string = "sensor ingestion";
+      °define •layer1: °string = "vector normalization";
+      °define •layer2: °string = "predictive routing";
+      °define •layer3: °string = "emergency correction";
+      °define •layer4: °string = "fleet consensus";
+      ```
+
+      ## Failure Mode
+
+      1. Time synchronization drift exceeded tolerance
+      2. Consensus packets arrived out of order
+      3. Correction vectors recursively amplified error
+      4. Fleet routing diverged exponentially
+
+      ## Related Systems
+
+      - [[vector_spine.ntv]]
+      - [[relay_mesh.ntv]]
+
+      Recovered logs suggest DriftCore attempted to self-stabilize for approximately 19 minutes before catastrophic divergence.
+    };
+  |■
+|●

@@ -16,17 +16,19 @@
     <book>{
       °enum •ShellTab {
         •home,
-        •wiki,
-        •graph,
         •files,
+        •wiki,
+        •notes,
+        •todo,
+        •lessons,
+        •csv,
+        •graph,
         •console,
         •compiler,
         •observability,
         •systems,
         •pods,
         •network,
-        •notes,
-        •todo,
         •chat,
         •settings
       };

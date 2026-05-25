@@ -1,0 +1,37 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/lessons-page.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.pages.lessons_page",
+      kind: "application-page",
+      namespace: "apps.ebook_shell.pages.lessons_page",
+      version: "0.1.0",
+      error: "terminal",
+      status: "future-active-draft",
+      imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Defines the lesson browser page with a left-side file selector and lesson viewport.",
+      lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Lessons/*.ntv"
+    };
+
+    <book>{
+      °struct •LessonsPage {
+        °define •lessonCount: •usize;
+        °define •selectedOrdinal: •usize;
+        °define •lexography: •string;
+        °define •layout: •TachyonLayoutEngine;
+      };
+
+      °function •MakeLessonsPage {
+        °return •LessonsPage;
+      };
+
+      °function •RenderLessonsPage {
+        °define •page: •LessonsPage;
+        °set •page.lexography = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Lessons/*.ntv";
+        °set •page.layout = •LayoutLessonsPage(•page.layout);
+        °return •page;
+      };
+    };
+  |■
+|●

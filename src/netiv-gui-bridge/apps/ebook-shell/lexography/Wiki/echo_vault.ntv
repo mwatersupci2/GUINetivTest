@@ -1,0 +1,50 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/echo_vault.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.lexography.wiki_echo_vault",
+      kind: "wiki-document",
+      namespace: "apps.ebook_shell.lexography.wiki.echo_vault",
+      version: "0.2.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core,gui.layout.tachyon_layout",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Echo Vault stores the recovered telemetry narrative in Netiv wiki form."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   EchoVault --> DriftCore
+      %%   EchoVault --> RelayMesh
+      %%   EchoVault --> TribunalRecords
+    };
+
+    <books>{
+      # Echo Vault
+
+      The Echo Vault was the archival telemetry repository recovered after the Helios Drift Incident.
+
+      ## Recovery
+
+      Only 14% of the original archive was recovered.
+
+      ```netiv
+      °define •recoveryRate: •string = "14%";
+      °define •archiveState: •string = "partial";
+      °define •renderHint: •string = "code blocks remain visible inside books";
+      ```
+
+      ## Important Discoveries
+
+      - DriftCore repeatedly warned operators.
+      - Emergency overrides were ignored.
+      - Fleet leadership disabled manual intervention.
+      - Synchronization errors were already known pre-launch.
+
+      ## Historical Debate
+
+      The records remain controversial because multiple sections appear intentionally erased.
+    };
+  |■
+|●

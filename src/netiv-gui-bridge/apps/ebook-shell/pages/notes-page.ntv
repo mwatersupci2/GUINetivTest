@@ -10,13 +10,15 @@
       status: "future-active-draft",
       imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines the lightweight text editor page for ebook-shell notes."
+      notes: "Defines the notes reader/editor page with a left-side file selector and markdown viewport.",
+      lexography: "src/netiv-gui-bridge/apps/ebook-shell/lexography/Notes/*.md"
     };
 
     <book>{
       °struct •NotesPage {
         °define •lineCount: °usize;
         °define •editable: °bool;
+        °define •lexography: •string;
         °define •layout: •TachyonLayoutEngine;
       };
 
@@ -26,6 +28,7 @@
 
       °function •RenderNotesPage {
         °define •page: •NotesPage;
+        °set •page.lexography = "src/netiv-gui-bridge/apps/ebook-shell/lexography/Notes/*.md";
         °set •page.layout = •LayoutNotesPage(•page.layout);
         °set •page.editable = true;
         °return •page;

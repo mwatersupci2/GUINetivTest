@@ -8,25 +8,28 @@
       version: "0.1.0",
       error: "terminal",
       status: "future-active-draft",
-      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.pages.shell_page,apps.ebook_shell.pages.graph_page,apps.ebook_shell.pages.files_page,apps.ebook_shell.pages.console_page,apps.ebook_shell.pages.compiler_page,apps.ebook_shell.pages.observability_page,apps.ebook_shell.pages.systems_page,apps.ebook_shell.pages.pods_page,apps.ebook_shell.pages.network_page,apps.ebook_shell.pages.notes_page,apps.ebook_shell.pages.todo_page,apps.ebook_shell.pages.chat_page,apps.ebook_shell.pages.settings_page",
+      imports: "trit.core,apps.ebook_shell.state.tab_state,apps.ebook_shell.pages.shell_page,apps.ebook_shell.pages.files_page,apps.ebook_shell.pages.notes_page,apps.ebook_shell.pages.todo_page,apps.ebook_shell.pages.lessons_page,apps.ebook_shell.pages.csv_page,apps.ebook_shell.pages.graph_page,apps.ebook_shell.pages.console_page,apps.ebook_shell.pages.compiler_page,apps.ebook_shell.pages.observability_page,apps.ebook_shell.pages.systems_page,apps.ebook_shell.pages.pods_page,apps.ebook_shell.pages.network_page,apps.ebook_shell.pages.chat_page,apps.ebook_shell.pages.settings_page",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines the full fourteen-tab ebook-shell interface."
+      notes: "Defines the full ebook-shell interface with folder-driven pages."
     };
 
     <edges>{
       %% graph TD
       %%   HomeShell --> TabState
       %%   HomeShell --> ShellPage
-      %%   HomeShell --> GraphPage
       %%   HomeShell --> FilesPage
+      %%   HomeShell --> WikiPage
+      %%   HomeShell --> NotesPage
+      %%   HomeShell --> TodoPage
+      %%   HomeShell --> LessonsPage
+      %%   HomeShell --> CsvPage
+      %%   HomeShell --> GraphPage
       %%   HomeShell --> ConsolePage
       %%   HomeShell --> CompilerPage
       %%   HomeShell --> ObservabilityPage
       %%   HomeShell --> SystemsPage
       %%   HomeShell --> PodsPage
       %%   HomeShell --> NetworkPage
-      %%   HomeShell --> NotesPage
-      %%   HomeShell --> TodoPage
       %%   HomeShell --> ChatPage
       %%   HomeShell --> SettingsPage
       %%   BuildHomeShell --> TabState
@@ -45,7 +48,7 @@
       °function •BuildHomeShell {
         °define •shell: •HomeShell;
         °set •shell.loaded = true;
-        °set •shell.pageCount = 14;
+        °set •shell.pageCount = 16;
         °return •shell;
       };
     };

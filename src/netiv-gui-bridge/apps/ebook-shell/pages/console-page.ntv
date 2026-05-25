@@ -1,7 +1,7 @@
 <Netiv="research/netiv-gui-bridge/apps/ebook-shell/pages/console-page.ntv">
 ○|
   □|
-    <meta>{
+      <meta>{
       name: "ebook_shell.pages.console_page",
       kind: "application-page",
       namespace: "apps.ebook_shell.pages.console_page",
@@ -10,7 +10,7 @@
       status: "future-active-draft",
       imports: "trit.core,gui.layout.tachyon_layout,gui.document.document_page_render,gui.runtime.loop,gui.host.windows,gui.host.windows_window,gui.input.keyboard,gui.input.pointer,gui.kiosk.event,gui.display.frame_surface",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines the full-bleed terminal and runtime console page for ebook-shell."
+      notes: "Defines the full-bleed Command Prompt passthrough page for ebook-shell."
     };
 
     <edges>{
@@ -46,16 +46,16 @@
         °set •page.interactive = true;
         °set •page.lineCount = 18;
         °set •page.outputDirty = true;
-        °set •page.prompt = "> ";
+        °set •page.prompt = "C:\\Projects\\Languages_Compilers_Tools\\Netiv Test Project>";
         °return •page;
       };
 
       °function •ConsoleInitializeShell {
         °define •page: •ConsolePage;
-        °set •page.shell = "powershell.exe";
+        °set •page.shell = "cmd.exe";
         °set •page.started = true;
         °set •page.shellRunning = true;
-        °set •page.transcript = "Launching powershell.exe\\nType commands and press Enter.";
+        °set •page.transcript = "";
         °return •page;
       };
 
@@ -64,40 +64,6 @@
         °define •line: •string;
         °set •page.transcript = •page.transcript + "\\n" + •line;
         °set •page.outputDirty = true;
-        °return •page;
-      };
-
-      °function •ConsoleClearTranscript {
-        °define •page: •ConsolePage;
-        °set •page.transcript = "";
-        °set •page.outputDirty = true;
-        °return •page;
-      };
-
-      °function •ConsoleIsClearCommand {
-        °define •command: •string;
-        °if { •command == "clear" } {
-          °return true;
-        };
-        °if { •command == "cls" } {
-          °return true;
-        };
-        °if { •command == "clear-host" } {
-          °return true;
-        };
-        °return false;
-      };
-
-      °function •ConsoleExecuteCommand {
-        °define •page: •ConsolePage;
-        °define •command: •string;
-        °if { •ConsoleIsClearCommand(•command) == true } {
-          °set •page = •ConsoleClearTranscript(•page);
-          °set •page.input = "";
-          °return •page;
-        };
-        °set •page = •ConsoleAppendTranscriptLine(•page, •page.prompt + •command);
-        °set •page.input = "";
         °return •page;
       };
 
@@ -116,12 +82,9 @@
 
       °function •ConsoleCommitInput {
         °define •page: •ConsolePage;
-        °define •command: •string;
-        °set •command = •page.input;
-        °if { •command != "" } {
-          °set •page = •ConsoleExecuteCommand(•page, •command);
-        };
+        °set •page.shellRunning = true;
         °set •page.outputDirty = true;
+        °set •page.input = "";
         °return •page;
       };
 

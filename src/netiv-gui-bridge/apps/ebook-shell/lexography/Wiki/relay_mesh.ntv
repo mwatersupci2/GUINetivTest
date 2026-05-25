@@ -1,0 +1,51 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/relay_mesh.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.lexography.wiki_relay_mesh",
+      kind: "wiki-document",
+      namespace: "apps.ebook_shell.lexography.wiki.relay_mesh",
+      version: "0.2.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core,gui.layout.tachyon_layout",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Relay Mesh describes the communications backbone using standard Netiv wiki sections."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   RelayMesh --> DriftCore
+      %%   RelayMesh --> VectorSpine
+      %%   RelayMesh --> EchoVault
+    };
+
+    <books>{
+      # Relay Mesh
+
+      The Relay Mesh was the communications backbone of the Helios fleet.
+
+      ## Topology
+
+      The network used a distributed mesh design.
+
+      ```netiv
+      °define •nodePrime: •string = "fleet coordination";
+      °define •nodeEdge: •string = "local vessel routing";
+      °define •nodeBurst: •string = "emergency transmission";
+      °define •nodeArchive: •string = "long-term telemetry storage";
+      ```
+
+      ## Known Problems
+
+      - packet reorder instability
+      - excessive recursive retries
+      - delayed monotonic timestamp propagation
+      - consensus deadlocks
+
+      ## Connection To DriftCore
+
+      The Relay Mesh supplied DriftCore with timing and routing consensus data.
+    };
+  |■
+|●

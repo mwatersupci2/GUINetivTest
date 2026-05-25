@@ -1,0 +1,28 @@
+# Project: Aurora Gateway Refactor
+# Columns: ID | Priority | Status | Owner | Sprint | Tags | Notes
+
+[ ] AUR-001 | High | Backlog | Mike | Sprint-1 | api,auth | Draft OAuth refresh flow
+[ ] AUR-002 | Medium | Active | Dana | Sprint-1 | ui | Redesign login card spacing
+[ ] AUR-003 | Critical | Review | Chris | Sprint-1 | db,migration | Verify schema rollback safety
+[ ] AUR-004 | Low | Backlog | Mike | Sprint-2 | docs | Expand API onboarding docs
+[ ] AUR-005 | Medium | Blocked | Kim | Sprint-2 | websocket | Resolve reconnect loop
+[ ] AUR-006 | High | Active | Alex | Sprint-2 | caching | Add local cache invalidation
+[ ] AUR-007 | Medium | Active | Dana | Sprint-2 | dashboard | Create metrics sidebar
+[ ] AUR-008 | Low | Complete | Chris | Sprint-1 | testing | Add smoke tests
+[ ] AUR-009 | High | Review | Kim | Sprint-3 | billing | Audit Stripe webhook retries
+[ ] AUR-010 | Critical | Active | Mike | Sprint-3 | queue | Stabilize job queue locking
+[ ] AUR-011 | Medium | Backlog | Alex | Sprint-3 | logs | Improve log formatting
+[ ] AUR-012 | High | Active | Dana | Sprint-3 | mobile | Adjust responsive layouts
+[ ] AUR-013 | Low | Backlog | Chris | Sprint-4 | docs | Create deployment checklist
+[ ] AUR-014 | Medium | Review | Kim | Sprint-4 | backup | Validate nightly snapshots
+[ ] AUR-015 | High | Active | Mike | Sprint-4 | auth | Harden session handling
+[ ] AUR-016 | Medium | Blocked | Dana | Sprint-5 | ui,theme | Dark mode contrast issues
+[ ] AUR-017 | Critical | Review | Alex | Sprint-5 | performance | Benchmark API throughput
+[ ] AUR-018 | Low | Complete | Kim | Sprint-5 | testing | Finish edge-case suite
+[ ] AUR-019 | Medium | Active | Chris | Sprint-6 | db | Normalize audit tables
+[ ] AUR-020 | High | Backlog | Mike | Sprint-6 | notifications | Prototype email batching
+[ ] AUR-021 | Medium | Active | Dana | Sprint-6 | ux | Reduce modal clutter
+[ ] AUR-022 | High | Review | Alex | Sprint-7 | security | Rotate internal secrets
+[ ] AUR-023 | Low | Backlog | Kim | Sprint-7 | analytics | Add usage counters
+[ ] AUR-024 | Medium | Active | Chris | Sprint-7 | import | Improve CSV parser
+[ ] AUR-025 | High | Blocked | Mike | Sprint-8 | infra | Resolve pod memory spikes

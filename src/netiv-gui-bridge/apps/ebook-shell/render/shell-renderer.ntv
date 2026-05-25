@@ -10,7 +10,7 @@
       status: "future-active-draft",
       imports: "trit.core,apps.ebook_shell.home_shell,apps.ebook_shell.widgets.tab_bar,apps.ebook_shell.widgets.name_bar,apps.ebook_shell.widgets.page_container,gui.display.frame_surface",
       target: "binary-hosted-trinary-runtime",
-      notes: "Defines the top-level shell composition path for the full fourteen-tab ebook-shell interface."
+      notes: "Defines the top-level shell composition path for the grouped sixteen-tab ebook-shell interface."
     };
 
     <edges>{

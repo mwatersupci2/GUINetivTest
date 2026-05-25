@@ -1,0 +1,21 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/lexography/Lessons/index.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.lexography.lessons_index",
+      kind: "lexography-page",
+      namespace: "apps.ebook_shell.lexography.lessons",
+      version: "0.1.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core",
+      target: "binary-hosted-trinary-runtime",
+      notes: "Lessons content under this folder must use .ntv files."
+    };
+
+    <book>{
+      °define •lessonsFormat: °string = ".ntv";
+      °define •lessonsPurpose: °string = "Lesson modules and structured lesson content.";
+    };
+  |■
+|●

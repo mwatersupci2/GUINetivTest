@@ -1,0 +1,33 @@
+# Project: Nebula MMO Backend
+# Columns: Ticket | Realm | Type | Severity | ETA | State
+
+[ ] MMO-001 | auth | exploit | critical | 1d | open
+[ ] MMO-002 | combat | balance | medium | 3d | active
+[ ] MMO-003 | inventory | dupe-bug | critical | 2d | review
+[ ] MMO-004 | guilds | ui | low | 4d | backlog
+[ ] MMO-005 | chat | moderation | high | 2d | active
+[ ] MMO-006 | crafting | economy | medium | 5d | backlog
+[ ] MMO-007 | raids | performance | high | 2d | active
+[ ] MMO-008 | zones | streaming | medium | 4d | blocked
+[ ] MMO-009 | housing | save-system | critical | 3d | review
+[ ] MMO-010 | ai | pathfinding | medium | 6d | active
+[ ] MMO-011 | pvp | ranking | low | 3d | backlog
+[ ] MMO-012 | login | queue | high | 1d | active
+[ ] MMO-013 | mounts | animation | low | 4d | open
+[ ] MMO-014 | marketplace | tax-rules | medium | 2d | review
+[ ] MMO-015 | achievements | sync | medium | 2d | active
+[ ] MMO-016 | launcher | patching | high | 3d | blocked
+[ ] MMO-017 | analytics | telemetry | low | 5d | backlog
+[ ] MMO-018 | npc | scripting | medium | 4d | active
+[ ] MMO-019 | worldboss | spawn-logic | high | 2d | review
+[ ] MMO-020 | servers | failover | critical | 2d | active
+[ ] MMO-021 | clans | permissions | medium | 2d | open
+[ ] MMO-022 | economy | inflation | high | 6d | backlog
+[ ] MMO-023 | mail | attachment-loss | critical | 1d | active
+[ ] MMO-024 | social | friends-list | low | 3d | review
+[ ] MMO-025 | launcher | updater | medium | 2d | backlog
+[ ] MMO-026 | api | gateway | high | 4d | active
+[ ] MMO-027 | db | replication | critical | 3d | blocked
+[ ] MMO-028 | quests | scripting | medium | 5d | review
+[ ] MMO-029 | maps | minimap | low | 2d | active
+[ ] MMO-030 | moderation | reporting | medium | 2d | backlog

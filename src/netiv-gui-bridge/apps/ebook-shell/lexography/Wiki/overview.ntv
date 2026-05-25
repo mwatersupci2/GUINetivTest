@@ -1,0 +1,52 @@
+<Netiv="research/netiv-gui-bridge/apps/ebook-shell/lexography/Wiki/overview.ntv">
+○|
+  □|
+    <meta>{
+      name: "ebook_shell.lexography.wiki_overview",
+      kind: "wiki-document",
+      namespace: "apps.ebook_shell.lexography.wiki.overview",
+      version: "0.2.0",
+      error: "terminal",
+      status: "active",
+      imports: "trit.core,gui.layout.tachyon_layout",
+      target: "binary-hosted-trinary-runtime",
+      notes: "The wiki overview uses the Netiv books block to present the article and its code samples."
+    };
+
+    <edges>{
+      %% graph TD
+      %%   HeliosOverview --> DriftCore
+      %%   HeliosOverview --> VectorSpine
+      %%   HeliosOverview --> RelayMesh
+      %%   HeliosOverview --> EchoVault
+    };
+
+    <books>{
+      # The Helios Drift Incident
+
+      The Helios Drift Incident was a cascading navigation disaster involving the deep-space colony vessel HSV Helios in 2144.
+
+      ## Major Systems
+
+      | System | Description |
+      |---|---|
+      | DriftCore | Autonomous route correction engine |
+      | Vector Spine | Spatial navigation graph |
+      | Relay Mesh | Inter-ship communication system |
+      | Echo Vault | Black box telemetry archive |
+
+      ## Layout Contract
+
+      ```netiv
+      °define •selectorPanel: •string = "left sidebar";
+      °define •viewportPanel: •string = "main viewport";
+      °define •renderMode: •string = "netiv-wiki";
+      ```
+
+      ## Legacy Notes
+
+      - The incident permanently changed interstellar navigation standards.
+      - The wiki page should render from the selected Netiv document, not a hardcoded article shell.
+    };
+  |■
+|●
